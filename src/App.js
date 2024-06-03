@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import PublicRoutes from "./routes/PublicRoutes";
+import { ComponentIndex } from "./components/ComponentsIndex";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<PublicRoutes />}>
+                    <Route path="" element={<ComponentIndex.Home />} />
+                    {/*Define all public route here*/}
+                </Route>
+            </Routes>
+            <ToastContainer
+                position="bottom-left"
+                autoClose={4000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+        </BrowserRouter>
+    )
 }
 
-export default App;
+export default App
