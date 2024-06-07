@@ -1,7 +1,8 @@
 .home {
-    background-color: rebeccapurple;
+    min-height      : 1200px;
+    background-color: var(--color-white);
 
     &-title {
-        color: azure;
+        color: rgb(49, 194, 194);
     }
 }

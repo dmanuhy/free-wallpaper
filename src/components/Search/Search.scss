@@ -1,0 +1,23 @@
+.search {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    width          : 600px;
+
+    &-input {
+        height                   : 2.2rem;
+        border                   : 0.1rem solid var(--color-brown);
+        border-top-left-radius   : 0.3rem;
+        border-bottom-left-radius: 0.3rem;
+        background-color         : var(--color-white-1);
+        padding                  : 1.2rem 1rem;
+    }
+
+    &-icon {
+        background-color          : var(--color-brown);
+        color                     : var(--color-white);
+        padding                   : 0.8rem;
+        border-top-right-radius   : 0.3rem;
+        border-bottom-right-radius: 0.3rem;
+    }
+}

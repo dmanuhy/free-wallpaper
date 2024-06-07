@@ -7,12 +7,15 @@ import { ComponentIndex } from "./components/ComponentsIndex";
 const App = () => {
     return (
         <BrowserRouter>
+            <ComponentIndex.Header />
             <Routes>
                 <Route path="/" element={<PublicRoutes />}>
                     <Route path="" element={<ComponentIndex.Home />} />
+                    <Route path="wallpaper/search/:category" element={<ComponentIndex.WallpaperSearchResult />} />
                     {/*Define all public route here*/}
                 </Route>
             </Routes>
+            <ComponentIndex.Footer />
             <ToastContainer
                 position="bottom-left"
                 autoClose={4000}
