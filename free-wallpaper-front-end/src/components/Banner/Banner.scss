@@ -1,0 +1,12 @@
+.banner {
+    min-height         : 440px;
+    background-position: center;
+    background-repeat  : no-repeat;
+    background-size    : cover;
+    position           : relative;
+    display            : flex;
+    flex-direction     : column;
+    justify-content    : center;
+    align-items        : center;
+    color              : var(--color-white);
+}
