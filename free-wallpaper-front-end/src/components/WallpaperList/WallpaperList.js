@@ -14,7 +14,7 @@ const WallpaperList = () => {
         <div className="wallpaper-list content-width-padding">
             {wallpaperList.map((item, index) => {
                 return (
-                    <Component.Wallpaper image={item} />
+                    <Component.Wallpaper image={item} creatorName={"John - " + index} creatorAvatar={item} />
                 )
             })}
         </div>
