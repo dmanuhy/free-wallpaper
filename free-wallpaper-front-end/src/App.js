@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import PublicRoutes from "./routes/PublicRoutes";
 import { Component } from "./components";
 import { Page } from "./pages";
+import AccountManagement from "./pages/AccountManagement/AccountManagement";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="" element={<Page.Home />} />
           <Route path="wallpaper/search/:category" element={<Page.WallpaperSearchResult />} />
           {/*Define all public route here*/}
+          <Route path="/am" element={<AccountManagement />} />
         </Route>
       </Routes>
       <Component.Footer />
