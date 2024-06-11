@@ -1,8 +1,71 @@
 .wallpaper {
     margin-bottom: 1rem;
+    position     : relative;
 
-    img {
-        width : 100% !important;
-        height: auto !important;
+
+    &-image {
+        width        : 100%;
+        height       : auto;
+        border-radius: 0.5rem;
+    }
+
+    &-icon {
+        position        : absolute;
+        left            : 0;
+        background-color: var(--color-white);
+        padding         : 0.5rem;
+        margin-top      : 0.5rem;
+        margin-left     : 0.5rem;
+        font-size       : 1.2rem;
+        border-radius   : 0.2rem;
+        opacity         : 0;
+        transition      : opacity .5s;
+        cursor          : pointer;
+    }
+
+    &-creator {
+        cursor     : pointer;
+        bottom     : 1rem;
+        right      : 1rem;
+        position   : absolute;
+        display    : flex;
+        align-items: center;
+        gap        : 1.2rem;
+        opacity    : 0;
+        transition : opacity .5s;
+
+        &-name {
+            font-size: 1.2rem;
+            color    : var(--color-white);
+        }
+
+        &-avatar {
+
+            border-radius      : 99rem;
+            height             : 3rem;
+            aspect-ratio       : 1;
+            background-size    : cover;
+            background-position: center;
+            border             : 1px solid var(--color-white);
+        }
+    }
+
+    &:hover {
+        .wallpaper {
+            &-image {
+                -webkit-filter    : brightness(80%);
+                -webkit-transition: all 1s ease;
+                -moz-transition   : all 1s ease;
+                -o-transition     : all 1s ease;
+                -ms-transition    : all 1s ease;
+                transition        : all 1s ease;
+            }
+
+
+            &-icon,
+            &-creator {
+                opacity: 1;
+            }
+        }
     }
 }
