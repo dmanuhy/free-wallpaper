@@ -51,12 +51,12 @@ const UserRequestTable = () => {
             <th>
               <input type="checkbox" />
             </th>
+            <th>RequestId</th>
             <th onClick={handleClick} className="sortable">
               Full Name <img src={chevron} alt="chevron" />
             </th>
             <th>Email Address</th>
-            <th>Location</th>
-            <th>Joined</th>
+            <th>Request Date</th>
             <th onClick={handleClick} className="sortable">
               Status <img src={chevron} alt="chevron" />
             </th>
