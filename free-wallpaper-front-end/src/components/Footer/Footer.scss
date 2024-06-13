@@ -1,4 +1,12 @@
 .footer {
+    margin-top      : 4rem;
     background-color: var(--color-white-1);
-    min-height      : 350px;
+    min-height      : 200px;
+
+    &-left {}
+
+    &-logo {
+        font-family: "Keania One", sans-serif;
+        cursor     : pointer;
+    }
 }
