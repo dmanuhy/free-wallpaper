@@ -1,27 +1,20 @@
+import { NavLink } from "react-router-dom"
+
 import "./Category.scss"
+
+const category = ["All", "Car", "Computer", "Natural", "Sea", "Girl", "Boy", "Film", "Actor", "Cafe House", "AI", "Bikini"]
 
 const Category = () => {
     return (
         <div className="category  content-width-padding">
-            <div className="category-list d-flex gap-2">
-                <span className="category-tag" style={{ background: "black", color: "white" }}>All</span>
-                <span className="category-tag">Car</span>
-                <span className="category-tag">Computer</span>
-                <span className="category-tag">Natural</span>
-                <span className="category-tag">People</span>
-                <span className="category-tag">Beach</span>
-                <span className="category-tag">Fiction</span>
-                <span className="category-tag">Fashion</span>
-                <span className="category-tag">Natural</span>
-                <span className="category-tag">People</span>
-                <span className="category-tag">Beach</span>
-                <span className="category-tag">Fiction</span>
-                <span className="category-tag">Fashion</span>
-                <span className="category-tag">Natural</span>
-                <span className="category-tag">People</span>
-                <span className="category-tag">Beach</span>
-                <span className="category-tag">Fiction</span>
-                <span className="category-tag">Fashion</span>
+            <div className="category-list">
+                {category.map((item, index) => {
+                    return (
+                        <NavLink key={index} to={`/search/${item}`} className={({ isActive }) => isActive ? "category-tag category-tag-selected" : "category-tag"}>
+                            {item}
+                        </NavLink>
+                    )
+                })}
             </div>
         </div>
     )

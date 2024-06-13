@@ -14,10 +14,13 @@ const App = () => {
       <Routes>
         <Route path="/" element={<PublicRoutes />}>
           <Route path="" element={<Page.Home />} />
-          <Route path="wallpaper/search/:category" element={<Page.WallpaperSearchResult />} />
+          <Route path="search/:category" element={<Page.WallpaperSearchResult />} />
           {/*Define all public route here*/}
-          <Route path="/am" element={<AccountManagement />} />
-          <Route path="rm" element={<RequestManagement />} />
+          <Route path="login" element={<Page.Login />} />
+          <Route path=":userid" element={<Page.UserGallery />} />
+          <Route path=":userid/collections" element={<Page.UserCollections />} />
+          <Route path=":userid/:albumid" element={<Page.UserCollectionsDetails />} />
+          <Route path="edit" element={<Page.Editprofile />} />
         </Route>
       </Routes>
       <Component.Footer />
