@@ -14,6 +14,12 @@ const App = () => {
           <Route path="" element={<Page.Home />} />
           <Route path="wallpaper/search/:category" element={<Page.WallpaperSearchResult />} />
           {/*Define all public route here*/}
+          <Route path="login" element={<Page.Login />} />
+          <Route path=":userid" element={<Page.UserGallery />} />
+          <Route path=":userid/collections" element={<Page.UserCollections />} />
+          <Route path=":userid/:albumid" element={<Page.UserCollectionsDetails />} />
+          <Route path="edit" element={<Page.Editprofile />} />
+
         </Route>
       </Routes>
       <Component.Footer />
