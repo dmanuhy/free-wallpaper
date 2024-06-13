@@ -1,0 +1,105 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    height: fit-content;
+}
+
+.user-profile {
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.icons {
+    margin-top: 10px;
+}
+
+.icons a {
+    margin: 0 10px;
+    font-size: 1.5em;
+    color: #000;
+    /* Change this to your desired color */
+    text-decoration: none;
+}
+
+.icons a:hover {
+    color: #007bff;
+    /* Change this to your desired hover color */
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: flex-start;
+    /* Align buttons to the left */
+    margin-top: 20px;
+    width: 100%;
+}
+
+.nav-button1 {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+}
+
+.nav-button2 {
+    background-color: #fdfdfd;
+    color: #000000;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+}
+
+.nav-button2:hover {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+}
+
+.nav-button1 span {
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 5px 10px;
+    margin-left: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    
+.gallery {
+    column-count: 3;
+    column-gap: 10px;
+}
+
+.gallery img {
+    width: 100%;
+    break-inside: avoid;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
