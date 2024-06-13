@@ -12,7 +12,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<PublicRoutes />}>
           <Route path="" element={<Page.Home />} />
-          <Route path="wallpaper/search/:category" element={<Page.WallpaperSearchResult />} />
+          <Route path="search/:category" element={<Page.WallpaperSearchResult />} />
           {/*Define all public route here*/}
           <Route path="login" element={<Page.Login />} />
           <Route path=":userid" element={<Page.UserGallery />} />

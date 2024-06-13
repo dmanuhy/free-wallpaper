@@ -1,20 +1,12 @@
 import { Component } from '..'
 import './WallpaperList.scss'
-import w1 from "../../assets/wallpaper/w1.jpg"
-import w2 from "../../assets/wallpaper/w2.jpg"
-import w3 from "../../assets/wallpaper/w3.jpg"
-import w4 from "../../assets/wallpaper/w4.jpg"
-import w5 from "../../assets/wallpaper/w5.jpg"
-import w6 from "../../assets/wallpaper/w6.jpg"
+
 import { useMemo, useState } from 'react'
 import Pagination from '../Pagination/Pagination'
 
+const PAGE_SIZE = 12;
 
-const wallpaperList = [w1, w2, w3, w4, w5, w6]
-
-const PAGE_SIZE = 2;
-
-const WallpaperList = () => {
+const WallpaperList = ({ wallpaperList = [] }) => {
 
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -27,12 +19,17 @@ const WallpaperList = () => {
     return (
         <>
             <div className="wallpaper-list content-width-padding">
-                {currentTableData.map((item, index) => {
-                    return (
-                        <Component.Wallpaper image={item} creatorName={"John - " + index} creatorAvatar={item} />
-                    )
-                })}
-
+                {wallpaperList && wallpaperList.length > 0 ?
+                    currentTableData.map((item, index) => {
+                        return (
+                            <Component.Wallpaper image={item} creatorName={"John - " + index} creatorAvatar={item} />
+                        )
+                    })
+                    :
+                    <span className='fs-4 text-danger'>
+                        No Content Found!
+                    </span>
+                }
             </div>
             <div className="d-flex justify-content-center mt-2">
                 <Pagination
