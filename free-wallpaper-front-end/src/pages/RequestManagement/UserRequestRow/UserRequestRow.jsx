@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import "./UserRow.scss";
-import RoleChange from "../RoleChange/RoleChange";
+import "./UserRequestRow.scss";
+import StatusChange from "../StatusChange/StatusChange";
 
-const UserRow = ({ user }) => {
+const UserRequestRow = ({ user }) => {
   const className = `badge ${user.role.toLowerCase()}`;
   const [isChanging, setIsChanging] = useState(false);
 
-  const toggleRoleChange = (e) => {
+  const toggleStatusChange = (e) => {
     e.stopPropagation();
     setIsChanging(!isChanging);
   };
@@ -23,12 +23,12 @@ const UserRow = ({ user }) => {
       <td>
         <span className={className}>{user.role}</span>
       </td>
-      <td onClick={toggleRoleChange} className="dot-action">
+      <td onClick={toggleStatusChange} className="dot-action">
         ...
-        {isChanging && <RoleChange toggleRoleChange={toggleRoleChange} user={user} />}
+        {isChanging && <StatusChange toggleStatusChange={toggleStatusChange} user={user} />}
       </td>
     </tr>
   );
 };
 
-export default UserRow;
+export default UserRequestRow;

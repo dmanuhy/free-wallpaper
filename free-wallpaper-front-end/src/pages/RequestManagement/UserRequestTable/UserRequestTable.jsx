@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import UserRow from "../UserRow/UserRow";
-import "./UserTable.scss";
-import { Context } from "../AccountManagement";
+import React, { useContext, useState } from "react";
+import UserRequestRow from "../UserRequestRow/UserRequestRow";
+import "./UserRequestTable.scss";
+import { Context } from "../RequestManagement";
 import chevron from "../../../assets/icon/chevron_up_down.svg";
 
-const UserTable = () => {
+const UserRequestTable = () => {
   const { users, setUsers } = useContext(Context);
   const [sortOption, setSortOption] = useState({
     name: "asc",
@@ -15,7 +15,7 @@ const UserTable = () => {
     if (e.target.innerText.trim() === "Full Name") {
       sortByName();
     } else if (e.target.innerText.trim() === "Role") {
-      sortByRole();
+      sortByStatus();
     }
   };
 
@@ -31,7 +31,7 @@ const UserTable = () => {
     }
   };
 
-  const sortByRole = () => {
+  const sortByStatus = () => {
     if (sortOption.role === "asc") {
       const newUsers = users.sort((a, b) => (a.role.toLowerCase() < b.role.toLowerCase() ? -1 : 1));
       setUsers(newUsers);
@@ -51,21 +51,21 @@ const UserTable = () => {
             <th>
               <input type="checkbox" />
             </th>
+            <th>RequestId</th>
             <th onClick={handleClick} className="sortable">
               Full Name <img src={chevron} alt="chevron" />
             </th>
             <th>Email Address</th>
-            <th>Location</th>
-            <th>Joined</th>
+            <th>Request Date</th>
             <th onClick={handleClick} className="sortable">
-              Role <img src={chevron} alt="chevron" />
+              Status <img src={chevron} alt="chevron" />
             </th>
             <th>Setting</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
-            <UserRow key={user.email} user={user} />
+            <UserRequestRow key={user.email} user={user} />
           ))}
         </tbody>
       </table>
@@ -73,4 +73,4 @@ const UserTable = () => {
   );
 };
 
-export default UserTable;
+export default UserRequestTable;
