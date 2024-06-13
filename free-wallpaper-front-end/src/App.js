@@ -5,6 +5,7 @@ import PublicRoutes from "./routes/PublicRoutes";
 import { Component } from "./components";
 import { Page } from "./pages";
 import AccountManagement from "./pages/AccountManagement/AccountManagement";
+import RequestManagement from "./pages/RequestManagement/RequestManagement";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="wallpaper/search/:category" element={<Page.WallpaperSearchResult />} />
           {/*Define all public route here*/}
           <Route path="/am" element={<AccountManagement />} />
+          <Route path="rm" element={<RequestManagement />} />
         </Route>
       </Routes>
       <Component.Footer />
