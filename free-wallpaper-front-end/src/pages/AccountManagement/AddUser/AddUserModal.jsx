@@ -7,12 +7,13 @@ const AddUserModal = ({ show, handleClose }) => {
 
   const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [role, setRole] = useState("viewer");
 
   const roles = ["Viewer", "Contributor", "Admin"];
 
   const handleSave = () => {
-    const userData = { email, role };
+    const userData = { email, role, name };
     addNewUser(userData);
     handleClose();
   };
@@ -31,6 +32,10 @@ const AddUserModal = ({ show, handleClose }) => {
           </button>
         </div>
         <div className="modal-body">
+          <label>
+            Full Name:
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+          </label>
           <label>
             Email:
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
