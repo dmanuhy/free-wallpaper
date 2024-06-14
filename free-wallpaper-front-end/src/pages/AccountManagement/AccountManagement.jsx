@@ -29,9 +29,14 @@ const AccountManagement = () => {
     setDefaultUsers(newDefaultUsers);
   };
 
+  const addNewUser = (newUser) => {
+    setUsers([...users, newUser]);
+    setDefaultUsers([...defaultUsers, newUser]);
+  };
+
   return (
     <div className="container account-management">
-      <Context.Provider value={{ users, setUsers, defaultUsers, changeUserRole }}>
+      <Context.Provider value={{ users, setUsers, defaultUsers, changeUserRole, addNewUser }}>
         <SearchBar />
         <UserTable />
         <Pagination />
