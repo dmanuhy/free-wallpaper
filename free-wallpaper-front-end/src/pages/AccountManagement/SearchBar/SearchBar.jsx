@@ -35,7 +35,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="header">
+    <div className="search-bar__header">
       <div className="search-bar">
         <input type="text" placeholder="Search users..." onChange={handleSearch} value={searchValue} />
         <select onChange={handleRoleChange} value={selectedRole}>
