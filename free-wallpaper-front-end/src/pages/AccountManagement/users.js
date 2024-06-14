@@ -80,4 +80,13 @@ export const usersArray = [
     role: "Contributor",
     avatar: "https://randomuser.me/api/portraits/men/9.jpg",
   },
+  {
+    id: 9,
+    name: "Jorge Ferreira",
+    email: "jorgee@gmail.com",
+    location: "Huambo, Angola",
+    joined: "March 14, 2018",
+    role: "Viewer",
+    avatar: "https://randomuser.me/api/portraits/men/9.jpg",
+  },
 ];
