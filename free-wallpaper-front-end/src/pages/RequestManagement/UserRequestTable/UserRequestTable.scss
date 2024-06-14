@@ -1,9 +1,9 @@
-.search-bar__header {
+.header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
 
-  input,
+  input[type="text"],
   select {
     padding: 8px 12px;
     margin-right: 10px;

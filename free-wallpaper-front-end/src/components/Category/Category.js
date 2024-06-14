@@ -1,6 +1,8 @@
+import { NavLink } from "react-router-dom"
+
 import "./Category.scss"
 
-const category = ["All", "Car", "Car", "Car", "Car", "Car", "Car", "Car", "Car", "Car", "Car", "Car"]
+const category = ["All", "Car", "Computer", "Natural", "Sea", "Girl", "Boy", "Film", "Actor", "Cafe House", "AI", "Bikini"]
 
 const Category = () => {
     return (
@@ -8,7 +10,9 @@ const Category = () => {
             <div className="category-list">
                 {category.map((item, index) => {
                     return (
-                        <span className={index === 0 ? "category-tag category-tag-selected" : "category-tag"} >{item + " " + index}</span>
+                        <NavLink key={index} to={`/search/${item}`} className={({ isActive }) => isActive ? "category-tag category-tag-selected" : "category-tag"}>
+                            {item}
+                        </NavLink>
                     )
                 })}
             </div>

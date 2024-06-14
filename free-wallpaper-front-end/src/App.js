@@ -4,6 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 import PublicRoutes from "./routes/PublicRoutes";
 import { Component } from "./components";
 import { Page } from "./pages";
+import AccountManagement from "./pages/AccountManagement/AccountManagement";
+import RequestManagement from "./pages/RequestManagement/RequestManagement";
 
 const App = () => {
   return (
@@ -12,14 +14,14 @@ const App = () => {
       <Routes>
         <Route path="/" element={<PublicRoutes />}>
           <Route path="" element={<Page.Home />} />
-          <Route path="wallpaper/search/:category" element={<Page.WallpaperSearchResult />} />
+          <Route path="search/:category" element={<Page.WallpaperSearchResult />} />
           {/*Define all public route here*/}
           <Route path="login" element={<Page.Login />} />
           <Route path=":userid" element={<Page.UserGallery />} />
           <Route path=":userid/collections" element={<Page.UserCollections />} />
           <Route path=":userid/:albumid" element={<Page.UserCollectionsDetails />} />
           <Route path="edit" element={<Page.Editprofile />} />
-
+          <Route path="am" element={<AccountManagement />} />
         </Route>
       </Routes>
       <Component.Footer />
