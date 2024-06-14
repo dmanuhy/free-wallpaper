@@ -8,7 +8,7 @@ const AddUserModal = ({ show, handleClose }) => {
   const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [role, setRole] = useState("viewer");
+  const [role, setRole] = useState("Viewer");
 
   const roles = ["Viewer", "Contributor", "Admin"];
 
