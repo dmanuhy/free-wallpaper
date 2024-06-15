@@ -4,6 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 import PublicRoutes from "./routes/PublicRoutes";
 import { Component } from "./components";
 import { Page } from "./pages";
+import AccountManagement from "./pages/AccountManagement/AccountManagement";
+import RequestManagement from "./pages/RequestManagement/RequestManagement";
 
 const App = () => {
   return (
@@ -19,7 +21,7 @@ const App = () => {
           <Route path=":username/collections" element={<Page.UserCollections />} />
           <Route path=":username/:albumid/:albumname" element={<Page.UserCollectionsDetails />} />
           <Route path=":username/edit-profile" element={<Page.Editprofile />} />
-
+          <Route path="am" element={<AccountManagement />} />
         </Route>
       </Routes>
       <Component.Footer />

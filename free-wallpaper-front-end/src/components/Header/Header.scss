@@ -1,28 +1,29 @@
 .header {
-    position        : sticky;
-    top             : 0;
-    z-index         : 2;
+  position        : sticky;
+  top             : 0;
+  z-index         : 2;
+  background-color: var(--color-white);
+
+  &-logo {
+    font-family: "Keania One", sans-serif;
+    text-wrap  : nowrap;
+    cursor     : pointer;
+  }
+
+  &-explore {
+    font-weight     : 600;
+    border          : none;
     background-color: var(--color-white);
+    border-radius   : 0.5rem;
+    padding         : 0.3rem 0.2rem;
+  }
 
-    &-logo {
-        font-family: "Keania One", sans-serif;
-        cursor     : pointer;
-    }
-
-    &-explore {
-        font-weight     : 600;
-        border          : none;
-        background-color: var(--color-white);
-        border-radius   : 0.5rem;
-        padding         : 0.3rem 0.2rem;
-    }
-
-    &-login {
-        border-radius   : 0.5rem;
-        font-weight     : 600;
-        color           : var(--color-white);
-        padding         : 0.3rem 1.2rem;
-        border          : none;
-        background-color: var(--color-green);
-    }
+  &-login {
+    border-radius   : 0.5rem;
+    font-weight     : 600;
+    color           : var(--color-white);
+    padding         : 0.3rem 1.2rem;
+    border          : none;
+    background-color: var(--color-green);
+  }
 }
