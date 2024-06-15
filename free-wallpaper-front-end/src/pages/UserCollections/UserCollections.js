@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom";
 import w1 from "../../assets/wallpaper/w1.jpg";
 import w2 from "../../assets/wallpaper/w2.jpg";
 import w3 from "../../assets/wallpaper/w3.jpg";
@@ -86,18 +87,18 @@ export default function UserCollections() {
 
             </div>
             <div className="navigation-buttons container" style={{ marginBottom: "30px" }}>
-                <a href="/usergallery" className="nav-button10 active">Gallery <span>{user.gallery.length}</span></a>
-                <a href="/usercollections" className="nav-button20">Collections</a>
+                <Link to="/:username" className="nav-button10 active">Gallery</Link>
+                <Link to=":username/collections" className="nav-button20">Collections</Link>
             </div>
             <div className="my-gallery container">
                 {albums.map(album => (
-                    <a className="my-gallery-item " key={album.id}>
+                    <Link className="my-gallery-item " to="/:username/:albumid/:albumname" key={album.id}>
                         <img src={album.photos[0].src} alt={album.photos[0].alt} />
                         <div className="my-description" >
                             <span >{album.name}</span>
                             <span className="my-photo-count">🖼️ {album.photos.length}</span>
                         </div>
-                    </a>
+                    </Link>
                 ))}
             </div>
         </div>
