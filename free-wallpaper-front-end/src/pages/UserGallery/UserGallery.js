@@ -6,6 +6,7 @@ import w3 from "../../assets/wallpaper/w3.jpg";
 import w4 from "../../assets/wallpaper/w4.jpg";
 import w5 from "../../assets/wallpaper/w5.jpg";
 import w6 from "../../assets/wallpaper/w6.jpg";
+import { Link } from 'react-router-dom';
 export default function UserGallery() {
     const user = {
         name: 'Name of user',
@@ -21,17 +22,17 @@ export default function UserGallery() {
                     <h1>{user.name}</h1>
                     <p>{user.description}</p>
                     <div className="icons">
-                        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                        <Link to="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
                             <i className="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="mailto:someone@example.com">
+                        </Link>
+                        <Link to="mailto:someone@example.com">
                             <i className="fas fa-envelope"></i>
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div className="navigation-buttons container" style={{ marginBottom: "30px" }}>
-                    <a href="/usergallery" className="nav-button1 active">Gallery <span>{user.gallery.length}</span></a>
-                    <a href="/:userid/collections" className="nav-button2">Collections</a>
+                    <Link to="/:username" className="nav-button1 active">Gallery</Link>
+                    <Link to="/:userid/collections" className="nav-button2">Collections</Link>
                 </div>
             </div>
             <Component.WallpaperList wallpaperList={user.gallery} />

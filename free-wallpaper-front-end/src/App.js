@@ -15,10 +15,10 @@ const App = () => {
           <Route path="search/:category" element={<Page.WallpaperSearchResult />} />
           {/*Define all public route here*/}
           <Route path="login" element={<Page.Login />} />
-          <Route path=":userid" element={<Page.UserGallery />} />
-          <Route path=":userid/collections" element={<Page.UserCollections />} />
-          <Route path=":userid/:albumid" element={<Page.UserCollectionsDetails />} />
-          <Route path="edit" element={<Page.Editprofile />} />
+          <Route path=":username" element={<Page.UserGallery />} />
+          <Route path=":username/collections" element={<Page.UserCollections />} />
+          <Route path=":username/:albumid/:albumname" element={<Page.UserCollectionsDetails />} />
+          <Route path=":username/edit-profile" element={<Page.Editprofile />} />
 
         </Route>
       </Routes>
