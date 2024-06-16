@@ -12,6 +12,7 @@ const AccountManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" });
+  const [blockedUsers, setBlockedUsers] = useState([]);
 
   const changeUserRole = (user, newRole) => {
     const newUsers = users.map((u) => {
@@ -62,6 +63,14 @@ const AccountManagement = () => {
     setSortConfig({ key, direction });
   };
 
+  const toggleBlockUser = (userId) => {
+    if (blockedUsers.includes(userId)) {
+      setBlockedUsers(blockedUsers.filter((id) => id !== userId));
+    } else {
+      setBlockedUsers([...blockedUsers, userId]);
+    }
+  };
+
   return (
     <div className="container account-management">
       <Context.Provider
@@ -76,6 +85,8 @@ const AccountManagement = () => {
           handlePageChange,
           requestSort,
           sortConfig,
+          blockedUsers,
+          toggleBlockUser,
         }}
       >
         <SearchBar />

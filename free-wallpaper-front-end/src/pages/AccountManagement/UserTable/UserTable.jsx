@@ -36,6 +36,7 @@ const UserTable = () => {
           <th onClick={() => requestSort("role")} className={getClassNamesFor("role")}>
             Role
           </th>
+          <th>Block</th>
           <th>Actions</th>
         </tr>
       </thead>

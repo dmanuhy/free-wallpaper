@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./UserRow.scss";
 import RoleChange from "../RoleChange/RoleChange";
+import { Context } from "../AccountManagement";
 
 const UserRow = ({ user }) => {
+  const { blockedUsers, toggleBlockUser } = useContext(Context);
+
   const className = `badge ${user.role.toLowerCase()}`;
   const [isChanging, setIsChanging] = useState(false);
 
@@ -11,14 +14,25 @@ const UserRow = ({ user }) => {
     setIsChanging(!isChanging);
   };
 
+  const isBlocked = blockedUsers.includes(user.id);
+
   return (
-    <tr>
+    <tr className={isBlocked ? "blocked" : ""}>
       <td>{user.name}</td>
       <td>{user.email}</td>
       <td>{user.location}</td>
       <td>{user.joined}</td>
       <td>
         <span className={className}>{user.role}</span>
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          checked={isBlocked}
+          onChange={() => {
+            toggleBlockUser(user.id);
+          }}
+        />
       </td>
       <td onClick={toggleRoleChange} className="dot-action">
         ...
