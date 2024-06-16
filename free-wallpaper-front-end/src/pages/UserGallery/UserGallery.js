@@ -7,12 +7,17 @@ import w4 from "../../assets/wallpaper/w4.jpg";
 import w5 from "../../assets/wallpaper/w5.jpg";
 import w6 from "../../assets/wallpaper/w6.jpg";
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { WallpaperContext } from '../../contexts/WallpaperContext';
 export default function UserGallery() {
+
+    const { page, setPage, wallpaperList } = useContext(WallpaperContext);
+
     const user = {
         name: 'Name of user',
         description: 'Description about user',
         profilePic: w1,
-        gallery: [w1, w2, w3, w4, w5, w6, w4, w3, w5],
+        gallery: wallpaperList,
     };
     return (
         <div>
@@ -35,7 +40,7 @@ export default function UserGallery() {
                     <Link to="/:userid/collections" className="nav-button2">Collections</Link>
                 </div>
             </div>
-            <Component.WallpaperList wallpaperList={user.gallery} />
+            <Component.WallpaperList wallpaperList={user.gallery} page={page} setPage={setPage} />
         </div>
     )
 }
