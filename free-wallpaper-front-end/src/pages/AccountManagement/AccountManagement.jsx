@@ -9,11 +9,13 @@ export const Context = createContext();
 const AccountManagement = () => {
   const [defaultUsers, setDefaultUsers] = useState(usersArray);
   const [users, setUsers] = useState(usersArray);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(10);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" });
 
   const changeUserRole = (user, newRole) => {
     const newUsers = users.map((u) => {
       if (u.id === user.id) {
-        // console.log(user, newRole);
         return { ...u, role: newRole };
       }
       return u;
@@ -34,9 +36,48 @@ const AccountManagement = () => {
     setDefaultUsers([...defaultUsers, newUser]);
   };
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const sortedUsers = [...users].sort((a, b) => {
+    if (sortConfig.key) {
+      const order = sortConfig.direction === "ascending" ? 1 : -1;
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return -1 * order;
+      }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return 1 * order;
+      }
+      return 0;
+    }
+    return users;
+  });
+
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
   return (
     <div className="container account-management">
-      <Context.Provider value={{ users, setUsers, defaultUsers, changeUserRole, addNewUser }}>
+      <Context.Provider
+        value={{
+          users: sortedUsers,
+          setUsers,
+          defaultUsers,
+          changeUserRole,
+          addNewUser,
+          currentPage,
+          usersPerPage,
+          handlePageChange,
+          requestSort,
+          sortConfig,
+        }}
+      >
         <SearchBar />
         <UserTable />
         <Pagination />

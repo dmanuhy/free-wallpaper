@@ -1,41 +1,41 @@
-.role-change {
-  position: absolute;
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  z-index: 100;
+// .role-change {
+//   position: absolute;
+//   background-color: white;
+//   border: 1px solid #ccc;
+//   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+//   padding: 10px;
+//   z-index: 100;
 
-  & button {
-    display: block;
-    width: 100%;
-    margin: 5px 0;
-    color: white;
-    border-radius: 4px;
-    border: 1px solid transparent;
-  }
+//   & button {
+//     display: block;
+//     width: 100%;
+//     margin: 5px 0;
+//     color: white;
+//     border-radius: 4px;
+//     border: 1px solid transparent;
+//   }
 
-  & button:hover {
-    opacity: 0.7;
-  }
+//   & button:hover {
+//     opacity: 0.7;
+//   }
 
-  //   & button:first-child {
-  //     background: rgb(255, 127, 80);
-  //   }
+//   //   & button:first-child {
+//   //     background: rgb(255, 127, 80);
+//   //   }
 
-  & button:nth-child(1) {
-    background: green;
-  }
+//   & button:nth-child(1) {
+//     background: green;
+//   }
 
-  & button:nth-child(2) {
-    background: blue;
-  }
+//   & button:nth-child(2) {
+//     background: blue;
+//   }
 
-  & button:nth-child(3) {
-    background: red;
-  }
+//   & button:nth-child(3) {
+//     background: red;
+//   }
 
-  & button:last-child {
-    background: red;
-  }
-}
+//   & button:last-child {
+//     background: red;
+//   }
+// }

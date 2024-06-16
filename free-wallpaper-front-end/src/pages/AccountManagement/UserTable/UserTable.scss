@@ -1,51 +1,30 @@
-table {
+.user-table {
   width: 100%;
   border-collapse: collapse;
 
-  thead {
-    th {
-      background-color: #f4f4f9;
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-      user-select: none;
+  th,
+  td {
+    padding: 8px;
+    border: 1px solid #ccc;
+  }
 
-      & img {
-        width: 20px;
-      }
+  th {
+    background-color: #f4f4f4;
+    cursor: pointer;
 
-      &:first-child {
-        width: 40px;
-      }
-
-      &:last-child {
-        width: 120px;
-      }
+    &.ascending::after {
+      content: " ⬆";
     }
-
-    .sortable {
-      cursor: pointer;
+    &.descending::after {
+      content: " ⬇";
     }
   }
 
-  tbody {
-    tr {
-      &:hover {
-        background-color: #f9f9f9;
-      }
-
-      td {
-        padding: 12px;
-        border-bottom: 1px solid #ddd;
-
-        &:first-child {
-          width: 40px;
-        }
-
-        &:last-child {
-          width: 120px;
-        }
-      }
-    }
+  .role-change {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1;
   }
 }

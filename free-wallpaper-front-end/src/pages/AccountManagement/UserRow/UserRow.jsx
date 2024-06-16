@@ -13,9 +13,6 @@ const UserRow = ({ user }) => {
 
   return (
     <tr>
-      <td>
-        <input type="checkbox" />
-      </td>
       <td>{user.name}</td>
       <td>{user.email}</td>
       <td>{user.location}</td>
