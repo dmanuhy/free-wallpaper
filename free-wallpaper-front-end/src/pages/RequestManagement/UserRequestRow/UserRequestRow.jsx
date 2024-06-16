@@ -3,7 +3,6 @@ import "./UserRequestRow.scss";
 import StatusChange from "../StatusChange/StatusChange";
 
 const UserRequestRow = ({ user }) => {
-  const className = `badge ${user.role.toLowerCase()}`;
   const [isChanging, setIsChanging] = useState(false);
 
   const toggleStatusChange = (e) => {
@@ -20,6 +19,8 @@ const UserRequestRow = ({ user }) => {
   } else if (user.role === "Viewer") {
     status = "Rejected";
   }
+
+  const className = `badge ${status.toLowerCase()}`;
 
   return (
     <tr>

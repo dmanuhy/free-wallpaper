@@ -9,7 +9,7 @@ const StatusChange = ({ toggleStatusChange, setRole, user }) => {
   return (
     <div>
       <div
-        className="role-change"
+        className="status-change"
         onClick={(e) => {
           e.stopPropagation();
         }}

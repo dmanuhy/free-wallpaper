@@ -6,15 +6,15 @@
   font-size: 0.9em;
   text-align: center;
 
-  &.admin {
+  &.approved {
     background-color: green;
   }
 
-  &.contributor {
+  &.pending {
     background-color: #87ceeb;
   }
 
-  &.viewer {
+  &.rejected {
     background-color: red;
   }
 }
