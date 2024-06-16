@@ -2,10 +2,10 @@
 
 .wallpaper-list {
 
+    text-align: center;
 
     &-container {
-        line-height: 0;
-
+        line-height         : 0;
         -webkit-column-count: 2;
         -webkit-column-gap  : 1rem;
         -moz-column-count   : 2;

@@ -14,7 +14,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<PublicRoutes />}>
           <Route path="" element={<Page.Home />} />
-          <Route path="search/:category" element={<Page.WallpaperSearchResult />} />
+          <Route path="search/:key" element={<Page.WallpaperSearchResult />} />
           {/*Define all public route here*/}
           <Route path="login" element={<Page.Login />} />
           <Route path=":username" element={<Page.UserGallery />} />
