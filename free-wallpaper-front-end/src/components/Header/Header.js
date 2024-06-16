@@ -8,7 +8,7 @@ const Header = () => {
     const navigate = useNavigate()
 
     return (
-        <div className="header content-width-padding content-height-padding row align-items-center mx-0">
+        <div className="header content-width-padding row align-items-center mx-0">
             <span className="header-logo col-2 fs-2" onClick={() => navigate("/")}>Free Wallpaper</span>
             <div className='col-7 header-search'>
                 {window.location.pathname !== "/" && window.location.pathname !== "/"
