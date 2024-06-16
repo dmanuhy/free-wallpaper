@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Context } from "../RequestManagement";
 
 const StatusChange = ({ toggleStatusChange, setRole, user }) => {
-  const status = ["Pending", "Approved", "Rejected"];
+  const status = ["Approved", "Pending", "Rejected"];
   const { changeRequestStatus } = useContext(Context);
 
   return (

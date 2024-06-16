@@ -11,17 +11,27 @@ const UserRequestRow = ({ user }) => {
     setIsChanging(!isChanging);
   };
 
+  let status = "";
+
+  if (user.role === "Admin") {
+    status = "Approved";
+  } else if (user.role === "Contributor") {
+    status = "Pending";
+  } else if (user.role === "Viewer") {
+    status = "Rejected";
+  }
+
   return (
     <tr>
       <td>
         <input type="checkbox" />
       </td>
-      <td>{user.name}</td>
+      <td>{user.id}</td>
       <td>{user.email}</td>
       <td>{user.location}</td>
       <td>{user.joined}</td>
       <td>
-        <span className={className}>{user.role}</span>
+        <span className={className}>{status}</span>
       </td>
       <td onClick={toggleStatusChange} className="dot-action">
         ...

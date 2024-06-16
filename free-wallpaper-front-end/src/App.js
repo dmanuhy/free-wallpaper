@@ -22,6 +22,7 @@ const App = () => {
           <Route path=":userid/:albumid" element={<Page.UserCollectionsDetails />} />
           <Route path="edit" element={<Page.Editprofile />} />
           <Route path="am" element={<AccountManagement />} />
+          <Route path="rm" element={<RequestManagement />} />
         </Route>
       </Routes>
       <Component.Footer />

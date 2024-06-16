@@ -1,28 +1,34 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+.request-table {
+  width: 100%;
+  border-collapse: collapse;
 
-  input[type="text"],
-  select {
+  th,
+  td {
     padding: 8px 12px;
-    margin-right: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
   }
 
-  button {
-    padding: 8px 12px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #ff7f50;
-    color: white;
-    border: none;
+  th {
+    background-color: #f4f4f4;
     cursor: pointer;
 
-    &:hover {
-      background-color: #ff6347;
+    &.ascending::after {
+      content: " ⬆";
     }
+    &.descending::after {
+      content: " ⬇";
+    }
+  }
+
+  .blocked {
+    background-color: #f8d7da;
+  }
+
+  .role-change {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1;
   }
 }

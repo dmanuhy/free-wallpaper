@@ -10,9 +10,11 @@ const AccountManagement = () => {
   const [defaultUsers, setDefaultUsers] = useState(usersArray);
   const [users, setUsers] = useState(usersArray);
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(10);
+
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" });
   const [blockedUsers, setBlockedUsers] = useState([]);
+
+  const usersPerPage = 10;
 
   const changeUserRole = (user, newRole) => {
     const newUsers = users.map((u) => {
