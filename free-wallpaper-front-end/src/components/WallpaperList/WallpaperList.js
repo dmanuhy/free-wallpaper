@@ -1,47 +1,49 @@
 import { Component } from '..'
 import './WallpaperList.scss'
 
-import { useMemo, useState } from 'react'
-import Pagination from '../Pagination/Pagination'
+import { LoadMoreOnScroll } from '../LoadMoreOnScroll/LoadMoreOnScroll';
+import { useMemo, useState } from 'react';
 
-const PAGE_SIZE = 12;
 
-const WallpaperList = ({ wallpaperList = [] }) => {
+const WallpaperList = ({ wallpaperList = [], page = 1, setPage = null }) => {
 
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const currentTableData = useMemo(() => {
-        const firstPageIndex = (currentPage - 1) * PAGE_SIZE;
-        const lastPageIndex = firstPageIndex + PAGE_SIZE;
-        return wallpaperList.slice(firstPageIndex, lastPageIndex);
-    }, [currentPage, wallpaperList]);
+    const wallpaperCounter = useMemo(() => {
+        let isLoadMore = true
+        if (wallpaperList.length % 60 === 0) {
+            isLoadMore = false
+        }
+        return { isLoadMore }
+    }, [wallpaperList])
 
     return (
         <>
             <div className="wallpaper-list content-width-padding">
                 {wallpaperList && wallpaperList.length > 0 ?
-                    currentTableData.map((item, index) => {
-                        return (
-                            <Component.Wallpaper image={item} creatorName={"John - " + index} creatorAvatar={item} />
-                        )
-                    })
+                    <>
+                        <div className='wallpaper-list-container'>
+                            {wallpaperList.map((item, index) => {
+                                return (
+                                    <Component.Wallpaper key={index + 1} image={item} creatorName={"John - " + index} creatorAvatar={item} index={index} />
+                                )
+                            })}
+                        </div>
+                        {setPage &&
+                            <>
+                                {!wallpaperCounter.isLoadMore ?
+                                    <button onClick={() => setPage((page) => page + 1)} className='btn btn-info text-white mt-5'>Discover More</button>
+                                    :
+                                    <LoadMoreOnScroll page={page} setPage={setPage} />
+                                }
+                            </>
+                        }
+                    </>
                     :
                     <span className='fs-4 text-danger'>
                         No Content Found!
                     </span>
                 }
             </div>
-            <div className="d-flex justify-content-center mt-2">
-                <Pagination
-                    className="pagination-bar"
-                    currentPage={currentPage}
-                    totalCount={wallpaperList.length}
-                    pageSize={PAGE_SIZE}
-                    onPageChange={page => setCurrentPage(page)}
-                />
-            </div>
         </>
-
     )
 }
 
