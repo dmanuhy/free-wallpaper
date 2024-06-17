@@ -6,6 +6,7 @@ import { Component } from "./components";
 import { Page } from "./pages";
 import AccountManagement from "./pages/AccountManagement/AccountManagement";
 import RequestManagement from "./pages/RequestManagement/RequestManagement";
+import Register from "./pages/Register/Register";
 
 const App = () => {
   return (
@@ -23,6 +24,9 @@ const App = () => {
           <Route path="user/:userId/edit-profile" element={<Page.Editprofile />} />
           <Route path="management/account" element={<AccountManagement />} />
           <Route path="management/request" element={<RequestManagement />} />
+          <Route path="am" element={<AccountManagement />} />
+          <Route path="regiseter" element={<Page.Register />} />
+
         </Route>
       </Routes>
       <Component.Footer />
