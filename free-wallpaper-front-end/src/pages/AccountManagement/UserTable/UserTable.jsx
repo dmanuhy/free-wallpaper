@@ -8,7 +8,7 @@ const UserTable = () => {
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = users.slice(indexOfFirstUser, indexOfFirstUser + usersPerPage);
 
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
@@ -27,10 +27,10 @@ const UserTable = () => {
           <th onClick={() => requestSort("email")} className={getClassNamesFor("email")}>
             Email
           </th>
-          <th onClick={() => requestSort("location")} className={getClassNamesFor("location")}>
+          <th onClick={() => requestSort("location")} className={`hidden-xs ${getClassNamesFor("location")}`}>
             Location
           </th>
-          <th onClick={() => requestSort("joined")} className={getClassNamesFor("joined")}>
+          <th onClick={() => requestSort("joined")} className={`hidden-xs ${getClassNamesFor("joined")}`}>
             Joined
           </th>
           <th onClick={() => requestSort("role")} className={getClassNamesFor("role")}>

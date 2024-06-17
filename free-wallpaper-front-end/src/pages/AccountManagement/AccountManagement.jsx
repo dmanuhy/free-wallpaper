@@ -83,6 +83,7 @@ const AccountManagement = () => {
           changeUserRole,
           addNewUser,
           currentPage,
+          setCurrentPage,
           usersPerPage,
           handlePageChange,
           requestSort,
