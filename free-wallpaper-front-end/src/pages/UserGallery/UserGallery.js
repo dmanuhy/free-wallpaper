@@ -35,7 +35,7 @@ export default function UserGallery() {
                     <Link to="/:userid/collections" className="nav-button2">Collections</Link>
                 </div>
             </div>
-            <Component.WallpaperList wallpaperList={user.gallery} />
+            <Component.WallpaperList wallpaperList={user.gallery}/>
         </div>
     )
 }
