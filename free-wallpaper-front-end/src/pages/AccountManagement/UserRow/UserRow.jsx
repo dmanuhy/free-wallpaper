@@ -20,8 +20,8 @@ const UserRow = ({ user }) => {
     <tr className={isBlocked ? "blocked" : ""}>
       <td>{user.name}</td>
       <td>{user.email}</td>
-      <td>{user.location}</td>
-      <td>{user.joined}</td>
+      <td className="hidden-xs">{user.location}</td>
+      <td className="hidden-xs">{user.joined}</td>
       <td>
         <span className={className}>{user.role}</span>
       </td>
