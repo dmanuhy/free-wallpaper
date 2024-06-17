@@ -36,8 +36,8 @@ export default function UserGallery() {
                     </div>
                 </div>
                 <div className="navigation-buttons container" style={{ marginBottom: "30px" }}>
-                    <Link to="/:username" className="nav-button1 active">Gallery</Link>
-                    <Link to="/:userid/collections" className="nav-button2">Collections</Link>
+                    <Link to="/user/1" className="nav-button1 active">Gallery</Link>
+                    <Link to="/user/1/collections" className="nav-button2">Collections</Link>
                 </div>
             </div>
             <Component.WallpaperList wallpaperList={user.gallery} page={page} setPage={setPage} />
