@@ -1,0 +1,67 @@
+.add-wallpaper-modal {
+
+    .modal {
+
+        &-dialog {
+            width    : 90%;
+            max-width: unset;
+        }
+
+        &-body {
+
+            display        : flex;
+            flex-direction : column;
+            justify-content: center;
+            align-items    : center;
+            gap            : 2rem;
+            min-height     : 80vh;
+            padding        : 2rem 18rem;
+
+            .select-categories {
+                display        : flex;
+                flex-wrap      : wrap;
+                justify-content: start;
+                gap            : 0.5rem;
+
+                &-item {
+                    display        : flex;
+                    justify-content: center;
+                    align-items    : center;
+
+                    &-input {
+                        border                   : 0.01rem solid var(--color-white-2);
+                        border-top-left-radius   : 0.3rem;
+                        border-bottom-left-radius: 0.3rem;
+                        padding                  : 0.3rem 0.4rem;
+                        width                    : 10rem;
+
+                        &:focus {
+                            outline: none;
+                        }
+                    }
+
+                    &-icon {
+
+
+                        &-delete {
+                            padding                   : 0.4rem 0.4rem;
+                            font-size                 : 1.4rem;
+                            color                     : var(--color-white);
+                            background-color          : var(--color-red);
+                            border-top-right-radius   : 0.3rem;
+                            border-bottom-right-radius: 0.3rem;
+                        }
+
+                        &-add {
+                            padding         : 0.4rem 0.4rem;
+                            font-size       : 1.4rem;
+                            border-radius   : 0.3rem;
+                            color           : var(--color-white);
+                            background-color: var(--color-green);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

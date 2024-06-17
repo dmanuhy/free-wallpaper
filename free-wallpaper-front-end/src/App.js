@@ -6,6 +6,7 @@ import { Component } from "./components";
 import { Page } from "./pages";
 import AccountManagement from "./pages/AccountManagement/AccountManagement";
 import RequestManagement from "./pages/RequestManagement/RequestManagement";
+import Register from "./pages/Register/Register";
 
 const App = () => {
   return (
@@ -17,12 +18,15 @@ const App = () => {
           <Route path="search/:key" element={<Page.WallpaperSearchResult />} />
           {/*Define all public route here*/}
           <Route path="login" element={<Page.Login />} />
-          <Route path=":username" element={<Page.UserGallery />} />
-          <Route path=":username/collections" element={<Page.UserCollections />} />
-          <Route path=":username/:albumid/:albumname" element={<Page.UserCollectionsDetails />} />
-          <Route path=":username/edit-profile" element={<Page.Editprofile />} />
+          <Route path="user/:userId" element={<Page.UserGallery />} />
+          <Route path="user/:userId/collections" element={<Page.UserCollections />} />
+          <Route path="user/:userId/album/:albumId" element={<Page.UserCollectionsDetails />} />
+          <Route path="user/:userId/edit-profile" element={<Page.Editprofile />} />
+          <Route path="management/account" element={<AccountManagement />} />
+          <Route path="management/request" element={<RequestManagement />} />
           <Route path="am" element={<AccountManagement />} />
-          <Route path="rm" element={<RequestManagement />} />
+          <Route path="regiseter" element={<Page.Register />} />
+
         </Route>
       </Routes>
       <Component.Footer />

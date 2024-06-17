@@ -7,6 +7,7 @@ import UserCollections from "./UserCollections/UserCollections";
 import UserCollectionsDetails from "./UserCollectionsDetails/UserCollectionsDetails";
 import WallpaperSearchResult from "./WallpaperSearchResult/WallpaperSearchResult";
 import Editprofile from "./Editprofile/Editprofile";
+import Register from "./Register/Register";
 
 export const Page = {
     Home,
@@ -17,6 +18,7 @@ export const Page = {
     UserGallery,
     UserCollections,
     UserCollectionsDetails,
-    Editprofile
+    Editprofile,
+    Register
     
 }

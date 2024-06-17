@@ -5,7 +5,7 @@ import { LoadMoreOnScroll } from '../LoadMoreOnScroll/LoadMoreOnScroll';
 import { useMemo, useState } from 'react';
 
 
-const WallpaperList = ({ wallpaperList = [], page = 1, setPage = null }) => {
+const WallpaperList = ({ wallpaperList = [], page = 0, setPage = null }) => {
 
     const wallpaperCounter = useMemo(() => {
         let isLoadMore = true
@@ -17,6 +17,7 @@ const WallpaperList = ({ wallpaperList = [], page = 1, setPage = null }) => {
 
     return (
         <>
+            {console.log(wallpaperList.length)}
             <div className="wallpaper-list content-width-padding">
                 {wallpaperList && wallpaperList.length > 0 ?
                     <>

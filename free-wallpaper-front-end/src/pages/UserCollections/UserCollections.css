@@ -3,8 +3,6 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    
-    
 }
 
 .user-profile {
@@ -34,7 +32,6 @@
 
 .icons a:hover {
     color: #007bff;
-    
 }
 
 .navigation-buttons {
@@ -109,7 +106,6 @@
     height: 70%;
     object-fit: cover;
     border-radius: 10px;
-
 }
 
 .my-description {

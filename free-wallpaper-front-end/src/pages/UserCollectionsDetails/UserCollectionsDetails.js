@@ -3,20 +3,19 @@ import { Component } from "../../components"
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import w1 from "../../assets/wallpaper/w1.jpg"
-import w2 from "../../assets/wallpaper/w2.jpg"
-import w3 from "../../assets/wallpaper/w3.jpg"
-import w4 from "../../assets/wallpaper/w4.jpg"
-import w5 from "../../assets/wallpaper/w5.jpg"
-import w6 from "../../assets/wallpaper/w6.jpg"
+import { useContext } from 'react';
+import { WallpaperContext } from "../../contexts/WallpaperContext"
+import AddWallpaperModal from '../../components/Modal/AddWallpaperModal/AddWallpaperModal';
 
 export default function UserCollectionsDetails() {
+
+    const { page, setPage, wallpaperList } = useContext(WallpaperContext)
+
     const album = {
         name: 'Flexing',
         username: 'hihhi',
         profilePic: w1,
-        wallpaperList: [w1, w2, w3, w4, w5, w6, w1, w2, w3, w4, w5, w6, w2, w3, w4, w5, w6, w2, w3, w4, w5, w6, w2, w3, w4, w5, w6]
     };
-    const wallpaperList = [w1, w2, w3, w4, w5, w6, w1, w2, w3, w4, w5, w6, w2, w3, w4, w5, w6, w2, w3, w4, w5, w6, w2, w3, w4, w5, w6]
     const handleDownloadAll = () => {
         const zip = new JSZip();
         const imgFolder = zip.folder("wallpapers");
@@ -52,17 +51,20 @@ export default function UserCollectionsDetails() {
                                 <h6 className="m-0">{album.username}</h6>
                             </div>
                         </div>
-                        
-                        <div className="d-flex justify-content-center mt-2">
+
+                        <div className="d-flex justify-content-center mt-2 gap-2">
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAddWallpaper">
+                                <i class="fa-solid fa-plus"></i> Wallpaper
+                            </button>
+                            <AddWallpaperModal />
                             <button className="btn btn-primary" onClick={handleDownloadAll}>
                                 Download Album ({wallpaperList.length} pics)
                             </button>
                         </div>
                     </div>
                 </row>
-
             </div>
-            <Component.WallpaperList wallpaperList={wallpaperList} />
+            <Component.WallpaperList wallpaperList={wallpaperList} page={page} setPage={setPage} />
         </div>
     )
 }

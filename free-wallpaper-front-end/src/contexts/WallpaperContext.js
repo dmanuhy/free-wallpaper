@@ -19,14 +19,14 @@ const WallpaperProvider = ({ children }) => {
     const fakeData = [w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12]
 
     const [wallpaperList, setWallpaperList] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
 
     useEffect(() => {
         setWallpaperList((wallpaperList) => [...wallpaperList, ...fakeData.sort((a, b) => 0.5 - Math.random())]);
     }, [page])
 
     return (
-        <WallpaperContext.Provider value={{ wallpaperList, page, setPage }}>
+        <WallpaperContext.Provider value={{ wallpaperList, page, setPage, setWallpaperList }}>
             {children}
         </WallpaperContext.Provider>
     )
