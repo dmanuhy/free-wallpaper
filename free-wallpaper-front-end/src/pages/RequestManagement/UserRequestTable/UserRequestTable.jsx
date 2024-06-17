@@ -45,7 +45,7 @@ const UserRequestTable = () => {
 
   return (
     <div>
-      <table>
+      <table className="request-table">
         <thead>
           <tr>
             <th>
@@ -53,12 +53,12 @@ const UserRequestTable = () => {
             </th>
             <th>RequestId</th>
             <th onClick={handleClick} className="sortable">
-              Full Name <img src={chevron} alt="chevron" />
+              Full Name
             </th>
             <th>Email Address</th>
             <th>Request Date</th>
             <th onClick={handleClick} className="sortable">
-              Status <img src={chevron} alt="chevron" />
+              Status
             </th>
             <th>Setting</th>
           </tr>
