@@ -2,13 +2,14 @@
 @import "./media_queries";
 
 :root {
-    --color-white   : #{variables.$app-color-white};
-    --color-black   : #{variables.$app-color-black};
-    --color-green   : #{variables.$app-color-green};
-    --color-brown   : #{variables.$app-color-brown};
-    --color-white-1 : #{variables.$app-color-white-1};
-    --color-white-2 : #{variables.$app-color-white-2};
-
+    --color-white      : #{variables.$app-color-white};
+    --color-black      : #{variables.$app-color-black};
+    --color-green      : #{variables.$app-color-green};
+    --color-brown      : #{variables.$app-color-brown};
+    --color-white-1    : #{variables.$app-color-white-1};
+    --color-white-2    : #{variables.$app-color-white-2};
+    --color-red        : #{variables.$app-color-red};
+    --color-red-2      : #{variables.$app-color-red-2};
     --color-black-light: #{variables.$app-color-black-light};
 
 }
