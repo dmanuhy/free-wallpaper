@@ -16,7 +16,7 @@ const Search = () => {
 
     return (
         <div className="search">
-            <input onKeyDown={(event) => handleSeachOnEnter(event.key)} onChange={(event) => setSearchValue(event.target.value)} value={searchValue} className="search-input col-10" type="text" placeholder='Seach for free Wallpaper ...' />
+            <input onKeyDown={(event) => handleSeachOnEnter(event.key)} onChange={(event) => setSearchValue(event.target.value)} value={searchValue} className="search-input col-10" type="text" placeholder='Seach ...' />
             <i onClick={() => naviage(`search/${searchValue}`)} className="search-icon fa-solid fa-magnifying-glass"></i>
         </div>
     )

@@ -5,6 +5,8 @@ import WallpaperList from "./WallpaperList/WallpaperList"
 import Footer from "./Footer/Footer"
 import Wallpaper from "./Wallpaper/Wallpaper"
 import Search from "./Search/Search"
+import ScrollToTop from "./ScrollToTop/ScrollToTop"
+
 export const Component = {
     Header,
     WallpaperList,
@@ -12,5 +14,6 @@ export const Component = {
     Banner,
     Footer,
     Search,
-    Wallpaper
+    Wallpaper,
+    ScrollToTop
 }
