@@ -3,6 +3,8 @@
   top             : 0;
   z-index         : 2;
   background-color: var(--color-white);
+  padding-top     : 1rem;
+  padding-bottom  : 1rem;
 
   &-logo {
     font-family: "Keania One", sans-serif;
@@ -22,8 +24,16 @@
     border-radius   : 0.5rem;
     font-weight     : 600;
     color           : var(--color-white);
-    padding         : 0.3rem 1.2rem;
+    padding         : 0.4rem 1.2rem;
     border          : none;
     background-color: var(--color-green);
+  }
+
+  &-user-avatar {
+    cursor         : pointer;
+    background-size: cover;
+    aspect-ratio   : 1;
+    width          : 2.5rem;
+    border-radius  : 9999999rem;
   }
 }

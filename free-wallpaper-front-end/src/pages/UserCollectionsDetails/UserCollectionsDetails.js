@@ -8,8 +8,13 @@ import w3 from "../../assets/wallpaper/w3.jpg"
 import w4 from "../../assets/wallpaper/w4.jpg"
 import w5 from "../../assets/wallpaper/w5.jpg"
 import w6 from "../../assets/wallpaper/w6.jpg"
+import { useContext } from 'react';
+import { WallpaperContext } from "../../contexts/WallpaperContext"
 
 export default function UserCollectionsDetails() {
+
+    const { page, setPage } = useContext(WallpaperContext)
+
     const album = {
         name: 'Flexing',
         username: 'hihhi',
@@ -52,7 +57,7 @@ export default function UserCollectionsDetails() {
                                 <h6 className="m-0">{album.username}</h6>
                             </div>
                         </div>
-                        
+
                         <div className="d-flex justify-content-center mt-2">
                             <button className="btn btn-primary" onClick={handleDownloadAll}>
                                 Download Album ({wallpaperList.length} pics)
@@ -62,7 +67,7 @@ export default function UserCollectionsDetails() {
                 </row>
 
             </div>
-            <Component.WallpaperList wallpaperList={wallpaperList} />
+            <Component.WallpaperList wallpaperList={wallpaperList} page={page} setPage={setPage} />
         </div>
     )
 }
