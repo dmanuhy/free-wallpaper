@@ -4,7 +4,7 @@ import AddUserButton from "../AddUser/AddUserButton";
 import { Context } from "../AccountManagement";
 
 const SearchBar = () => {
-  const { setUsers, defaultUsers } = useContext(Context);
+  const { setUsers, defaultUsers, setCurrentPage } = useContext(Context);
   const [selectedRole, setSelectedRole] = useState("All");
   const [searchValue, setSearchValue] = useState("");
 
@@ -32,6 +32,7 @@ const SearchBar = () => {
     }
 
     setUsers(filteredUsers);
+    setCurrentPage(1);
   };
 
   return (

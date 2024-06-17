@@ -1,4 +1,4 @@
-.role-change {
+.status-change {
   position: absolute;
   background-color: white;
   border: 1px solid #ccc;
@@ -28,7 +28,7 @@
   }
 
   & button:nth-child(2) {
-    background: blue;
+    background: #87ceeb;
   }
 
   & button:nth-child(3) {
@@ -36,6 +36,6 @@
   }
 
   & button:last-child {
-    background: red;
+    background: black;
   }
 }

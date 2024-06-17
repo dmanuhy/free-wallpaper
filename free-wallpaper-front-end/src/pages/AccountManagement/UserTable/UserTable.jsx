@@ -1,75 +1,51 @@
-import React, { useContext, useEffect, useState } from "react";
-import UserRow from "../UserRow/UserRow";
+import React, { useContext } from "react";
 import "./UserTable.scss";
+import UserRow from "../UserRow/UserRow";
 import { Context } from "../AccountManagement";
-import chevron from "../../../assets/icon/chevron_up_down.svg";
 
 const UserTable = () => {
-  const { users, setUsers } = useContext(Context);
-  const [sortOption, setSortOption] = useState({
-    name: "asc",
-    role: "asc",
-  });
+  const { users, currentPage, usersPerPage, requestSort, sortConfig } = useContext(Context);
 
-  const handleClick = (e) => {
-    if (e.target.innerText.trim() === "Full Name") {
-      sortByName();
-    } else if (e.target.innerText.trim() === "Role") {
-      sortByRole();
-    }
-  };
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-  const sortByName = () => {
-    if (sortOption.name === "asc") {
-      const newUsers = users.sort((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1));
-      setUsers(newUsers);
-      setSortOption({ ...sortOption, name: "desc" });
-    } else if (sortOption.name === "desc") {
-      const newUsers = users.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1));
-      setUsers(newUsers);
-      setSortOption({ ...sortOption, name: "asc" });
+  const getClassNamesFor = (name) => {
+    if (!sortConfig) {
+      return;
     }
-  };
-
-  const sortByRole = () => {
-    if (sortOption.role === "asc") {
-      const newUsers = users.sort((a, b) => (a.role.toLowerCase() < b.role.toLowerCase() ? -1 : 1));
-      setUsers(newUsers);
-      setSortOption({ ...sortOption, role: "desc" });
-    } else if (sortOption.role === "desc") {
-      const newUsers = users.sort((a, b) => (a.role.toLowerCase() > b.role.toLowerCase() ? -1 : 1));
-      setUsers(newUsers);
-      setSortOption({ ...sortOption, role: "asc" });
-    }
+    return sortConfig.key === name ? sortConfig.direction : undefined;
   };
 
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <input type="checkbox" />
-            </th>
-            <th onClick={handleClick} className="sortable">
-              Full Name <img src={chevron} alt="chevron" />
-            </th>
-            <th>Email Address</th>
-            <th>Location</th>
-            <th>Joined</th>
-            <th onClick={handleClick} className="sortable">
-              Role <img src={chevron} alt="chevron" />
-            </th>
-            <th>Setting</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <UserRow key={user.email} user={user} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <table className="user-table">
+      <thead>
+        <tr>
+          <th onClick={() => requestSort("name")} className={getClassNamesFor("name")}>
+            Name
+          </th>
+          <th onClick={() => requestSort("email")} className={getClassNamesFor("email")}>
+            Email
+          </th>
+          <th onClick={() => requestSort("location")} className={getClassNamesFor("location")}>
+            Location
+          </th>
+          <th onClick={() => requestSort("joined")} className={getClassNamesFor("joined")}>
+            Joined
+          </th>
+          <th onClick={() => requestSort("role")} className={getClassNamesFor("role")}>
+            Role
+          </th>
+          <th>Block</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {currentUsers.map((user) => (
+          <UserRow key={user.id} user={user} />
+        ))}
+      </tbody>
+    </table>
   );
 };
 
