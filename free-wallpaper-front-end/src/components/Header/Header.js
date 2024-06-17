@@ -13,7 +13,7 @@ const Header = () => {
     const handleClickAvatar = () => {
         switch (user.role) {
             case "admin": navigate("/management/account"); break;
-            case "contributor": navigate(`/${user.email}`); break
+            case "contributor": navigate(`/user/${user.email}`); break
             default: break;
         }
     }

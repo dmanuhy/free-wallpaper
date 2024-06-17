@@ -8,7 +8,7 @@ import w5 from "../../assets/wallpaper/w5.jpg";
 import w6 from "../../assets/wallpaper/w6.jpg";
 import './UserCollections.css';
 export default function UserCollections() {
-    
+
     const user = {
         name: 'Name of user',
         description: 'Description about user',
@@ -87,12 +87,12 @@ export default function UserCollections() {
 
             </div>
             <div className="navigation-buttons container" style={{ marginBottom: "30px" }}>
-                <Link to="/:username" className="nav-button10 active">Gallery</Link>
-                <Link to=":username/collections" className="nav-button20">Collections</Link>
+                <Link to="/user/1" className="nav-button10 active">Gallery</Link>
+                <Link to="/user/1/collections" className="nav-button20">Collections</Link>
             </div>
             <div className="my-gallery container">
                 {albums.map(album => (
-                    <Link className="my-gallery-item " to="/:username/:albumid/:albumname" key={album.id}>
+                    <Link className="my-gallery-item " to="/user/1/album/27" key={album.id}>
                         <img src={album.photos[0].src} alt={album.photos[0].alt} />
                         <div className="my-description" >
                             <span >{album.name}</span>
