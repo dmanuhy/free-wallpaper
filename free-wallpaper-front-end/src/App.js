@@ -25,7 +25,7 @@ const App = () => {
           <Route path="management/account" element={<AccountManagement />} />
           <Route path="management/request" element={<RequestManagement />} />
           <Route path="am" element={<AccountManagement />} />
-          <Route path="regiseter" element={<Page.Register />} />
+          <Route path="register" element={<Page.Register />} />
 
         </Route>
       </Routes>

@@ -59,7 +59,7 @@ export default function UserCollections() {
 
             ]
         },
-        
+
 
     ];
     const [albums, setAlbums] = useState(al);
@@ -72,7 +72,11 @@ export default function UserCollections() {
     // useEffect(() => {
     //     if ()
     // }, [])
-    const defaultPhotos = [{ id: 0, src: empty, alt: '' }]; 
+
+    const handleDelete = (albumId, e) => {
+        e.preventDefault();
+        setAlbums(albums.filter(album => album.id !== albumId));
+    };
 
     return (
 
@@ -118,14 +122,16 @@ export default function UserCollections() {
                             </>
                         ) : (
                             <>
-                                <img src={defaultPhotos[0].src} alt={defaultPhotos[0].alt} />
+                                <img src={empty} />
                                 <div className="my-description">
                                     <span>{album.name}</span>
                                     <span className="my-photo-count"><i class="bi bi-image"> </i> 0</span>
                                 </div>
                             </>
                         )}
+                        <button className="delete-button" onClick={(e) => handleDelete(album.id, e)}>X</button>
                     </Link>
+
                 ))}
             </div>
 
@@ -154,7 +160,7 @@ export default function UserCollections() {
                 </div>
             </div>
 
-        </div>
+        </div >
 
     )
 }
