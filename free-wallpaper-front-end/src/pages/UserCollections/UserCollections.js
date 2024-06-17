@@ -100,7 +100,7 @@ export default function UserCollections() {
                 <Link to="/user/1" className="nav-button10 active">Gallery</Link>
                 <Link to="/user/1/collections" className="nav-button20">Collections</Link>
 
-                <div style={{ alignItems: "flex-end" }}>
+                <div style={{ paddingLeft: "930px" }}>
                     <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <i className="bi bi-plus-circle-fill">  </i>
                         New Album
