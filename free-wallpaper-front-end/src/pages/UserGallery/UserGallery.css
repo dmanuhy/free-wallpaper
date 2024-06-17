@@ -1,10 +1,10 @@
-.app {
+.ap {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
     font-family: 'Times New Roman', Times, serif;
-    height: fit-content;
+    height: 100px;
 }
 
 .user-profile {
@@ -12,6 +12,7 @@
     margin-bottom: 20px;
     width: 100%;
     max-width: 800px;
+    justify-content: center;
 }
 
 .profile-pic {

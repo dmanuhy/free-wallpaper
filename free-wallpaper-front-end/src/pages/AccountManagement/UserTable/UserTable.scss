@@ -31,4 +31,14 @@
     padding: 10px;
     z-index: 1;
   }
+
+  .hidden-xs {
+    display: table-cell;
+  }
+
+  @media (max-width: 768px) {
+    .hidden-xs {
+      display: none;
+    }
+  }
 }

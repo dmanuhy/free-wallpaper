@@ -10,8 +10,8 @@ import w6 from "../../assets/wallpaper/w6.jpg";
 import empty from "../../assets/wallpaper/empty.png";
 import './UserCollections.css';
 export default function UserCollections() {
-    const [NewAlbumName, setNewAlbumName] = useState('');
 
+    const [NewAlbumName, setNewAlbumName] = useState('');
 
     const user = {
         name: 'Name of user',
@@ -59,7 +59,7 @@ export default function UserCollections() {
 
             ]
         },
-        
+
 
     ];
     const [albums, setAlbums] = useState(al);
@@ -72,7 +72,11 @@ export default function UserCollections() {
     // useEffect(() => {
     //     if ()
     // }, [])
-    const defaultPhotos = [{ id: 0, src: empty, alt: '' }]; 
+
+    const handleDelete = (albumId, e) => {
+        e.preventDefault();
+        setAlbums(albums.filter(album => album.id !== albumId));
+    };
 
     return (
 
@@ -93,45 +97,42 @@ export default function UserCollections() {
             </div>
             <div className="navigation-buttons container" style={{ marginBottom: "30px", display: "flex", alignItems: "center" }}>
 
-                <Link to="/:username" className="nav-button10 active">Gallery</Link>
-                <Link to=":username/collections" className="nav-button20">Collections</Link>
+                <Link to="/user/1" className="nav-button10 active">Gallery</Link>
+                <Link to="/user/1/collections" className="nav-button20">Collections</Link>
 
-                <div style={{ alignItems: "flex-end" }}>
+                <div style={{ paddingLeft: "930px" }}>
                     <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <i class="bi bi-plus-circle-fill">  </i>
+                        <i className="bi bi-plus-circle-fill">  </i>
                         New Album
                     </button>
                 </div>
             </div>
 
-
             <div className="my-gallery container">
                 {albums?.map(album => (
-                    <Link className="my-gallery-item " to="/:username/:albumid/:albumname" key={album.id}>
+                    <Link className="my-gallery-item " to="/user/1/album/27" key={album.id}>
                         {album.photos && album.photos.length > 1 ? (
                             <>
                                 <img src={album.photos[0].src} alt={album.photos[0].alt} />
                                 <div className="my-description">
                                     <span>{album.name}</span>
-                                    <span className="my-photo-count"><i class="bi bi-image"> </i> {album.photos.length}</span>
+                                    <span className="my-photo-count"><i className="bi bi-image"> </i> {album.photos.length}</span>
                                 </div>
                             </>
                         ) : (
                             <>
-                                <img src={defaultPhotos[0].src} alt={defaultPhotos[0].alt} />
+                                <img src={empty} />
                                 <div className="my-description">
                                     <span>{album.name}</span>
-                                    <span className="my-photo-count"><i class="bi bi-image"> </i> 0</span>
+                                    <span className="my-photo-count"><i className="bi bi-image"> </i> 0</span>
                                 </div>
                             </>
                         )}
+                        <button className="delete-button" onClick={(e) => handleDelete(album.id, e)}>X</button>
                     </Link>
+
                 ))}
             </div>
-
-
-
-
 
             <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
@@ -154,7 +155,7 @@ export default function UserCollections() {
                 </div>
             </div>
 
-        </div>
+        </div >
 
     )
 }
