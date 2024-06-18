@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 
-const userRouter = express.Router();
+const tagRouter = express.Router();
 
-userRouter.use(bodyParser.json());
+tagRouter.use(bodyParser.json());
 
 module.exports = {
-    userRouter
+    tagRouter
 }

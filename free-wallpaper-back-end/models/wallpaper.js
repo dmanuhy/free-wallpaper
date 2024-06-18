@@ -1,10 +1,6 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const WallpaperSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
   description: {
     type: String,
   },
@@ -15,17 +11,28 @@ const WallpaperSchema = new mongoose.Schema({
   tags: {
     type: [String],
   },
+  fromAlbum: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "albums"
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'users',
     required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
   },
   likes: {
     type: Number,
     default: 0,
   },
-});
+  comments: [
+    { user: { type: mongoose.Schema.Types.ObjectId, ref: "users" }, body: String, date: Date }
+  ],
+  newNotification: {
+    type: Boolean,
+    require: false
+  }
+}, { timestamps: true });
+
+let Wallpaper = mongoose.model("wallpaper", WallpaperSchema);
+
+module.exports = Wallpaper;

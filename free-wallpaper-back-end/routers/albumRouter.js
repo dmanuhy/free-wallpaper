@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 
-const userRouter = express.Router();
+const albumRouter = express.Router();
 
-userRouter.use(bodyParser.json());
+albumRouter.use(bodyParser.json());
 
 module.exports = {
-    userRouter
+    albumRouter
 }
