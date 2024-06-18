@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import "./SearchBar.scss";
-import AddUserButton from "../AddUser/AddUserButton";
 import { Context } from "../AccountManagement";
 
 const SearchBar = () => {
@@ -42,13 +41,9 @@ const SearchBar = () => {
         <select onChange={handleRoleChange} value={selectedRole}>
           <option disabled>Roles</option>
           <option>All</option>
-          <option>Admin</option>
           <option>Contributor</option>
           <option>Viewer</option>
         </select>
-      </div>
-      <div>
-        <AddUserButton />
       </div>
     </div>
   );

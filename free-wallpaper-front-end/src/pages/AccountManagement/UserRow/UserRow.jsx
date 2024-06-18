@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import "./UserRow.scss";
-import RoleChange from "../RoleChange/RoleChange";
 import { Context } from "../AccountManagement";
 
 const UserRow = ({ user }) => {
@@ -34,10 +33,10 @@ const UserRow = ({ user }) => {
           }}
         />
       </td>
-      <td onClick={toggleRoleChange} className="dot-action">
+      {/* <td onClick={toggleRoleChange} className="dot-action">
         ...
         {isChanging && <RoleChange toggleRoleChange={toggleRoleChange} user={user} />}
-      </td>
+      </td> */}
     </tr>
   );
 };
