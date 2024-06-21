@@ -27,10 +27,6 @@ const WallpaperSchema = new mongoose.Schema({
   comments: [
     { user: { type: mongoose.Schema.Types.ObjectId, ref: "users" }, body: String, date: Date }
   ],
-  newNotification: {
-    type: Boolean,
-    require: false
-  }
 }, { timestamps: true });
 
 let Wallpaper = mongoose.model("wallpaper", WallpaperSchema);
