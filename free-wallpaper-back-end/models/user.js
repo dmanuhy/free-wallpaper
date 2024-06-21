@@ -15,10 +15,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  role: {
-    type: String,
-    required: true
-  },
+  role: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "roles" }
+  ],
   bio: {
     type: String,
     require: false
@@ -43,10 +42,6 @@ const UserSchema = new mongoose.Schema({
   token: {
     type: String,
     require: true
-  },
-  isVip: {
-    type: Boolean,
-    default: false
   },
   isActived: {
     type: Boolean,
