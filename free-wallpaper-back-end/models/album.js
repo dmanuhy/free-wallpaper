@@ -6,43 +6,14 @@ const AlbumSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    role: {
-        type: String,
-        required: true
-    },
-    bio: {
-        type: String,
-        require: false
-    },
-    avatar: {
-        type: String,
-        require: false
-    },
-    albums: [
-        { type: mongoose.Schema.Types.ObjectId, ref: "albums" }
-    ],
-    shared: [
-        { type: mongoose.Schema.Types.ObjectId, ref: "albums" }
-    ],
-    liked: [
+    wallpapers: [
         { type: mongoose.Schema.Types.ObjectId, ref: "wallpapers" }
     ],
-    dob: {
-        type: Date,
-        require: false
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
+        required: true
     },
-    isActived: {
-        type: Boolean
-    }
 }, { timestamps: true });
 
 const Album = mongoose.model('album', AlbumSchema);
