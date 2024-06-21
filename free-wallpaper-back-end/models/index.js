@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const User = require("./user");
 const Tag = require("./tag");
 const Wallpaper = require("./wallpaper");
+const Role = require("./role");
+const Album = require("./album")
 
 mongoose.Promise = global.Promise;
 
@@ -10,11 +12,12 @@ db.user = User;
 db.tag = Tag;
 db.user = User;
 db.wallpaper = Wallpaper
-db.mongoose = mongoose;
+db.role = Role
+db.album = Album
 
 const connectDB = async () => {
     await mongoose.connect(process.env.MONGO_URI, {
-        dbName: "free-wallpaper"
+        dbName: process.env.DB_NAME
     })
         .then(() => console.log("Connected to Mongodb"))
         .catch(error => {
