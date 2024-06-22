@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   roles: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "roles" }
+    { type: mongoose.Schema.Types.ObjectId, ref: "role" }
   ],
   bio: {
     type: String,
@@ -27,13 +27,13 @@ const UserSchema = new mongoose.Schema({
     require: false
   },
   albums: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "albums" }
+    { type: mongoose.Schema.Types.ObjectId, ref: "album" }
   ],
   shared: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "albums" }
+    { type: mongoose.Schema.Types.ObjectId, ref: "album" }
   ],
   liked: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "wallpapers" }
+    { type: mongoose.Schema.Types.ObjectId, ref: "wallpaper" }
   ],
   dob: {
     type: Date,

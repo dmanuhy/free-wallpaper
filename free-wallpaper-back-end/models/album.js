@@ -7,11 +7,11 @@ const AlbumSchema = new mongoose.Schema({
         required: true,
     },
     wallpapers: [
-        { type: mongoose.Schema.Types.ObjectId, ref: "wallpapers" }
+        { type: mongoose.Schema.Types.ObjectId, ref: "wallpaper" }
     ],
     author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: "user",
         required: true
     },
 }, { timestamps: true });
