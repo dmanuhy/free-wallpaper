@@ -1,19 +1,20 @@
 const mongoose = require("mongoose");
 const User = require("./user");
 const Tag = require("./tag");
-const Wallpaper = require("./wallpaper");
 const Role = require("./role");
 const Album = require("./album")
+const Wallpaper = require("./wallpaper")
 
 mongoose.Promise = global.Promise;
 
 const db = {}
+
 db.user = User;
 db.tag = Tag;
-db.user = User;
-db.wallpaper = Wallpaper
-db.role = Role
-db.album = Album
+db.role = Role;
+db.album = Album;
+db.wallpaper = Wallpaper;
+
 
 const connectDB = async () => {
     await mongoose.connect(process.env.MONGO_URI, {

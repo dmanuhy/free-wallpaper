@@ -27,14 +27,20 @@ const signUp = async (req, res, next) => {
     }
 }
 
-const signIn = async (req, res, next) => {
+const signIn = async (req, res) => {
     try {
-
+        if (!req.body.email || !req.body.password) {
+            return res.status(422).json({
+                status: res.statusCode,
+                message: "Vui lòng điền đầy đủ thông tin"
+            })
+        } else {
+            const serviceResponse = await UserService.signInService(req.body)
+            // res.cookie("jwt", serviceResponse.token, { httpOnly: true, maxAge: 60 * 1000 * 60 * 24 })
+            return res.status(200).json(serviceResponse)
+        }
     } catch (error) {
-        return res.status(500).json({
-            status: res.statusCode,
-            message: "Internal Server Error"
-        })
+        console.log(error)
     }
 }
 
