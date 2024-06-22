@@ -32,19 +32,39 @@ const signIn = async (req, res) => {
         if (!req.body.email || !req.body.password) {
             return res.status(422).json({
                 status: res.statusCode,
-                message: "Vui lòng điền đầy đủ thông tin"
+                message: "Missing input(s)"
             })
         } else {
             const serviceResponse = await UserService.signInService(req.body)
-            // res.cookie("jwt", serviceResponse.token, { httpOnly: true, maxAge: 60 * 1000 * 60 * 24 })
+            res.cookie("jwt", serviceResponse.token, { httpOnly: true, maxAge: 60 * 1000 * 60 * 24 })
             return res.status(200).json(serviceResponse)
         }
     } catch (error) {
-        console.log(error)
+        return res.status(500).json({
+            status: res.statusCode,
+            message: "Internal Server Error"
+        })
     }
 }
 
+const logout = async (req, res) => {
+    try {
+        res.clearCookie("jwt");
+        return res.status(200).json({
+            status: res.statusCode,
+            message: "Logged out!"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            status: res.statusCode,
+            message: "Internal Server Error"
+        })
+    }
+}
+
+
 module.exports = {
     signUp,
-    signIn
+    signIn,
+    logout
 } 

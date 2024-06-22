@@ -2,7 +2,7 @@ import "./Register.scss"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify";
-import { UserService } from "../../services/UserService";
+import { userService } from "../../services/userService";
 
 const Register = () => {
 
@@ -21,7 +21,7 @@ const Register = () => {
             if (newUser.password !== newUser.confirmPassword) {
                 toast.error("Confirm password didn't matched")
             } else {
-                const response = await UserService.signUpService(newUser);
+                const response = await userService.signUpService(newUser);
                 if (response.status === 201) {
                     toast.success(response.message);
                     navigate('/login');
