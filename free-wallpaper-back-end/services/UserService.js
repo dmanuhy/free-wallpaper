@@ -82,13 +82,15 @@ const signInService = (data) => {
                         })
                         .populate({
                             path: "shared",
-                            select: "_id name wallpapers"
+                            select: "_id name wallpapers",
+                            populate: {
+                                path: "wallpapers",
+                                select: "imageUrl"
+                            }
                         })
                         .populate({
                             path: "liked"
                         });
-
-                    console.log(userData)
                     if (isCorrectPassword) {
                         const payload = {
                             name: userData.name,

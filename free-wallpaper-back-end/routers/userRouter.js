@@ -8,6 +8,7 @@ userRouter.use(bodyParser.json());
 
 userRouter.post("/sign-up", userController.signUp)
 userRouter.post("/sign-in", userController.signIn)
+userRouter.get("/logout", userController.logout)
 
 module.exports = {
     userRouter

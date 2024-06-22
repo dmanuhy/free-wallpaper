@@ -4,6 +4,16 @@ const signUpService = (data) => {
     return axios.post(`/user/sign-up`, data);
 }
 
-export const UserService = {
-    signUpService
+const signInService = (data) => {
+    return axios.post(`/user/sign-in`, data);
+}
+
+const logoutService = (data) => {
+    return axios.get(`/user/logout`);
+}
+
+export const userService = {
+    signUpService,
+    signInService,
+    logoutService
 }
