@@ -40,7 +40,7 @@ async function CreateNewWallpaper(req, res, next) {
     }
 }
 module.exports = {
-    getWallpapers
+    getWallpapers,
     CreateNewWallpaper
 
 } 
