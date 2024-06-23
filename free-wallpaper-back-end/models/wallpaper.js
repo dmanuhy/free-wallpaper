@@ -18,7 +18,7 @@ const WallpaperSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        required: true,
+        
     },
     likes: {
         type: Number,
