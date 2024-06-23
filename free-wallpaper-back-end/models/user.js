@@ -1,5 +1,5 @@
 // models/user.js
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -15,7 +15,39 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  roles: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "role" }
+  ],
+  bio: {
+    type: String,
+    require: false
+  },
+  avatar: {
+    type: String,
+    require: false
+  },
+  albums: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "album" }
+  ],
+  shared: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "album" }
+  ],
+  liked: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "wallpaper" }
+  ],
+  dob: {
+    type: Date,
+    require: false
+  },
+  token: {
+    type: String,
+    require: true
+  },
+  isActived: {
+    type: Boolean,
+    default: false
+  }
 });
 
-const User = mongoose.model('User', UserSchema);
-export default User;
+const User = mongoose.model('user', UserSchema);
+module.exports = User;

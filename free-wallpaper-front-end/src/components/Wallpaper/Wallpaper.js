@@ -16,7 +16,7 @@ const Wallpaper = ({ image, creatorName, creatorAvatar, index }) => {
             <img loading="lazy" className="wallpaper-image" src={image} alt="image1" />
             <i class="wallpaper-icon fa-regular fa-heart"></i>
             <a className="wallpaper-download-btn btn btn-success" href={image} download={true} >Download</a>
-            <div onClick={() => navigate(`/${creatorName}`)} className="wallpaper-creator">
+            <div onClick={() => navigate(`/user/${creatorName}`)} className="wallpaper-creator">
                 <span className="wallpaper-creator-name">
                     {creatorName}
                 </span>

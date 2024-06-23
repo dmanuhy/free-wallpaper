@@ -11,7 +11,7 @@ const AddWallpaperModal = () => {
 
     const [newImage, setNewImage] = useState(null);
     const [description, setDescription] = useState("");
-    const [categories, setCategories] = useState(["Car", "Girl", "Computer", "Animal", "Euro"]);
+    const [categories, setCategories] = useState([""]);
 
     const quillModules = {
         toolbar: CONSTRANT.TOOL_BAR_OPTIONS
@@ -23,16 +23,38 @@ const AddWallpaperModal = () => {
             case "ADD":
                 currentCategories.push(""); break;
             case "DELETE":
-                currentCategories.splice(index, 1); break;
+                if (currentCategories.length > 1) {
+                    currentCategories.splice(index, 1); break;
+                } else {
+                    return
+                }
             default: return;
         }
         setCategories(currentCategories);
     }
 
+    const handleChangeCategory = (index, value) => {
+        const currentCategories = [...categories]
+        currentCategories[index] = value
+        setCategories(currentCategories)
+    }
+
     const handleCreateNewWallpaper = () => {
-        let currentWallpaperList = [...wallpaperList];
-        currentWallpaperList = [newImage, ...wallpaperList];
-        setWallpaperList(currentWallpaperList);
+        if (!newImage || !description || categories.length < 1) {
+            alert("Missing parameter(s)")
+        } else {
+            let currentWallpaperList = [...wallpaperList];
+            currentWallpaperList = [newImage, ...wallpaperList];
+            setWallpaperList(currentWallpaperList);
+            alert("Created new Wallpaper");
+            clearState();
+        }
+    }
+
+    const clearState = () => {
+        setNewImage("")
+        setDescription("")
+        setCategories([""]);
     }
 
     return (
@@ -54,7 +76,7 @@ const AddWallpaperModal = () => {
                                     {categories && categories.map((item, index) => {
                                         return (
                                             <div className="select-categories-item">
-                                                <input value={item} placeholder="image category.." className="select-categories-item-input" />
+                                                <input onChange={(event) => handleChangeCategory(index, event.target.value)} value={item} placeholder="image category.." className="select-categories-item-input" />
                                                 <i onClick={() => handleChangeCategoryList(index, "DELETE")} className="select-categories-item-icon-delete fa-solid fa-minus"></i>
                                             </div>
                                         )
@@ -64,7 +86,7 @@ const AddWallpaperModal = () => {
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button onClick={() => handleCreateNewWallpaper()} type="button" class="btn btn-primary" data-bs-dismiss="modal">Create</button>
+                            <button onClick={() => handleCreateNewWallpaper()} type="button" class="btn btn-primary">Create</button>
                         </div>
                     </div>
                 </div>

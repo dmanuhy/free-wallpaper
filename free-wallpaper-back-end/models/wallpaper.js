@@ -1,31 +1,34 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const WallpaperSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-  },
-  imageUrl: {
-    type: String,
-    required: true,
-  },
-  tags: {
-    type: [String],
-  },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  likes: {
-    type: Number,
-    default: 0,
-  },
-});
+    description: {
+        type: String,
+    },
+    imageUrl: {
+        type: String,
+        required: true,
+    },
+    tags: [
+        { type: mongoose.Schema.Types.ObjectId, ref: "tag" }
+    ],
+    fromAlbum: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "album"
+    },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: true,
+    },
+    likes: {
+        type: Number,
+        default: 0,
+    },
+    comments: [
+        { user: { type: mongoose.Schema.Types.ObjectId, ref: "user" }, body: String, date: Date }
+    ],
+}, { timestamps: true });
+
+const Wallpaper = mongoose.model("wallpaper", WallpaperSchema);
+
+module.exports = Wallpaper;
