@@ -1,10 +1,14 @@
 const express = require('express');
-const bodyParser = require('body-parser')
-
 const albumRouter = express.Router();
+const albumController = require('../controllers/albumController');
 
-albumRouter.use(bodyParser.json());
+
+albumRouter.post('/', albumController.createAlbum);
+albumRouter.get('/', albumController.getAlbums);
+albumRouter.get('/:id', albumController.getAlbumById);
+albumRouter.put('/:id', albumController.updateAlbum);
+albumRouter.delete('/:id', albumController.deleteAlbum);
 
 module.exports = {
     albumRouter
-}
+};
