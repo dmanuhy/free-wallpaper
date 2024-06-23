@@ -4,6 +4,6 @@ const getAllWallpaperService = (page = "1", order = "createdAt", priority = "des
     return axios.get(`/wallpaper/all?page=${page}&order=${order}&priority=${priority}`);
 }
 
-export const wallpaperService = {
+export const WallpaperService = {
     getAllWallpaperService
 }

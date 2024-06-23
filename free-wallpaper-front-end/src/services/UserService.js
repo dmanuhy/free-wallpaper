@@ -12,7 +12,7 @@ const logoutService = (data) => {
     return axios.get(`/user/logout`);
 }
 
-export const userService = {
+export const UserService = {
     signUpService,
     signInService,
     logoutService

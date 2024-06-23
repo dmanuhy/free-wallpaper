@@ -9,53 +9,53 @@ const AddWallpaperModal = () => {
 
     const { wallpaperList, setWallpaperList } = useContext(WallpaperContext);
 
-    const [newImage, setNewImage] = useState(null);
+    const [newImages, setNewImages] = useState([]);
     const [description, setDescription] = useState("");
     const [categories, setCategories] = useState([""]);
 
-    const quillModules = {
-        toolbar: CONSTRANT.TOOL_BAR_OPTIONS
-    }
+    // const quillModules = {
+    //     toolbar: CONSTRANT.TOOL_BAR_OPTIONS
+    // }
 
-    const handleChangeCategoryList = (index, action) => {
-        const currentCategories = [...categories]
-        switch (action) {
-            case "ADD":
-                currentCategories.push(""); break;
-            case "DELETE":
-                if (currentCategories.length > 1) {
-                    currentCategories.splice(index, 1); break;
-                } else {
-                    return
-                }
-            default: return;
-        }
-        setCategories(currentCategories);
-    }
+    // const handleChangeCategoryList = (index, action) => {
+    //     const currentCategories = [...categories]
+    //     switch (action) {
+    //         case "ADD":
+    //             currentCategories.push(""); break;
+    //         case "DELETE":
+    //             if (currentCategories.length > 1) {
+    //                 currentCategories.splice(index, 1); break;
+    //             } else {
+    //                 return
+    //             }
+    //         default: return;
+    //     }
+    //     setCategories(currentCategories);
+    // }
 
-    const handleChangeCategory = (index, value) => {
-        const currentCategories = [...categories]
-        currentCategories[index] = value
-        setCategories(currentCategories)
-    }
+    // const handleChangeCategory = (index, value) => {
+    //     const currentCategories = [...categories]
+    //     currentCategories[index] = value
+    //     setCategories(currentCategories)
+    // }
 
     const handleCreateNewWallpaper = () => {
-        if (!newImage || !description || categories.length < 1) {
-            alert("Missing parameter(s)")
-        } else {
-            let currentWallpaperList = [...wallpaperList];
-            currentWallpaperList = [newImage, ...wallpaperList];
-            setWallpaperList(currentWallpaperList);
-            alert("Created new Wallpaper");
-            clearState();
-        }
+        // if (!newImages || !description || categories.length < 1) {
+        //     alert("Missing parameter(s)")
+        // } else {
+        //     let currentWallpaperList = [...wallpaperList];
+        //     currentWallpaperList = [newImages, ...wallpaperList];
+        //     setWallpaperList(currentWallpaperList);
+        //     alert("Created new Wallpaper");
+        //     clearState();
+        // }
     }
 
-    const clearState = () => {
-        setNewImage("")
-        setDescription("")
-        setCategories([""]);
-    }
+    // const clearState = () => {
+    //     setNewImages("")
+    //     setDescription("")
+    //     setCategories([""]);
+    // }
 
     return (
         <div className="add-wallpaper-modal">
@@ -67,9 +67,9 @@ const AddWallpaperModal = () => {
                             <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <Dropzone newImage={newImage} setNewImage={setNewImage} />
-                            <TextEditor value={description} setValue={setDescription} label={"Description for your Wallpaper"} id={"newWallpaperDesc"} quillModules={quillModules} />
-                            <div>
+                            <Dropzone newImages={newImages} setNewImages={setNewImages} />
+                            {/* <TextEditor value={description} setValue={setDescription} label={"Description for your Wallpaper"} id={"newWallpaperDesc"} quillModules={quillModules} /> */}
+                            {/* <div>
                                 <label>Your wallpapersallpaper categories</label>
                                 <div className="select-categories">
                                     <i onClick={() => handleChangeCategoryList(null, "ADD")} className="select-categories-item-icon-add text-white bg-success fa-solid fa-plus"></i>
@@ -82,7 +82,7 @@ const AddWallpaperModal = () => {
                                         )
                                     })}
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
