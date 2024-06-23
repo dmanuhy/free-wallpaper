@@ -52,7 +52,6 @@ const signInService = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             const existUser = await db.user.findOne({ email: data.email }).select("email isActived password")
-            console.log("check user status: ", existUser)
             if (!existUser) {
                 resolve({
                     status: 401,
