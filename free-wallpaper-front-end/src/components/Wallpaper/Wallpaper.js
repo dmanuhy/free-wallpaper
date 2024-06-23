@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import "./Wallpaper.scss"
 import { motion } from "framer-motion";
+import user_avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
 
 const variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 }
 }
 
-const Wallpaper = ({ image, creatorName, creatorAvatar, index }) => {
+const Wallpaper = ({ image, creatorName, createdBy, index }) => {
 
     const navigate = useNavigate()
 
@@ -18,9 +19,9 @@ const Wallpaper = ({ image, creatorName, creatorAvatar, index }) => {
             <a className="wallpaper-download-btn btn btn-success" href={image} download={true} >Download</a>
             <div onClick={() => navigate(`/user/${creatorName}`)} className="wallpaper-creator">
                 <span className="wallpaper-creator-name">
-                    {creatorName}
+                    {createdBy.name}
                 </span>
-                <div className="wallpaper-creator-avatar" style={{ backgroundImage: `url(${creatorAvatar})` }}></div>
+                <div className="wallpaper-creator-avatar" style={{ backgroundImage: `url(${createdBy.avatar || user_avatar_raw})` }}></div>
             </div>
         </motion.div >
     )
