@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { WallpaperService } from "../services/WallpaperService";
+import { WallpaperService } from "../services/wallpaperService";
 
 const WallpaperContext = React.createContext(null);
 
