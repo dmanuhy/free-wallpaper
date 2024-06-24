@@ -4,7 +4,7 @@ import { useContext, useState } from "react"
 import { UserContext } from "../../contexts/UserContext"
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { userService } from "../../services/userService";
+import { userService } from "../../services/UserService";
 function Login() {
 
   const { loginContext, logoutContext } = useContext(UserContext);

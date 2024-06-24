@@ -4,7 +4,7 @@ import { Component } from '..'
 import { useNavigate } from "react-router-dom"
 import { UserContext } from '../../contexts/UserContext'
 import user_avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
-import { userService } from '../../services/userService'
+import { userService } from '../../services/UserService'
 import { toast } from 'react-toastify'
 
 const Header = () => {

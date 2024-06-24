@@ -2,7 +2,7 @@ import "./Register.scss"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify";
-import { userService } from "../../services/userService";
+import { userService } from "../../services/UserService";
 
 const Register = () => {
 

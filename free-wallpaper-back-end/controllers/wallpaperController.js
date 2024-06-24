@@ -34,7 +34,7 @@ async function CreateNewWallpaper(req, res, next) {
             });
             return await newWallpaper.save();
         }));
-        return res.status(200).json({ message: "Tạo thành công", wallpapers: savedWallpapers });
+        return res.status(201).json({ message: "Tạo thành công", wallpapers: savedWallpapers });
     } catch (error) {
         next(error);
     }
