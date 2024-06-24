@@ -19,9 +19,9 @@ const Wallpaper = ({ image, creatorName, createdBy }) => {
             <a className="wallpaper-download-btn btn btn-success" href={image} download={true} >Download</a>
             <div onClick={() => navigate(`/user/${creatorName}`)} className="wallpaper-creator">
                 <span className="wallpaper-creator-name">
-                    {createdBy.name}
+                    {createdBy && createdBy.name}
                 </span>
-                <div className="wallpaper-creator-avatar" style={{ backgroundImage: `url(${createdBy.avatar || user_avatar_raw})` }}></div>
+                <div className="wallpaper-creator-avatar" style={{ backgroundImage: `url(${createdBy && createdBy.avatar || user_avatar_raw})` }}></div>
             </div>
         </motion.div >
     )
