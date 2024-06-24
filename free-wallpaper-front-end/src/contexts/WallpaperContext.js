@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { wallpaperService } from "../services/wallpaperService"
+import { WallpaperService } from "../services/WallpaperService";
 
 const WallpaperContext = React.createContext(null);
 
@@ -15,7 +15,7 @@ const WallpaperProvider = ({ children }) => {
     const [noMoreData, setNoMoreData] = useState(false)
 
     const fetchAllWallpaper = async () => {
-        const response = await wallpaperService.getAllWallpaperService(page, sort.order, sort.priority)
+        const response = await WallpaperService.getAllWallpaperService(page, sort.order, sort.priority)
         if (response && response.status === 200 && response.data.length > 0) {
             if (page === 1) {
                 setWallpaperList(response.data);

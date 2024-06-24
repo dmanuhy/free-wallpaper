@@ -4,7 +4,7 @@ import { useContext, useState } from "react"
 import { UserContext } from "../../contexts/UserContext"
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { userService } from "../../services/UserService";
+import { UserService } from "../../services/UserService";
 function Login() {
 
   const { loginContext, logoutContext } = useContext(UserContext);
@@ -17,7 +17,7 @@ function Login() {
     if (!email || !password) {
       toast.error("Please enter username and password");
     } else {
-      const response = await userService.signInService({
+      const response = await UserService.signInService({
         email: email,
         password: password
       })

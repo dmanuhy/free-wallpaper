@@ -8,7 +8,7 @@ const variants = {
     visible: { opacity: 1 }
 }
 
-const Wallpaper = ({ image, creatorName, createdBy, index }) => {
+const Wallpaper = ({ image, creatorName, createdBy }) => {
 
     const navigate = useNavigate()
 
