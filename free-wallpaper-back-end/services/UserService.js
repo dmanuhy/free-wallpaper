@@ -4,7 +4,10 @@ const bcrypt = require("bcrypt")
 const { createJWT } = require("../middlewares/JsonWebToken")
 
 const getRoles = async (roleName) => {
-    const role = await db.role.findOne({ name: roleName }).select("_id");
+    let role = await db.role.findOne({ name: roleName }).select("_id");
+    if (!role) {
+        role = await db.role.create({ name: roleName })
+    }
     return role;
 }
 
