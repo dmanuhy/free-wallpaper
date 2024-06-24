@@ -51,7 +51,10 @@ const signUpService = (data) => {
 const signInService = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const existUser = await db.user.findOne({ email: data.email }).select("email isActived password")
+            const existUser = await db.user.findOne({ email: data.email })
+                .populate({
+                    path: "roles"
+                })
             if (!existUser) {
                 resolve({
                     status: 401,
@@ -67,47 +70,24 @@ const signInService = (data) => {
                 }
                 else {
                     const isCorrectPassword = bcrypt.compareSync(data.password, existUser.password)
-                    const userData = await db.user.findOne({ email: data.email })
-                        .populate({
-                            path: "roles"
-                        })
-                        .populate({
-                            path: "albums",
-                            select: "_id name wallpapers",
-                            populate: {
-                                path: "wallpapers",
-                                select: "imageUrl"
-                            }
-                        })
-                        .populate({
-                            path: "shared",
-                            select: "_id name wallpapers",
-                            populate: {
-                                path: "wallpapers",
-                                select: "imageUrl"
-                            }
-                        })
-                        .populate({
-                            path: "liked"
-                        });
                     if (isCorrectPassword) {
                         const payload = {
-                            name: userData.name,
-                            email: userData.email,
-                            roles: userData.roles,
-                            isActived: userData.isActived
+                            _id: existUser._id,
+                            name: existUser.name,
+                            email: existUser.email,
+                            roles: existUser.roles,
+                            isActived: existUser.isActived
                         }
                         const token = createJWT(payload)
                         resolve({
                             status: 200,
                             message: "Authenticated successfully!",
                             data: {
-                                name: userData.name,
-                                isActived: userData.isActived,
-                                roles: userData.roles,
-                                albums: userData.albums,
-                                shared: userData.shared,
-                                liked: userData.liked
+                                _id: existUser._id,
+                                name: existUser.name,
+                                email: existUser.email,
+                                roles: existUser.roles,
+                                isActived: existUser.isActived
                             },
                             token: token,
                         })
