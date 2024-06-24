@@ -16,7 +16,7 @@ const Header = () => {
     const handleClickAvatar = () => {
         switch (user && user.roles.includes("admin")) {
             case true: navigate("/management/account"); break;
-            case false: navigate(`/user/${user && user.name}`); break;
+            case false: navigate(`/user/${user && user._id}`); break;
             default: break;
         }
     }
