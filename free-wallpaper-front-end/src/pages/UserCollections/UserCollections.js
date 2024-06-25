@@ -59,7 +59,7 @@ export default function UserCollections() {
 
             ]
         },
-        
+
 
     ];
     const [albums, setAlbums] = useState(al);
@@ -72,7 +72,11 @@ export default function UserCollections() {
     // useEffect(() => {
     //     if ()
     // }, [])
-    const defaultPhotos = [{ id: 0, src: empty, alt: '' }]; 
+
+    const handleDelete = (albumId, e) => {
+        e.preventDefault();
+        setAlbums(albums.filter(album => album.id !== albumId));
+    };
 
     return (
 
@@ -96,7 +100,7 @@ export default function UserCollections() {
                 <Link to="/user/1" className="nav-button10 active">Gallery</Link>
                 <Link to="/user/1/collections" className="nav-button20">Collections</Link>
 
-                <div style={{ alignItems: "flex-end" }}>
+                <div style={{ paddingLeft: "930px" }}>
                     <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <i className="bi bi-plus-circle-fill">  </i>
                         New Album
@@ -117,14 +121,16 @@ export default function UserCollections() {
                             </>
                         ) : (
                             <>
-                                <img src={defaultPhotos[0].src} alt={defaultPhotos[0].alt} />
+                                <img src={empty} />
                                 <div className="my-description">
                                     <span>{album.name}</span>
                                     <span className="my-photo-count"><i className="bi bi-image"> </i> 0</span>
                                 </div>
                             </>
                         )}
+                        <button className="delete-button" onClick={(e) => handleDelete(album.id, e)}>X</button>
                     </Link>
+
                 ))}
             </div>
 
@@ -149,7 +155,7 @@ export default function UserCollections() {
                 </div>
             </div>
 
-        </div>
+        </div >
 
     )
 }

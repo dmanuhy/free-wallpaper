@@ -1,22 +1,53 @@
-import "./Register.css"
+import "./Register.scss"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify";
+import { UserService } from "../../services/UserService";
 
-function Register() {
-  return (
-    <div className="app">
-      <div className="background"></div>
-      <div className="overlay"></div>
-      <div className="login-form-container">
-        <div className="login-form">
-          <h2>New to wallpaper</h2>
-          <div className="divider">Register your Account</div>
-          <input type="text" placeholder="name" className="input-field"/>
-          <input type="password" placeholder="Password" className="input-field" />
-          <a href="/forgot-password" className="forgot-password">Forgot your password?</a>
-          <button className="sign-in-button">Register</button>
+const Register = () => {
+
+    const navigate = useNavigate();
+
+    const [newUser, setNewUser] = useState({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    });
+
+    const handleRegister = async (event) => {
+        event.preventDefault();
+        try {
+            if (newUser.password !== newUser.confirmPassword) {
+                toast.error("Confirm password didn't matched")
+            } else {
+                const response = await UserService.signUpService(newUser);
+                if (response.status === 201) {
+                    toast.success(response.message);
+                    navigate('/login');
+                } else {
+                    toast.error(response.message);
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    return (
+        <div className="register">
+            <div className="login-form">
+                <h2 className="text-white">New to wallpaper</h2>
+                <div className="divider text-white">Register your Account</div>
+                <input onChange={(event) => setNewUser({ ...newUser, name: event.target.value })} value={newUser.name} type="text" placeholder="Username" className="input-field" />
+                <input onChange={(event) => setNewUser({ ...newUser, email: event.target.value })} value={newUser.email} type="email" placeholder="Email" className="input-field" />
+                <input onChange={(event) => setNewUser({ ...newUser, password: event.target.value })} value={newUser.password} type="password" placeholder="Password" className="input-field" />
+                <input onChange={(event) => setNewUser({ ...newUser, confirmPassword: event.target.value })} value={newUser.confirmPassword} type="password" placeholder="Confirm Password" className="input-field" />
+                <Link to="/login" className="forgot-password fs-6 text-white">Already have an account? Login here</Link>
+                <button onClick={(event) => handleRegister(event)} className="sign-in-button">Register</button>
+            </div>
         </div>
-      </div>
-    </div>
-  )
+    )
 }
 
 export default Register

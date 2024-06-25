@@ -1,33 +1,20 @@
 import React, { useEffect, useState } from "react"
-import w10 from "../assets/wallpaper/w10.jpg"
 const UserContext = React.createContext(null);
 
 const UserProvider = ({ children }) => {
 
-    const [user, setUser] = useState({ email: "", displayName: "", avatar: "", role: "", isActived: false })
+    const [user, setUser] = useState({})
 
-    const login = (email, password) => {
-        setUser({
-            email: email,
-            displayName: "Hello World",
-            role: email.includes("admin") ? "admin" : "contributor",
-            avatar: w10,
-            isActived: true
-        })
+    const loginContext = (data) => {
+        setUser(data)
     }
 
-    const logout = () => {
-        setUser({
-            email: "",
-            displayName: "",
-            role: "",
-            avatar: "",
-            isActived: false
-        })
+    const logoutContext = () => {
+        setUser({})
     }
 
     return (
-        <UserContext.Provider value={{ login, logout, user }}>
+        <UserContext.Provider value={{ user, setUser, loginContext, logoutContext }}>
             {children}
         </UserContext.Provider>
     )

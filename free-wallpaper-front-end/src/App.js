@@ -10,6 +10,7 @@ import Register from "./pages/Register/Register";
 const App = () => {
   return (
     <BrowserRouter>
+      <Component.ScrollToTop />
       <Component.Header />
       <Routes>
         <Route path="/" element={<PublicRoutes />}>

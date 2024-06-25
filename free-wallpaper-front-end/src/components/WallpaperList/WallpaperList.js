@@ -2,10 +2,10 @@ import { Component } from '..'
 import './WallpaperList.scss'
 
 import { LoadMoreOnScroll } from '../LoadMoreOnScroll/LoadMoreOnScroll';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 
-const WallpaperList = ({ wallpaperList = [], page = 0, setPage = null }) => {
+const WallpaperList = ({ wallpaperList = [], page = 0, setPage = null, noMoreData = false }) => {
 
     const wallpaperCounter = useMemo(() => {
         let isLoadMore = true
@@ -17,18 +17,17 @@ const WallpaperList = ({ wallpaperList = [], page = 0, setPage = null }) => {
 
     return (
         <>
-            {console.log(wallpaperList.length)}
             <div className="wallpaper-list content-width-padding">
                 {wallpaperList && wallpaperList.length > 0 ?
                     <>
                         <div className='wallpaper-list-container'>
                             {wallpaperList.map((item, index) => {
                                 return (
-                                    <Component.Wallpaper key={index + 1} image={item} creatorName={"John - " + index} creatorAvatar={item} index={index} />
+                                    <Component.Wallpaper key={item._id} image={item.imageUrl} createdBy={item.createdBy} />
                                 )
                             })}
                         </div>
-                        {setPage &&
+                        {setPage && noMoreData === false &&
                             <>
                                 {!wallpaperCounter.isLoadMore ?
                                     <button onClick={() => setPage((page) => page + 1)} className='btn btn-info text-white mt-5'>Discover More</button>

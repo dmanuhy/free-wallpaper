@@ -6,10 +6,12 @@ import w1 from "../../assets/wallpaper/w1.jpg"
 import { useContext } from 'react';
 import { WallpaperContext } from "../../contexts/WallpaperContext"
 import AddWallpaperModal from '../../components/Modal/AddWallpaperModal/AddWallpaperModal';
+import { UserContext } from '../../contexts/UserContext';
 
 export default function UserCollectionsDetails() {
 
     const { page, setPage, wallpaperList } = useContext(WallpaperContext)
+    const { user } = useContext(UserContext)
 
     const album = {
         name: 'Flexing',
@@ -53,10 +55,14 @@ export default function UserCollectionsDetails() {
                         </div>
 
                         <div className="d-flex justify-content-center mt-2 gap-2">
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAddWallpaper">
-                                <i class="fa-solid fa-plus"></i> Wallpaper
-                            </button>
-                            <AddWallpaperModal />
+                            {user && user.isActived &&
+                                <>
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAddWallpaper">
+                                        <i class="fa-solid fa-plus"></i> Wallpaper
+                                    </button>
+                                    <AddWallpaperModal />
+                                </>
+                            }
                             <button className="btn btn-primary" onClick={handleDownloadAll}>
                                 Download Album ({wallpaperList.length} pics)
                             </button>
