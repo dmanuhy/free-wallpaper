@@ -3,40 +3,31 @@ import "./UserRow.scss";
 import { Context } from "../AccountManagement";
 
 const UserRow = ({ user }) => {
-  const { blockedUsers, toggleBlockUser } = useContext(Context);
-
-  const className = `badge ${user.role.toLowerCase()}`;
-  const [isChanging, setIsChanging] = useState(false);
-
-  const toggleRoleChange = (e) => {
-    e.stopPropagation();
-    setIsChanging(!isChanging);
+  const getRoleClassName = (roles) => {
+    if (roles.some((role) => role.name === "admin")) return "badge admin";
+    if (roles.some((role) => role.name === "vip")) return "badge vip";
+    return `badge contributor`; // Default to 'contributor'
   };
 
-  const isBlocked = blockedUsers.includes(user.id);
+  const className = getRoleClassName(user.roles);
 
   return (
-    <tr className={isBlocked ? "blocked" : ""}>
+    <tr className={!user.isActive ? "blocked" : ""}>
       <td>{user.name}</td>
       <td>{user.email}</td>
-      <td className="hidden-xs">{user.location}</td>
-      <td className="hidden-xs">{user.joined}</td>
+      <td className="hidden-xs">{user.dob}</td>
       <td>
-        <span className={className}>{user.role}</span>
+        <span className={className}>
+          {user.roles.some((role) => role.name === "admin")
+            ? "admin"
+            : user.roles.some((role) => role.name === "vip")
+            ? "vip"
+            : "contributor"}
+        </span>
       </td>
       <td>
-        <input
-          type="checkbox"
-          checked={isBlocked}
-          onChange={() => {
-            toggleBlockUser(user.id);
-          }}
-        />
+        <input type="checkbox" checked={!user.isActive} onChange={() => {}} />
       </td>
-      {/* <td onClick={toggleRoleChange} className="dot-action">
-        ...
-        {isChanging && <RoleChange toggleRoleChange={toggleRoleChange} user={user} />}
-      </td> */}
     </tr>
   );
 };

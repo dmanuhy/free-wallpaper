@@ -21,15 +21,15 @@ const SearchBar = () => {
 
   const sortByRoleAndSearch = (role, searchValue) => {
     let filteredUsers = defaultUsers;
+    console.log(defaultUsers);
 
     if (role !== "All") {
       filteredUsers = filteredUsers.filter((user) => user.role === role);
     }
 
-    if (searchValue) {
-      filteredUsers = filteredUsers.filter((user) => user.name.toLowerCase().includes(searchValue.toLowerCase()));
-    }
-
+    // if (searchValue) {
+    //   filteredUsers = filteredUsers.filter((user) => user.name.toLowerCase().includes(searchValue.toLowerCase()));
+    // }
     setUsers(filteredUsers);
     setCurrentPage(1);
   };
@@ -41,8 +41,8 @@ const SearchBar = () => {
         <select onChange={handleRoleChange} value={selectedRole}>
           <option disabled>Roles</option>
           <option>All</option>
+          <option>Vip</option>
           <option>Contributor</option>
-          <option>Viewer</option>
         </select>
       </div>
     </div>
