@@ -37,7 +37,6 @@ const UserTable = () => {
             Role
           </th>
           <th>Block</th>
-          {/* <th>Actions</th> */}
         </tr>
       </thead>
       <tbody>
