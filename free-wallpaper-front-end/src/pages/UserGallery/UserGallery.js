@@ -1,46 +1,80 @@
 import './UserGallery.css';
 import { Component } from "../../components"
-import w1 from "../../assets/wallpaper/w1.jpg";
-import w2 from "../../assets/wallpaper/w2.jpg";
-import w3 from "../../assets/wallpaper/w3.jpg";
-import w4 from "../../assets/wallpaper/w4.jpg";
-import w5 from "../../assets/wallpaper/w5.jpg";
-import w6 from "../../assets/wallpaper/w6.jpg";
-import { Link } from 'react-router-dom';
+
+import { Link, useParams } from "react-router-dom";
 import { useContext } from 'react';
-import { WallpaperContext } from '../../contexts/WallpaperContext';
+import { UserContext } from '../../contexts/UserContext';
+import { useState, useEffect } from "react";
+import user_avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
+import { WallpaperService } from '../../services/WallpaperService';
+import { UserService } from '../../services/UserService';
 export default function UserGallery() {
+    const { userId } = useParams();
+    const [NewAlbumName, setNewAlbumName] = useState('');
+    const { user } = useContext(UserContext)
+    const [User, setUser] = useState();
+    const [wallpaperList, setWallpaperList] = useState([]);
+    const [page, setPage] = useState(1);
+    const [sort, setSort] = useState({
+        order: "createdAt",
+        priority: "descending"
+    })
 
-    const { page, setPage, wallpaperList } = useContext(WallpaperContext);
+    const [noMoreData, setNoMoreData] = useState(false)
 
-    const user = {
-        name: 'Name of user',
-        description: 'Description about user',
-        profilePic: w1,
-        gallery: wallpaperList,
+    const fetchAllWallpaper = async () => {
+        const response = await WallpaperService.getAllWallpaperByAuthorService(userId, page, sort.order, sort.priority)
+        if (response && response.status === 200 && response.data.length > 0) {
+            if (page === 1) {
+                setWallpaperList(response.data);
+            } else {
+                setWallpaperList((products) => [...products, ...response.data]);
+            }
+        } else {
+            setNoMoreData(true)
+        }
+    }
+    
+    const fetchUser = async () => {
+        try {
+            const response = await UserService.findUser(userId);
+            setUser(response);
+            console.log(response);
+        } catch (error) {
+            console.error("Error fetching user:", error);
+        }
     };
+
+    useEffect(() => {
+        fetchUser()
+        if (page !== 0) {
+            fetchAllWallpaper();
+        }
+    }, [page, sort])
+
+
     return (
         <div>
             <div className="app">
                 <div className="user-profile">
-                    <img src={user.profilePic} alt="Profile" className="profile-pic" />
-                    <h1>{user.name}</h1>
-                    <p>{user.description}</p>
+                    <img src={User?.avatar || user_avatar_raw} alt="Profile" className="profile-pic" />
+                    <h1>{User?.name}</h1>
+                    <p>{User?.bio}</p>
                     <div className="icons">
-                        <Link to="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                        <Link target="_blank" rel="noopener noreferrer">
                             <i className="fab fa-facebook-f"></i>
                         </Link>
-                        <Link to="mailto:someone@example.com">
+                        <Link to={User?.email}>
                             <i className="fas fa-envelope"></i>
                         </Link>
                     </div>
                 </div>
                 <div className="navigation-buttons container" style={{ marginBottom: "30px" }}>
-                    <Link to="/user/1" className="nav-button1 active">Gallery</Link>
-                    <Link to="/user/1/collections" className="nav-button2">Collections</Link>
+                    <Link to="" className="nav-button1 active">Gallery</Link>
+                    <Link to="collections" className="nav-button2">Collections</Link>
                 </div>
             </div>
-            <Component.WallpaperList wallpaperList={user.gallery} page={page} setPage={setPage} />
+            <Component.WallpaperList wallpaperList={wallpaperList} page={page} setPage={setPage} />
         </div>
     )
 }

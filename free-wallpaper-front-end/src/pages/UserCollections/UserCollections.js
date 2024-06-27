@@ -1,95 +1,82 @@
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import w1 from "../../assets/wallpaper/w1.jpg";
-import w2 from "../../assets/wallpaper/w2.jpg";
-import w3 from "../../assets/wallpaper/w3.jpg";
-import w4 from "../../assets/wallpaper/w4.jpg";
-import w5 from "../../assets/wallpaper/w5.jpg";
-import w6 from "../../assets/wallpaper/w6.jpg";
+import { UserContext } from '../../contexts/UserContext';
 import empty from "../../assets/wallpaper/empty.png";
 import './UserCollections.css';
+import { AlbumService } from "../../services/AlbumService";
+import { useContext } from 'react';
+import user_avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
+import { UserService } from "../../services/UserService";
 export default function UserCollections() {
-
+    const { userId } = useParams();
+    const [User, setUser] = useState();
     const [NewAlbumName, setNewAlbumName] = useState('');
-
-    const user = {
-        name: 'Name of user',
-        description: 'Description about user',
-        profilePic: w1,
-        gallery: [w1, w2, w3, w4, w5, w6, w4, w3, w5],
-    };
-    const al = [
-        {
-            id: 1,
-            name: 'Album name 1',
-            photos: [
-                { id: 1, src: w1, alt: 'Description 1' },
-                { id: 2, src: w2, alt: 'Description 2' },
-
-            ]
-        },
-        {
-            id: 2,
-            name: 'Album name 2',
-            photos: [
-                { id: 3, src: w3, alt: 'Description 3' },
-                { id: 4, src: w4, alt: 'Description 4' },
-                { id: 5, src: w5, alt: 'Description 4' },
-
-            ]
-        },
-        {
-            id: 3,
-            name: 'Album name 3',
-            photos: [
-                { id: 3, src: w3, alt: 'Description 3' },
-                { id: 4, src: w4, alt: 'Description 4' },
-                { id: 5, src: w5, alt: 'Description 4' },
-
-            ]
-        },
-        {
-            id: 4,
-            name: 'Album name 3',
-            photos: [
-                { id: 3, src: w3, alt: 'Description 3' },
-                { id: 4, src: w4, alt: 'Description 4' },
-                { id: 5, src: w5, alt: 'Description 4' },
-
-            ]
-        },
+    const { user } = useContext(UserContext)
 
 
-    ];
-    const [albums, setAlbums] = useState(al);
-    const handleSubmit = () => {
-        if (NewAlbumName.trim() !== '') {
-            setAlbums([...albums, { name: NewAlbumName, photos: [] }]);
+    const [albums, setAlbums] = useState([]);
+    const [wallpaperList, setWallpaperList] = useState([]);
+
+
+    const [noMoreData, setNoMoreData] = useState(false)
+    const handleSubmit = async () => {
+        try {
+            const newAlbum = {
+                name: NewAlbumName,
+                author: userId,
+                wallpapers: []
+            };
+            const response = await AlbumService.createAlbum(newAlbum);
+            
             setNewAlbumName('');
+        } catch (error) {
+            console.error("Error creating album:", error);
         }
     };
-    // useEffect(() => {
-    //     if ()
-    // }, [])
+
+    const fetchAlbums = async () => {
+        try {
+            const response = await AlbumService.getAllAlbumByAuthorService(userId);
+            setAlbums(response);
+            console.log(response);
+        } catch (error) {
+            console.error("Error fetching albums:", error);
+        }
+    };
+    const fetchUser = async () => {
+        try {
+            const response = await UserService.findUser(userId);
+            setUser(response);
+            console.log(response);
+        } catch (error) {
+            console.error("Error fetching user:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchAlbums();
+        fetchUser();
+    }, [NewAlbumName]);
+    
 
     const handleDelete = (albumId, e) => {
-        e.preventDefault();
-        setAlbums(albums.filter(album => album.id !== albumId));
+
+
     };
 
     return (
-
         <div className="app">
             <div className="user-profile ">
-                <img src={user.profilePic} alt="Profile" className="profile-pic" />
-                <h1>{user.name}</h1>
-                <p>{user.description}</p>
+                <img style={{ marginTop: "300px" }} src={User?.avatar || user_avatar_raw} alt="Profile" className="profile-pic" />
+                <h1>{User?.name}</h1>
+                {/* <p>{user.description}</p> */}
+                <p>{User?.bio}</p>
                 <div className="icons">
                     <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
                         <i className="fab fa-facebook-f"></i>
                     </a>
-                    <a href="mailto:someone@example.com">
+                    <a href={User?.email}>
                         <i className="fas fa-envelope"></i>
                     </a>
                 </div>
@@ -97,26 +84,30 @@ export default function UserCollections() {
             </div>
             <div className="navigation-buttons container" style={{ marginBottom: "30px", display: "flex", alignItems: "center" }}>
 
-                <Link to="/user/1" className="nav-button10 active">Gallery</Link>
-                <Link to="/user/1/collections" className="nav-button20">Collections</Link>
-
-                <div style={{ paddingLeft: "930px" }}>
-                    <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <i className="bi bi-plus-circle-fill">  </i>
-                        New Album
-                    </button>
-                </div>
+                <Link to={`/user/${userId}`} className="nav-button10 active">Gallery</Link>
+                <Link to="" className="nav-button20">Collections</Link>
+                {user && user.isActived && user._id == userId &&
+                    <>
+                        <div style={{ paddingLeft: "930px" }}>
+                            <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <i className="bi bi-plus-circle-fill">  </i>
+                                New Album
+                            </button>
+                        </div>
+                    </>
+                }
             </div>
+
 
             <div className="my-gallery container">
                 {albums?.map(album => (
-                    <Link className="my-gallery-item " to="/user/1/album/27" key={album.id}>
-                        {album.photos && album.photos.length > 1 ? (
+                    <Link className="my-gallery-item " to={`/user/${userId}/album/${album._id}`} key={album.id}>
+                        {album && album.wallpapers.length > 0 ? (
                             <>
-                                <img src={album.photos[0].src} alt={album.photos[0].alt} />
+                                <img src={album.wallpapers[0].imageUrl} />
                                 <div className="my-description">
                                     <span>{album.name}</span>
-                                    <span className="my-photo-count"><i className="bi bi-image"> </i> {album.photos.length}</span>
+                                    <span className="my-photo-count"><i className="bi bi-image"> {album.wallpapers.length} </i> </span>
                                 </div>
                             </>
                         ) : (
@@ -128,7 +119,11 @@ export default function UserCollections() {
                                 </div>
                             </>
                         )}
-                        <button className="delete-button" onClick={(e) => handleDelete(album.id, e)}>X</button>
+                        {user && user.isActived && user._id == userId &&
+                            <>
+                                <button className="delete-button" onClick={(e) => handleDelete(album.id, e)}>X</button>
+                            </>
+                        }
                     </Link>
 
                 ))}
@@ -144,7 +139,7 @@ export default function UserCollections() {
                         <div className="modal-body">
                             <form>
                                 <label for="recipient-name" className="col-form-label">Enter Name of Album</label>
-                                <input type="text" className="form-control" id="recipient-name" onChange={(e) => setNewAlbumName(e.target.value)} />
+                                <input type="text" className="form-control" id="recipient-name" value={NewAlbumName} onChange={(e) => setNewAlbumName(e.target.value)} />
                             </form>
                         </div>
                         <div className="modal-footer">

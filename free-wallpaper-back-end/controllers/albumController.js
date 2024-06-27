@@ -94,7 +94,6 @@ const deleteAlbum = async (req, res) => {
 // Get albums by user ID
 const getAlbumsByUser = async (req, res) => {
     const { userId } = req.params;
-
     try {
         const albums = await Album.find({ author: userId }).populate('wallpapers').populate('author');
         res.status(200).json(albums);

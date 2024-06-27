@@ -1,4 +1,5 @@
-const { UserService } = require("../services")
+const User = require("../models/user")
+const { UserService, WallpaperService } = require("../services")
 
 const signUp = async (req, res, next) => {
     try {
@@ -61,10 +62,21 @@ const logout = async (req, res) => {
         })
     }
 }
-
-
+const finduserById = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const user = await User.findById(userId)
+        if (!user) {
+            return res.status(404).json({ message: 'user not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 module.exports = {
     signUp,
     signIn,
-    logout
+    logout,
+    finduserById
 } 

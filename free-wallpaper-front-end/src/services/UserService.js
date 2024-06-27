@@ -11,9 +11,13 @@ const signInService = (data) => {
 const logoutService = (data) => {
     return axios.get(`/user/logout`);
 }
+const findUser = (userId) => {
+    return axios.get(`/user/${userId}`);
+}
 
 export const UserService = {
     signUpService,
     signInService,
-    logoutService
+    logoutService,
+    findUser
 }

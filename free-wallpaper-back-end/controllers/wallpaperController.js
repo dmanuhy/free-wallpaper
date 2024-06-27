@@ -1,5 +1,6 @@
 const db = require("../models");
 const User = require("../models/user");
+const Album = require("../models/album");
 const { WallpaperService } = require("../services")
 
 const getWallpapers = async (req, res) => {
@@ -20,13 +21,12 @@ const Wallpaper = require("../models/wallpaper");
 async function CreateNewWallpaper(req, res, next) {
     try {
         const files = req.files;
-        const { description, tags, fromAlbum, createdBy } = req.body;
+        const { fromAlbum, createdBy } = req.body;
 
         const savedWallpapers = await Promise.all(files.map(async (file) => {
             const newWallpaper = new Wallpaper({
-                description,
+
                 imageUrl: file.path,
-                tags,
                 fromAlbum,
                 createdBy,
                 likes: 0,
@@ -34,13 +34,49 @@ async function CreateNewWallpaper(req, res, next) {
             });
             return await newWallpaper.save();
         }));
-        return res.status(200).json({ message: "Tạo thành công", wallpapers: savedWallpapers });
+        const wallpaperIds = savedWallpapers.map(wallpaper => wallpaper._id);
+        await Album.findByIdAndUpdate(fromAlbum, { $push: { wallpapers: { $each: wallpaperIds } } });
+        return res.status(201).json({ message: "Tạo thành công", wallpapers: savedWallpapers });
     } catch (error) {
         next(error);
     }
 }
+const getWallpapersByAuthor = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const page = req.query.page ? req.query.page : "1";
+        const order = req.query.order ? req.query.order : "updatedAt";
+        const priority = req.query.priority ? req.query.priority : "DESC";
+        try {
+            const serviceResponse = await WallpaperService.getAllWallpaperByAuthorService(userId, page, order, priority);
+            return res.status(200).json(serviceResponse)
+        } catch (error) {
+            console.log(error);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+const getWallpapersByAlbum = async (req, res) => {
+    try {
+        const { albumId } = req.params;
+        const page = req.query.page ? req.query.page : "1";
+        const order = req.query.order ? req.query.order : "updatedAt";
+        const priority = req.query.priority ? req.query.priority : "DESC";
+        try {
+            const serviceResponse = await WallpaperService.getAllWallpaperByAlbumService(albumId, page, order, priority);
+            return res.status(200).json(serviceResponse)
+        } catch (error) {
+            console.log(error);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 module.exports = {
     getWallpapers,
-    CreateNewWallpaper
+    CreateNewWallpaper,
+    getWallpapersByAuthor,
+    getWallpapersByAlbum
 
 } 
