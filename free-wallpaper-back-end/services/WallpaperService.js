@@ -5,16 +5,10 @@ const getAllWallpaperService = (page, order, priority) => {
         try {
             const wallpaperPerPage = 6;
             const wallpapers = await db.wallpaper.find({})
+                .select("_id imageUrl createdBy")
                 .populate({
                     path: "createdBy",
                     select: "_id name avatar"
-                })
-                .populate({
-                    path: "tags"
-                })
-                .populate({
-                    path: "fromAlbum",
-                    select: "_id name"
                 })
                 .sort([[order, priority]])
                 .limit(wallpaperPerPage)

@@ -1,7 +1,20 @@
 const db = require("../models");
-const Tag = require("../models/tag");
 
+const getAllTag = async (req, res, next) => {
+    try {
+        const response = await db.tag.find({})
+        return res.status(200).json({
+            status: res.statusCode,
+            data: response
+        })
+    } catch (error) {
+        return res.status(500).json({
+            status: res.statusCode,
+            message: "Internal Server Error"
+        })
+    }
+}
 
 module.exports = {
-
+    getAllTag
 } 
