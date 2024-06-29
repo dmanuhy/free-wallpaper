@@ -1,3 +1,4 @@
+const { Timestamp } = require('mongodb');
 const mongoose = require('mongoose');
 
 const WallpaperSchema = new mongoose.Schema({
@@ -18,14 +19,13 @@ const WallpaperSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        
     },
     likes: {
         type: Number,
         default: 0,
     },
     comments: [
-        { user: { type: mongoose.Schema.Types.ObjectId, ref: "user" }, body: String, date: Date }
+        { user: { type: mongoose.Schema.Types.ObjectId, ref: "user" }, body: String, date: { type: Number, default: Date.now() } }
     ],
 }, { timestamps: true });
 
