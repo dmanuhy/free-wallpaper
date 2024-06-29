@@ -101,8 +101,48 @@ const getAllWallpaperByAlbumService = (albumId, page, order, priority) => {
 }
 
 
+const getWallpaperByIDService = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const wallpaper = await db.wallpaper.findOne({ _id: id })
+                .select("_id imageUrl description tags fromAlbum createdBy likes comments")
+                .populate({
+                    path: "tags",
+                    select: "_id name"
+                })
+                .populate({
+                    path: "fromAlbum",
+                    select: "_id name"
+                })
+                .populate({
+                    path: "createdBy",
+                    select: "_id name avatar"
+                })
+                .populate({
+                    path: "comments",
+                    select: "user body date",
+                    populate: { path: "user", select: "_id name avatar" }
+                })
+            if (wallpaper) {
+                resolve({
+                    status: 200,
+                    data: wallpaper
+                })
+            } else {
+                resolve({
+                    status: 404,
+                    message: "No data found"
+                })
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     getAllWallpaperService,
     getAllWallpaperByAuthorService,
-    getAllWallpaperByAlbumService
+    getAllWallpaperByAlbumService,
+    getWallpaperByIDService
 }

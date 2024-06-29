@@ -15,8 +15,7 @@ const Wallpaper = ({ wallpaper }) => {
     return (
         <>
             <motion.div variants={variants} initial="hidden" animate="visible" transition={{ ease: "easeInOut", duration: 0.5 }} className="wallpaper">
-                {console.log(wallpaper)}
-                <img loading="lazy" className="wallpaper-image" src={wallpaper.imageUrl} alt="image1" data-bs-toggle="modal" data-bs-target="#wallpaperDetailModal" />
+                <img onClick={() => navigate(`/wallpaper/${wallpaper._id}`)} loading="lazy" className="wallpaper-image" src={wallpaper.imageUrl} alt="image1" />
                 <i class="wallpaper-icon fa-regular fa-heart"></i>
                 <a className="wallpaper-download-btn btn btn-success" href={wallpaper.imageUrl} download={true} >Download</a>
                 <div onClick={() => navigate(`/user/${wallpaper.createdBy._id}`)} className="wallpaper-creator">

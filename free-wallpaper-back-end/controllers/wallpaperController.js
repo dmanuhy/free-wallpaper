@@ -5,7 +5,7 @@ const { WallpaperService } = require("../services")
 
 const getWallpapers = async (req, res) => {
     const page = req.query.page ? req.query.page : "1";
-    const order = req.query.order ? req.query.order : "updatedAt";
+    const order = req.query.order ? req.query.order : "createdAt";
     const priority = req.query.priority ? req.query.priority : "DESC";
 
     try {
@@ -41,6 +41,7 @@ async function CreateNewWallpaper(req, res, next) {
         next(error);
     }
 }
+
 const getWallpapersByAuthor = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -57,6 +58,7 @@ const getWallpapersByAuthor = async (req, res) => {
         console.log(error);
     }
 }
+
 const getWallpapersByAlbum = async (req, res) => {
     try {
         const { albumId } = req.params;
@@ -73,10 +75,27 @@ const getWallpapersByAlbum = async (req, res) => {
         console.log(error);
     }
 }
+
+const getWallpaperByID = async (req, res) => {
+    try {
+        const { id } = req.params
+        if (!id) {
+            return res.status(422).json({
+                message: "Id not found"
+            })
+        } else {
+            const serviceResponse = await WallpaperService.getWallpaperByIDService(id);
+            return res.status(200).json(serviceResponse)
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     getWallpapers,
     CreateNewWallpaper,
     getWallpapersByAuthor,
-    getWallpapersByAlbum
-
+    getWallpapersByAlbum,
+    getWallpaperByID
 } 
