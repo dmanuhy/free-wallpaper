@@ -4,7 +4,7 @@ const getAllWallpaperService = (page = "1", order = "createdAt", priority = "des
     return axios.get(`/wallpaper/all?page=${page}&order=${order}&priority=${priority}`);
 }
 const getAllWallpaperByAuthorService = (userId, page = "1", order = "createdAt", priority = "descending") => {
-    return axios.get(`/wallpaper/${userId}?page=${page}&order=${order}&priority=${priority}`);
+    return axios.get(`/wallpaper/by-author/${userId}?page=${page}&order=${order}&priority=${priority}`);
 }
 const getAllWallpaperByAlbumService = (albumId, page = "1", order = "createdAt", priority = "descending") => {
     return axios.get(`/wallpaper/all/${albumId}?page=${page}&order=${order}&priority=${priority}`);
@@ -16,9 +16,14 @@ const CreateWallpaper = (wallpaper) => {
         }
     });
 }
+
+const getWallpaperDetail = (id) => {
+    return axios.get(`/wallpaper/${id}`);
+}
 export const WallpaperService = {
     getAllWallpaperService,
     getAllWallpaperByAuthorService,
     getAllWallpaperByAlbumService,
-    CreateWallpaper
+    CreateWallpaper,
+    getWallpaperDetail
 }
