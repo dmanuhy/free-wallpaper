@@ -132,11 +132,29 @@ const getWallpaperByID = async (req, res) => {
     }
 }
 
+const addWallpaperComment = async (req, res) => {
+    try {
+        const { wallpaperID, commentID, body, userID } = req.body
+        if (!wallpaperID || !body || !userID) {
+            return res.status(422).json({
+                status: res.statusCode,
+                message: "Cannot access data"
+            })
+        } else {
+            const serviceResponse = await WallpaperService.addWallpaperCommentService(req.body);
+            return res.status(200).json(serviceResponse)
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     getWallpapers,
     CreateNewWallpaper,
     getWallpapersByAuthor,
     getWallpapersByAlbum,
     getWallpaperByID,
-    deleteManyImageAlbum
+    deleteManyImageAlbum,
+    addWallpaperComment
 } 

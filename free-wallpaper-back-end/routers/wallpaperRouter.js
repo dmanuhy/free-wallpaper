@@ -12,6 +12,7 @@ wallpaperRouter.get("/by-author/:userId", wallpaperController.getWallpapersByAut
 wallpaperRouter.get("/all/:albumId", wallpaperController.getWallpapersByAlbum);
 wallpaperRouter.get("/:id", wallpaperController.getWallpaperByID);
 wallpaperRouter.delete("/:id", wallpaperController.deleteManyImageAlbum);
+wallpaperRouter.post("/comment/add", wallpaperController.addWallpaperComment);
 wallpaperRouter.post("/create", uploadCloud.array('imageUrl'), wallpaperController.CreateNewWallpaper)
 module.exports = {
     wallpaperRouter

@@ -37,7 +37,7 @@ const signIn = async (req, res) => {
             })
         } else {
             const serviceResponse = await UserService.signInService(req.body)
-            res.cookie("jwt", serviceResponse.token, { httpOnly: true, maxAge: 60 * 1000 * 60 * 24 })
+            res.cookie("jwt", serviceResponse.token, { httpOnly: false, maxAge: 60 * 1000 * 60 * 24 })
             return res.status(200).json(serviceResponse)
         }
     } catch (error) {

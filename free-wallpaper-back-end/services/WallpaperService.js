@@ -1,4 +1,5 @@
-const db = require("../models")
+const db = require("../models");
+const Wallpaper = require("../models/wallpaper");
 
 const getAllWallpaperService = (page, order, priority) => {
     return new Promise(async (resolve, reject) => {
@@ -120,8 +121,20 @@ const getWallpaperByIDService = (id) => {
                 })
                 .populate({
                     path: "comments",
-                    select: "user body date",
-                    populate: { path: "user", select: "_id name avatar" }
+                    select: "_id user body date replies",
+                    populate: [
+                        {
+                            path: "user",
+                            select: "_id name avatar"
+                        },
+                        {
+                            path: "replies",
+                            populate: {
+                                path: "user",
+                                select: "_id name avatar"
+                            }
+                        }
+                    ]
                 })
             if (wallpaper) {
                 resolve({
@@ -140,9 +153,68 @@ const getWallpaperByIDService = (id) => {
     })
 }
 
+const addWallpaperCommentService = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let existWallpaper = null
+            if (!data.commentID || data.commentID === "") {
+                existWallpaper = await Wallpaper.findOneAndUpdate(
+                    { _id: data.wallpaperID },
+                    { $push: { comments: { user: data.userID, body: data.body, date: Date.now() } } },
+                    { new: true }
+                ).select("_id comments").populate({
+                    path: "comments",
+                    populate: { path: "user", select: "_id name avatar" }
+                })
+                if (existWallpaper) {
+                    resolve({
+                        status: 201,
+                        data: existWallpaper.comments[existWallpaper.comments.length - 1]
+                    })
+                }
+            } else {
+                existWallpaper = await Wallpaper.findOneAndUpdate(
+                    { _id: data.wallpaperID }
+                ).select("_id comments").populate({
+                    path: "comments",
+                    select: "_id replies",
+                    populate: {
+                        path: "replies",
+                        select: "_id user body date",
+                        populate: {
+                            path: "user",
+                            select: "_id name avatar"
+                        }
+                    }
+                })
+                if (existWallpaper) {
+                    updateIndex = existWallpaper.comments.indexOf(existWallpaper.comments.find(comment => comment._id.toString() === data.commentID))
+                    existWallpaper.comments[updateIndex].replies.push({ user: data.userID, body: data.body, date: Date.now() })
+                    await existWallpaper.save()
+                    const lastReplyIndex = existWallpaper.comments[updateIndex].replies.length
+                    const reply = existWallpaper.comments[updateIndex].replies[lastReplyIndex - 1]
+                    const user = await db.user.findOne({ _id: reply.user.toString() }).select("name avatar")
+                    resolve({
+                        status: 201,
+                        data: {
+                            user: user,
+                            _id: reply._id,
+                            body: reply.body,
+                            date: reply.date
+                        }
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     getAllWallpaperService,
     getAllWallpaperByAuthorService,
     getAllWallpaperByAlbumService,
-    getWallpaperByIDService
+    getWallpaperByIDService,
+    addWallpaperCommentService
 }

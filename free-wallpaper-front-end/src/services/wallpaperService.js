@@ -23,11 +23,17 @@ const deleteImageAlbum = (albumId) => {
 const getWallpaperDetail = (id) => {
     return axios.get(`/wallpaper/${id}`);
 }
+
+const addWallpaperCommentService = (data) => {
+    return axios.post("wallpaper/comment/add", data);
+}
+
 export const WallpaperService = {
     getAllWallpaperService,
     getAllWallpaperByAuthorService,
     getAllWallpaperByAlbumService,
     CreateWallpaper,
     getWallpaperDetail,
-    deleteImageAlbum
+    deleteImageAlbum,
+    addWallpaperCommentService
 }
