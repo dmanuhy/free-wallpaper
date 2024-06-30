@@ -24,7 +24,7 @@ const getAlbums = async (req, res) => {
     try {
         const albums = await Album.find().limit(3).populate('wallpapers').populate('author');
         const albumsWithThumbnails = albums.map(album => {
-            const thumbnails = album.wallpapers.slice(0, 3); // Lấy 3 ảnh đầu làm placeholder
+            const thumbnails = album.wallpapers.slice(0, 3); 
             return {
                 ...album.toObject(),
                 thumbnails

@@ -1,6 +1,5 @@
 import './UserGallery.css';
 import { Component } from "../../components"
-
 import { Link, useParams } from "react-router-dom";
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/UserContext';
@@ -39,7 +38,6 @@ export default function UserGallery() {
         try {
             const response = await UserService.findUser(userId);
             setUser(response);
-            console.log(response);
         } catch (error) {
             console.error("Error fetching user:", error);
         }

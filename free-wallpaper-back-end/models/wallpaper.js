@@ -18,7 +18,7 @@ const WallpaperSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        
+
     },
     likes: {
         type: Number,
@@ -27,6 +27,9 @@ const WallpaperSchema = new mongoose.Schema({
     comments: [
         { user: { type: mongoose.Schema.Types.ObjectId, ref: "user" }, body: String, date: Date }
     ],
+    publicId: {
+        type: String
+    }
 }, { timestamps: true });
 
 const Wallpaper = mongoose.model("wallpaper", WallpaperSchema);
