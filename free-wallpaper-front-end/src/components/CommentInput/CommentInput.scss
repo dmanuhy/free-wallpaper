@@ -1,0 +1,11 @@
+.comment-input {
+    border          : none;
+    border-radius   : 9999rem;
+    padding         : 0.4rem 0.7rem;
+    font-size       : 0.9rem;
+    background-color: var(--color-white-2);
+
+    &:focus {
+        outline: none;
+    }
+}

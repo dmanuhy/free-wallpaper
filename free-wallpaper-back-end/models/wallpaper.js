@@ -1,4 +1,3 @@
-const { Timestamp } = require('mongodb');
 const mongoose = require('mongoose');
 
 const WallpaperSchema = new mongoose.Schema({
@@ -25,7 +24,18 @@ const WallpaperSchema = new mongoose.Schema({
         default: 0,
     },
     comments: [
-        { user: { type: mongoose.Schema.Types.ObjectId, ref: "user" }, body: String, date: { type: Number, default: Date.now() } }
+        {
+            user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+            body: String,
+            date: { type: Number, default: Date.now() },
+            replies: [
+                {
+                    user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+                    body: String,
+                    date: { type: Number, default: Date.now() },
+                }
+            ]
+        }
     ],
 }, { timestamps: true });
 

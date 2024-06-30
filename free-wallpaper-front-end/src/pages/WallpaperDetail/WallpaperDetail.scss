@@ -26,6 +26,7 @@
     &-img {
         border-radius: 1rem;
         width        : 55%;
+        height       : 100%;
     }
 
     &-content {
@@ -53,6 +54,10 @@
     }
 
     &-comment {
+        &-list {
+            overflow-y: auto;
+        }
+
         &-body {
             font-size: 1.1rem;
         }
@@ -71,6 +76,28 @@
             padding         : 0.7rem 1rem;
             background-color: var(--color-black-light);
             color           : var(--color-white);
+        }
+    }
+
+    &-reply {
+        &-avatar {
+            background-position: center;
+            background-size    : cover;
+            width              : 1.8rem;
+            aspect-ratio       : 1;
+            border-radius      : 9999rem;
+        }
+
+        &-body {
+            font-size: 0.9rem;
+        }
+
+        &-time {
+            font-size    : 0.9rem;
+            text-overflow: ellipsis;
+            white-space  : nowrap;
+            overflow     : hidden;
+            color        : var(--color-black-light);
         }
     }
 }

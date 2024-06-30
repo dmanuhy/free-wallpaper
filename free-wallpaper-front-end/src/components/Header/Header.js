@@ -57,7 +57,7 @@ const Header = () => {
                 </div>
                 {user && user.isActived === true ?
                     <>
-                        <div onClick={() => handleClickAvatar()} className="header-user-avatar" style={{ backgroundImage: `url(${user.avatar || user_avatar_raw})` }}></div>
+                        <div onClick={() => handleClickAvatar()} className="header-user-avatar" style={{ backgroundImage: `url(${(user && user.avatar) || user_avatar_raw})` }}></div>
                         <button onClick={(event) => handleLogout(event)} className="header-logout btn btn-warning">Logout</button>
                     </>
                     :
