@@ -16,6 +16,9 @@ const CreateWallpaper = (wallpaper) => {
         }
     });
 }
+const deleteImageAlbum = (albumId) => {
+    return axios.delete(`/wallpaper/${albumId}`);
+}
 
 const getWallpaperDetail = (id) => {
     return axios.get(`/wallpaper/${id}`);
@@ -25,5 +28,6 @@ export const WallpaperService = {
     getAllWallpaperByAuthorService,
     getAllWallpaperByAlbumService,
     CreateWallpaper,
-    getWallpaperDetail
+    getWallpaperDetail,
+    deleteImageAlbum
 }

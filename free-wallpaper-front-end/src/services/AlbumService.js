@@ -7,11 +7,15 @@ const getAlbumByIdService = (albumId) => {
     return axios.get(`/album/${albumId}`)
 }
 const createAlbum = (albumData) => {
-    return axios.post(`/album`,albumData)
+    return axios.post(`/album`, albumData)
+}
+const deleteAlbumbyId = (albumId) => {
+    return axios.delete(`/album/${albumId}`)
 }
 
 export const AlbumService = {
     getAllAlbumByAuthorService,
     getAlbumByIdService,
-    createAlbum
+    createAlbum,
+    deleteAlbumbyId
 }

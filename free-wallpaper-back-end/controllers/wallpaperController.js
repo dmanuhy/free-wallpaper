@@ -2,6 +2,7 @@ const db = require("../models");
 const User = require("../models/user");
 const Album = require("../models/album");
 const { WallpaperService } = require("../services")
+const cloudinary = require('cloudinary').v2;
 
 const getWallpapers = async (req, res) => {
     const page = req.query.page ? req.query.page : "1";
@@ -41,28 +42,46 @@ async function CreateNewWallpaper(req, res, next) {
         next(error);
     }
 }
-<<<<<<< HEAD
-const deleteOneImage = async (publicIds) => {
-    try {
-        const deletePromises = publicIds.map(publicId => cloudinary.uploader.destroy(publicId));
-        await Promise.all(deletePromises);
-        console.log(`Deleted images with public_ids: ${publicIds}`);
-    } catch (error) {
-        console.error(`Failed to delete images with public_ids: ${publicIds}`, error);
-    }
-};
-const deleteManyImageAlbum = async (publicIds) => {
-    try {
-        const deletePromises = publicIds.map(publicId => cloudinary.uploader.destroy(publicId));
-        await Promise.all(deletePromises);
-        console.log(`Deleted images with public_ids: ${publicIds}`);
-    } catch (error) {
-        console.error(`Failed to delete images with public_ids: ${publicIds}`, error);
-    }
-};
-=======
 
->>>>>>> 34ad0c5c78e93346233406c03f30bce3d217081b
+// const deleteOneImage = async (publicIds) => {
+//     try {
+//         const deletePromises = publicIds.map(publicId => cloudinary.uploader.destroy(publicId));
+//         await Promise.all(deletePromises);
+//         Xoa' await Album.findByIdAndUpdate(fromAlbum, { $pull: { wallpapers: { $in: wallpaperIds } } });
+//         console.log(`Deleted images with public_ids: ${publicIds}`);
+//     } catch (error) {
+//         console.error(`Failed to delete images with public_ids: ${publicIds}`, error);
+//     }
+// };
+const deleteManyImageAlbum = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ error: "Missing albumId in query parameters" });
+        }
+
+        // Tìm các ảnh trong album có id là `id`
+        const wallpapers = await Wallpaper.find({ fromAlbum: id });
+
+        // Lấy ra publicId của các ảnh
+        const publicIds = wallpapers.map(wallpaper => wallpaper.publicId);
+
+        // Xóa từng ảnh khỏi Cloudinary
+        const deletePromises = publicIds.map(publicId => cloudinary.uploader.destroy(publicId));
+        await Promise.all(deletePromises);
+
+        // Xóa tất cả ảnh khỏi MongoDB
+        await Wallpaper.deleteMany({ fromAlbum: id });
+
+        // Trả về phản hồi thành công
+        return res.status(200).json({ message: "Deleted images from album successfully" });
+    } catch (error) {
+        console.error(`Failed to delete images with public_ids`, error);
+        return res.status(500).json({ error: "Failed to delete images from album", details: error.message });
+    }
+};
+
 const getWallpapersByAuthor = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -118,5 +137,6 @@ module.exports = {
     CreateNewWallpaper,
     getWallpapersByAuthor,
     getWallpapersByAlbum,
-    getWallpaperByID
+    getWallpaperByID,
+    deleteManyImageAlbum
 } 
