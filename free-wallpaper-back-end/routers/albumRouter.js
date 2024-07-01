@@ -14,7 +14,8 @@ albumRouter.put('/:id', albumController.updateAlbum);
 albumRouter.delete('/:id', albumController.deleteAlbum);
 // Lấy danh sách các album của một người dùng dựa trên ID của người dùng đó 
 albumRouter.get('/user/:userId', albumController.getAlbumsByUser);
-
+// Share album
+albumRouter.post('/share', albumController.shareAlbum);
 module.exports = {
     albumRouter
 };

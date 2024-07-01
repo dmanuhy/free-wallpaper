@@ -18,15 +18,29 @@ const WallpaperSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        
+
     },
     likes: {
         type: Number,
         default: 0,
     },
     comments: [
-        { user: { type: mongoose.Schema.Types.ObjectId, ref: "user" }, body: String, date: Date }
+        {
+            user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+            body: String,
+            date: { type: Number, default: Date.now() },
+            replies: [
+                {
+                    user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+                    body: String,
+                    date: { type: Number, default: Date.now() },
+                }
+            ]
+        }
     ],
+    publicId: {
+        type: String
+    }
 }, { timestamps: true });
 
 const Wallpaper = mongoose.model("wallpaper", WallpaperSchema);

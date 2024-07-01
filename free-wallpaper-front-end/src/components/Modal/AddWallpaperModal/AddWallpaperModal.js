@@ -1,99 +1,61 @@
-import "./AddWallpaperModal.scss"
-import { useContext, useState } from "react"
+import { useState } from "react";
 import Dropzone from "../../Dropzone/Dropzone";
-import TextEditor from "../../TextEditor/TextEditor"
-import { CONSTRANT } from "../../../constrant";
-import { WallpaperContext } from "../../../contexts/WallpaperContext";
+import { WallpaperService } from "../../../services/WallpaperService";
+import "./AddWallpaperModal.scss";
 
-const AddWallpaperModal = () => {
+const AddWallpaperModal = ({ albumId, userId, onUpdate }) => {
+    const [newImages, setNewImages] = useState([]);
 
-    const { wallpaperList, setWallpaperList } = useContext(WallpaperContext);
-
-    const [newImage, setNewImage] = useState(null);
-    const [description, setDescription] = useState("");
-    const [categories, setCategories] = useState([""]);
-
-    const quillModules = {
-        toolbar: CONSTRANT.TOOL_BAR_OPTIONS
-    }
-
-    const handleChangeCategoryList = (index, action) => {
-        const currentCategories = [...categories]
-        switch (action) {
-            case "ADD":
-                currentCategories.push(""); break;
-            case "DELETE":
-                if (currentCategories.length > 1) {
-                    currentCategories.splice(index, 1); break;
-                } else {
-                    return
-                }
-            default: return;
+    const handleCreateNewWallpaper = async () => {
+        if (!newImages || newImages.length === 0) {
+            alert("Please upload at least one image.");
+            return;
         }
-        setCategories(currentCategories);
-    }
-
-    const handleChangeCategory = (index, value) => {
-        const currentCategories = [...categories]
-        currentCategories[index] = value
-        setCategories(currentCategories)
-    }
-
-    const handleCreateNewWallpaper = () => {
-        if (!newImage || !description || categories.length < 1) {
-            alert("Missing parameter(s)")
-        } else {
-            let currentWallpaperList = [...wallpaperList];
-            currentWallpaperList = [newImage, ...wallpaperList];
-            setWallpaperList(currentWallpaperList);
-            alert("Created new Wallpaper");
+        try {
+            const formData = new FormData();
+            newImages.forEach((image) => {
+                formData.append("imageUrl", image);
+            });
+            formData.append("fromAlbum", albumId);
+            formData.append("createdBy", userId);
+            const response = await WallpaperService.CreateWallpaper(formData);
+            alert("Created new wallpaper successfully");
             clearState();
+            onUpdate();
+        } catch (error) {
+            console.error("Error creating new wallpaper:", error);
+            alert("Error creating new wallpaper. Please try again.");
         }
-    }
+    };
 
     const clearState = () => {
-        setNewImage("")
-        setDescription("")
-        setCategories([""]);
-    }
+        setNewImages([]);
+    };
+
 
     return (
         <div className="add-wallpaper-modal">
-            <div class="modal fade" id="modalAddWallpaper" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog  modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header bg-success">
-                            <h1 class="modal-title fs-5 text-white" id="staticBackdropLabel">Shared your wallpapers, photos, and let the world love them</h1>
-                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="modalAddWallpaper" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header bg-success">
+                            <h1 className="modal-title fs-5 text-white" id="staticBackdropLabel">
+                                Share your wallpapers, photos, and let the world love them
+                            </h1>
+                            <button type="button" className="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <Dropzone newImage={newImage} setNewImage={setNewImage} />
-                            <TextEditor value={description} setValue={setDescription} label={"Description for your Wallpaper"} id={"newWallpaperDesc"} quillModules={quillModules} />
-                            <div>
-                                <label>Your wallpapersallpaper categories</label>
-                                <div className="select-categories">
-                                    <i onClick={() => handleChangeCategoryList(null, "ADD")} className="select-categories-item-icon-add text-white bg-success fa-solid fa-plus"></i>
-                                    {categories && categories.map((item, index) => {
-                                        return (
-                                            <div className="select-categories-item">
-                                                <input onChange={(event) => handleChangeCategory(index, event.target.value)} value={item} placeholder="image category.." className="select-categories-item-input" />
-                                                <i onClick={() => handleChangeCategoryList(index, "DELETE")} className="select-categories-item-icon-delete fa-solid fa-minus"></i>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            </div>
+                        <div className="modal-body">
+                            <Dropzone newImages={newImages} setNewImages={setNewImages} />
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button onClick={() => handleCreateNewWallpaper()} type="button" class="btn btn-primary">Create</button>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button onClick={handleCreateNewWallpaper} type="button" data-bs-dismiss="modal" className="btn btn-primary">Create</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    );
+};
 
-    )
-}
-
-export default AddWallpaperModal
+export default AddWallpaperModal;

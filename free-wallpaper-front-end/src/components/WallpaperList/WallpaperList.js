@@ -2,8 +2,7 @@ import { Component } from '..'
 import './WallpaperList.scss'
 
 import { LoadMoreOnScroll } from '../LoadMoreOnScroll/LoadMoreOnScroll';
-import { useContext, useMemo, useState } from 'react';
-import { WallpaperContext } from '../../contexts/WallpaperContext';
+import { useMemo } from 'react';
 
 
 const WallpaperList = ({ wallpaperList = [], page = 0, setPage = null, noMoreData = false }) => {
@@ -24,7 +23,7 @@ const WallpaperList = ({ wallpaperList = [], page = 0, setPage = null, noMoreDat
                         <div className='wallpaper-list-container'>
                             {wallpaperList.map((item, index) => {
                                 return (
-                                    <Component.Wallpaper key={item._id} image={item.imageUrl} createdBy={item.createdBy} index={index} />
+                                    <Component.Wallpaper key={"wallpaper" + item._id} wallpaper={item} />
                                 )
                             })}
                         </div>

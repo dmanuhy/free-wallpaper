@@ -1,4 +1,5 @@
-const { UserService } = require("../services")
+const User = require("../models/user")
+const { UserService, WallpaperService } = require("../services")
 
 const signUp = async (req, res, next) => {
     try {
@@ -36,7 +37,7 @@ const signIn = async (req, res) => {
             })
         } else {
             const serviceResponse = await UserService.signInService(req.body)
-            res.cookie("jwt", serviceResponse.token, { httpOnly: true, maxAge: 60 * 1000 * 60 * 24 })
+            res.cookie("jwt", serviceResponse.token, { httpOnly: false, maxAge: 60 * 1000 * 60 * 24 })
             return res.status(200).json(serviceResponse)
         }
     } catch (error) {
@@ -61,10 +62,21 @@ const logout = async (req, res) => {
         })
     }
 }
-
-
+const finduserById = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const user = await User.findById(userId)
+        if (!user) {
+            return res.status(404).json({ message: 'user not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 module.exports = {
     signUp,
     signIn,
-    logout
+    logout,
+    finduserById
 } 

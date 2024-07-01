@@ -1,4 +1,9 @@
 .dropzone {
+
+    &:focus {
+        outline: none;
+    }
+
     display       : flex;
     flex-direction: column;
     align-items   : center;
@@ -13,7 +18,18 @@
     }
 
     &-image {
-        height: 32rem;
-        width : auto;
+        height: auto;
+        width : 80%;
+    }
+
+    &-item {
+        &-delete {
+            font-size: 1.5rem;
+            height   : fit-content;
+
+            &:hover {
+                color: var(--color-red);
+            }
+        }
     }
 }

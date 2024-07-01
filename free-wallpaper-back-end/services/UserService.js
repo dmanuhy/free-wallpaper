@@ -4,7 +4,10 @@ const bcrypt = require("bcrypt")
 const { createJWT } = require("../middlewares/JsonWebToken")
 
 const getRoles = async (roleName) => {
-    const role = await db.role.findOne({ name: roleName }).select("_id");
+    let role = await db.role.findOne({ name: roleName }).select("_id");
+    if (!role) {
+        role = await db.role.create({ name: roleName })
+    }
     return role;
 }
 
@@ -51,8 +54,10 @@ const signUpService = (data) => {
 const signInService = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const existUser = await db.user.findOne({ email: data.email }).select("email isActived password")
-            console.log("check user status: ", existUser)
+            const existUser = await db.user.findOne({ email: data.email })
+                .populate({
+                    path: "roles"
+                })
             if (!existUser) {
                 resolve({
                     status: 401,
@@ -68,47 +73,26 @@ const signInService = (data) => {
                 }
                 else {
                     const isCorrectPassword = bcrypt.compareSync(data.password, existUser.password)
-                    const userData = await db.user.findOne({ email: data.email })
-                        .populate({
-                            path: "roles"
-                        })
-                        .populate({
-                            path: "albums",
-                            select: "_id name wallpapers",
-                            populate: {
-                                path: "wallpapers",
-                                select: "imageUrl"
-                            }
-                        })
-                        .populate({
-                            path: "shared",
-                            select: "_id name wallpapers",
-                            populate: {
-                                path: "wallpapers",
-                                select: "imageUrl"
-                            }
-                        })
-                        .populate({
-                            path: "liked"
-                        });
                     if (isCorrectPassword) {
                         const payload = {
-                            name: userData.name,
-                            email: userData.email,
-                            roles: userData.roles,
-                            isActived: userData.isActived
+                            _id: existUser._id,
+                            name: existUser.name,
+                            email: existUser.email,
+                            roles: existUser.roles,
+                            avatar: existUser.avatar,
+                            isActived: existUser.isActived
                         }
                         const token = createJWT(payload)
                         resolve({
                             status: 200,
                             message: "Authenticated successfully!",
                             data: {
-                                name: userData.name,
-                                isActived: userData.isActived,
-                                roles: userData.roles,
-                                albums: userData.albums,
-                                shared: userData.shared,
-                                liked: userData.liked
+                                _id: existUser._id,
+                                name: existUser.name,
+                                email: existUser.email,
+                                roles: existUser.roles,
+                                avatar: existUser.avatar,
+                                isActived: existUser.isActived
                             },
                             token: token,
                         })
@@ -125,6 +109,7 @@ const signInService = (data) => {
         }
     })
 }
+
 
 
 module.exports = {
