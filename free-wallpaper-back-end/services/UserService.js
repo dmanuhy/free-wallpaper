@@ -124,13 +124,13 @@ const getAllUsersService = async () => {
   }
 };
 
-const blockUserService = async (userId, isActive) => {
+const blockUserService = async (userId, isActived) => {
   try {
     const updatedUser = await db.user
-      .findByIdAndUpdate(userId, { $set: { isActive: isActive } }, { new: true })
+      .findByIdAndUpdate(userId, { $set: { isActived: isActived } }, { new: true })
       .populate("roles", "-_id");
 
-    console.log(userId, isActive);
+    console.log(userId, isActived);
 
     if (!updatedUser) {
       return {

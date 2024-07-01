@@ -16,8 +16,8 @@ const getAllUsersService = () => {
   return axios.get(`/user`);
 };
 
-const blockUserService = (id, isActive) => {
-  return axios.patch(`/user/${id}`, { isActive });
+const blockUserService = (id, isActived) => {
+  return axios.patch(`/user/${id}`, { isActived });
 };
 
 export const UserService = {

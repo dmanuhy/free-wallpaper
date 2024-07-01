@@ -77,9 +77,9 @@ const getAllUsers = async (req, res) => {
 const blockUser = async (req, res, next) => {
   try {
     const userId = req.params.id;
-    const isActive = req.body.isActive;
+    const isActived = req.body.isActived;
 
-    const serviceResponse = await UserService.blockUserService(userId, isActive);
+    const serviceResponse = await UserService.blockUserService(userId, isActived);
     return res.status(serviceResponse.status).json(serviceResponse);
   } catch (error) {
     return res.status(500).json({
