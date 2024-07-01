@@ -13,7 +13,9 @@ wallpaperRouter.get("/all/:albumId", wallpaperController.getWallpapersByAlbum);
 wallpaperRouter.get("/:id", wallpaperController.getWallpaperByID);
 wallpaperRouter.delete("/:id", wallpaperController.deleteManyImageAlbum);
 wallpaperRouter.post("/comment/add", wallpaperController.addWallpaperComment);
-wallpaperRouter.post("/create", uploadCloud.array('imageUrl'), wallpaperController.CreateNewWallpaper)
+wallpaperRouter.post("/create", uploadCloud.array('imageUrl'), wallpaperController.CreateNewWallpaper);
+//Like ảnh
+wallpaperRouter.post('/:id/like', wallpaperController.likeWallpaper);
 module.exports = {
     wallpaperRouter
 }

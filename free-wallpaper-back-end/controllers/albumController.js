@@ -1,5 +1,6 @@
 const db = require("../models");
 const Album = require("../models/album");
+const User = require("../models/user"); 
 
 // Create a new album
 const createAlbum = async (req, res) => {
@@ -102,11 +103,41 @@ const getAlbumsByUser = async (req, res) => {
     }
 };
 
+//Share album
+const shareAlbum = async (req, res) => {
+    try {
+        const { albumId, userId } = req.body;
+
+        // Check if album exists
+        const album = await Album.findById(albumId);
+        if (!album) {
+            return res.status(404).json({ message: 'Album not found' });
+        }
+
+        // Check if user exists
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        album.sharedWith = album.sharedWith || [];
+        if (!album.sharedWith.includes(userId)) {
+            album.sharedWith.push(userId);
+            await album.save();
+        }
+
+        res.status(200).json({ message: 'Album shared successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error', error });
+    }
+};
+
 module.exports = {
     createAlbum,
     getAlbums,
     getAlbumById,
     updateAlbum,
     deleteAlbum,
-    getAlbumsByUser
+    getAlbumsByUser,
+    shareAlbum
 };

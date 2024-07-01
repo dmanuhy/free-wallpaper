@@ -149,6 +149,26 @@ const addWallpaperComment = async (req, res) => {
     }
 }
 
+//Like ảnh
+const likeWallpaper = async (req, res) => {
+    try {
+        const wallpaperId = req.params.id;
+        const wallpaper = await Wallpaper.findById(wallpaperId);
+
+        if (!wallpaper) {
+            return res.status(404).json({ message: 'Wallpaper not found' });
+        }
+
+        wallpaper.likes += 1;
+        await wallpaper.save();
+
+        res.status(200).json({ message: 'Wallpaper liked successfully', likes: wallpaper.likes });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error', error });
+    }
+};
+
+
 module.exports = {
     getWallpapers,
     CreateNewWallpaper,
@@ -156,5 +176,6 @@ module.exports = {
     getWallpapersByAlbum,
     getWallpaperByID,
     deleteManyImageAlbum,
-    addWallpaperComment
+    addWallpaperComment,
+    likeWallpaper
 } 
