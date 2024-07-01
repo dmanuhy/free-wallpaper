@@ -31,14 +31,14 @@ const UserTable = () => {
           <th onClick={() => requestSort("joined")} className={`hidden-xs ${getClassNamesFor("joined")}`}>
             Date Of Birth
           </th>
-          <th onClick={() => requestSort("role")} className={getClassNamesFor("role")}>
-            Role
-          </th>
+          <th>Role</th>
           <th>Block</th>
         </tr>
       </thead>
       <tbody>
-        {currentUsers.map((user, index) => user.role !== "admin" && <UserRow key={user._id} user={user} />)}
+        {currentUsers.map((user) => (
+          <UserRow key={user._id} user={user} />
+        ))}
       </tbody>
     </table>
   );

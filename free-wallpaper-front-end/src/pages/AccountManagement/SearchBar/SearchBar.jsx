@@ -21,15 +21,23 @@ const SearchBar = () => {
 
   const sortByRoleAndSearch = (role, searchValue) => {
     let filteredUsers = defaultUsers;
-    console.log(defaultUsers);
 
     if (role !== "All") {
-      filteredUsers = filteredUsers.filter((user) => user.role === role);
+      if (role.toLowerCase() === "contributor") {
+        filteredUsers = filteredUsers.filter(
+          (user) => user.roles.length === 1 && user.roles[0].name.toLowerCase() === "contributor"
+        );
+      } else {
+        filteredUsers = filteredUsers.filter((user) =>
+          user.roles.some((r) => r.name.toLowerCase() === role.toLowerCase())
+        );
+      }
     }
 
-    // if (searchValue) {
-    //   filteredUsers = filteredUsers.filter((user) => user.name.toLowerCase().includes(searchValue.toLowerCase()));
-    // }
+    if (searchValue) {
+      filteredUsers = filteredUsers.filter((user) => user.name.toLowerCase().includes(searchValue.toLowerCase()));
+    }
+
     setUsers(filteredUsers);
     setCurrentPage(1);
   };

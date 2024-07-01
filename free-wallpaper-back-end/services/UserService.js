@@ -107,11 +107,14 @@ const signInService = (data) => {
 
 const getAllUsersService = async () => {
   try {
-    const users = await db.user.find().populate("roles", "-_id");
+    const adminRole = await db.role.findOne({ name: "admin" }).select("_id");
+
+    const users = await db.user.find({ roles: { $ne: adminRole._id } }).populate("roles", "-_id");
+
     return {
       status: 200,
       data: users,
-      message: "Successfully retrieved all users",
+      message: "Successfully retrieved all users except admins",
     };
   } catch (error) {
     return {
@@ -121,8 +124,37 @@ const getAllUsersService = async () => {
   }
 };
 
+const blockUserService = async (userId, isActive) => {
+  try {
+    const updatedUser = await db.user
+      .findByIdAndUpdate(userId, { $set: { isActive: isActive } }, { new: true })
+      .populate("roles", "-_id");
+
+    console.log(userId, isActive);
+
+    if (!updatedUser) {
+      return {
+        status: 404,
+        message: "User not found or no changes made",
+      };
+    }
+
+    return {
+      status: 200,
+      data: updatedUser,
+      message: "User updated successfully",
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      message: error.message || "Internal Server Error",
+    };
+  }
+};
+
 module.exports = {
   signUpService,
   signInService,
   getAllUsersService,
+  blockUserService,
 };

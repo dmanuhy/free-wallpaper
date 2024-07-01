@@ -74,9 +74,25 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const blockUser = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const isActive = req.body.isActive;
+
+    const serviceResponse = await UserService.blockUserService(userId, isActive);
+    return res.status(serviceResponse.status).json(serviceResponse);
+  } catch (error) {
+    return res.status(500).json({
+      status: 500,
+      message: error.message || "Internal Server Error",
+    });
+  }
+};
+
 module.exports = {
   signUp,
   signIn,
   logout,
   getAllUsers,
+  blockUser,
 };

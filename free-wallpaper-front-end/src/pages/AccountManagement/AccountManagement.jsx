@@ -64,6 +64,7 @@ const AccountManagement = () => {
           users: sortedUsers,
           setUsers,
           defaultUsers,
+          setDefaultUsers,
 
           currentPage,
           setCurrentPage,

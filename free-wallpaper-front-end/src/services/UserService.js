@@ -16,9 +16,14 @@ const getAllUsersService = () => {
   return axios.get(`/user`);
 };
 
+const blockUserService = (id, isActive) => {
+  return axios.patch(`/user/${id}`, { isActive });
+};
+
 export const UserService = {
   signUpService,
   signInService,
   logoutService,
   getAllUsersService,
+  blockUserService,
 };
