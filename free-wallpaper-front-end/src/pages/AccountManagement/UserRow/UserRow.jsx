@@ -39,7 +39,7 @@ const UserRow = ({ user }) => {
     <tr className={!user.isActived ? "blocked" : ""}>
       <td>{user.name}</td>
       <td>{user.email}</td>
-      <td className="hidden-xs">{user.dob}</td>
+      <td className="hidden-xs">{user.dob && new Date(user.dob).toLocaleDateString("vi-VN")}</td>
       <td>
         <span className={className}>
           {user.roles.some((role) => role.name === "admin")
