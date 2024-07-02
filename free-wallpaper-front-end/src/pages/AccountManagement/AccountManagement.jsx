@@ -1,43 +1,35 @@
-import React, { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import UserTable from "./UserTable/UserTable";
 import SearchBar from "./SearchBar/SearchBar";
 import Pagination from "./Pagination/Pagination";
 import "./AccountManagement.scss";
-import { usersArray } from "./users";
+import { UserService } from "../../services/UserService.js";
 export const Context = createContext();
 
 const AccountManagement = () => {
-  const [defaultUsers, setDefaultUsers] = useState(usersArray);
-  const [users, setUsers] = useState(usersArray);
+  const [defaultUsers, setDefaultUsers] = useState([]);
+  const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" });
-  const [blockedUsers, setBlockedUsers] = useState([]);
+
+  const getAllUser = async () => {
+    try {
+      const response = await UserService.getAllUsersService();
+
+      setDefaultUsers(response);
+      setUsers(response);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllUser();
+  }, []);
 
   const usersPerPage = 10;
-
-  const changeUserRole = (user, newRole) => {
-    const newUsers = users.map((u) => {
-      if (u.id === user.id) {
-        return { ...u, role: newRole };
-      }
-      return u;
-    });
-
-    const newDefaultUsers = defaultUsers.map((u) => {
-      if (u.id === user.id) {
-        return { ...u, role: newRole };
-      }
-      return u;
-    });
-    setUsers(newUsers);
-    setDefaultUsers(newDefaultUsers);
-  };
-
-  const addNewUser = (newUser) => {
-    setUsers([...users, newUser]);
-    setDefaultUsers([...defaultUsers, newUser]);
-  };
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -65,14 +57,6 @@ const AccountManagement = () => {
     setSortConfig({ key, direction });
   };
 
-  const toggleBlockUser = (userId) => {
-    if (blockedUsers.includes(userId)) {
-      setBlockedUsers(blockedUsers.filter((id) => id !== userId));
-    } else {
-      setBlockedUsers([...blockedUsers, userId]);
-    }
-  };
-
   return (
     <div className="container account-management">
       <Context.Provider
@@ -80,16 +64,14 @@ const AccountManagement = () => {
           users: sortedUsers,
           setUsers,
           defaultUsers,
-          changeUserRole,
-          addNewUser,
+          setDefaultUsers,
+
           currentPage,
           setCurrentPage,
           usersPerPage,
           handlePageChange,
           requestSort,
           sortConfig,
-          blockedUsers,
-          toggleBlockUser,
         }}
       >
         <SearchBar />

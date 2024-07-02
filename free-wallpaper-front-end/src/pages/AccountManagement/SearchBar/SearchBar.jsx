@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import "./SearchBar.scss";
-import AddUserButton from "../AddUser/AddUserButton";
 import { Context } from "../AccountManagement";
 
 const SearchBar = () => {
@@ -24,7 +23,15 @@ const SearchBar = () => {
     let filteredUsers = defaultUsers;
 
     if (role !== "All") {
-      filteredUsers = filteredUsers.filter((user) => user.role === role);
+      if (role.toLowerCase() === "contributor") {
+        filteredUsers = filteredUsers.filter(
+          (user) => user.roles.length === 1 && user.roles[0].name.toLowerCase() === "contributor"
+        );
+      } else {
+        filteredUsers = filteredUsers.filter((user) =>
+          user.roles.some((r) => r.name.toLowerCase() === role.toLowerCase())
+        );
+      }
     }
 
     if (searchValue) {
@@ -42,13 +49,9 @@ const SearchBar = () => {
         <select onChange={handleRoleChange} value={selectedRole}>
           <option disabled>Roles</option>
           <option>All</option>
-          <option>Admin</option>
+          <option>Vip</option>
           <option>Contributor</option>
-          <option>Viewer</option>
         </select>
-      </div>
-      <div>
-        <AddUserButton />
       </div>
     </div>
   );
