@@ -1,17 +1,23 @@
 import { NavLink } from "react-router-dom"
 
 import "./Category.scss"
-
-const category = ["All", "Car", "Computer", "Natural", "Sea", "Girl", "Boy", "Film", "Actor", "Cafe House", "AI", "Bikini"]
+import { useContext } from "react"
+import { TagContext } from "../../contexts/TagContext"
 
 const Category = () => {
+
+    const { category } = useContext(TagContext)
+
     return (
-        <div className="category  content-width-padding">
+        <div className="category content-width-padding">
             <div className="category-list">
-                {category.map((item, index) => {
+                <NavLink to={`/search/all`} className={({ isActive }) => isActive ? "category-tag category-tag-selected" : "category-tag"}>
+                    All
+                </NavLink>
+                {category && category.map((item, index) => {
                     return (
-                        <NavLink key={index} to={`/search/${item}`} className={({ isActive }) => isActive ? "category-tag category-tag-selected" : "category-tag"}>
-                            {item}
+                        <NavLink key={index} to={`/search/${item.name}`} className={({ isActive }) => isActive ? "category-tag category-tag-selected" : "category-tag"}>
+                            {item.name}
                         </NavLink>
                     )
                 })}

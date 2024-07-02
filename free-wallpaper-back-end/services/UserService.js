@@ -76,6 +76,7 @@ const signInService = (data) => {
               name: existUser.name,
               email: existUser.email,
               roles: existUser.roles,
+              avatar: existUser.avatar,
               isActived: existUser.isActived,
             };
             const token = createJWT(payload);
@@ -87,6 +88,7 @@ const signInService = (data) => {
                 name: existUser.name,
                 email: existUser.email,
                 roles: existUser.roles,
+                avatar: existUser.avatar,
                 isActived: existUser.isActived,
               },
               token: token,

@@ -8,9 +8,14 @@ const wallpaperRouter = express.Router();
 wallpaperRouter.use(bodyParser.json());
 
 wallpaperRouter.get("/all", wallpaperController.getWallpapers);
-
-
-wallpaperRouter.post("/create",uploadCloud.array('imageUrl'),wallpaperController.CreateNewWallpaper)
+wallpaperRouter.get("/by-author/:userId", wallpaperController.getWallpapersByAuthor);
+wallpaperRouter.get("/all/:albumId", wallpaperController.getWallpapersByAlbum);
+wallpaperRouter.get("/:id", wallpaperController.getWallpaperByID);
+wallpaperRouter.delete("/:id", wallpaperController.deleteManyImageAlbum);
+wallpaperRouter.post("/comment/add", wallpaperController.addWallpaperComment);
+wallpaperRouter.post("/create", uploadCloud.array('imageUrl'), wallpaperController.CreateNewWallpaper);
+//Like ảnh
+wallpaperRouter.post('/:id/like', wallpaperController.likeWallpaper);
 module.exports = {
     wallpaperRouter
 }

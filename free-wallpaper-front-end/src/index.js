@@ -8,13 +8,16 @@ import "../node_modules/bootstrap-icons/font/bootstrap-icons.css"
 
 import './styles/index.scss'
 import { UserProvider } from './contexts/UserContext.js';
+import { TagProvider } from './contexts/TagContext.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <UserProvider>
-      <WallpaperProvider>
-        <App />
-      </WallpaperProvider>
+      <TagProvider>
+        <WallpaperProvider>
+          <App />
+        </WallpaperProvider>
+      </TagProvider>
     </UserProvider>
   </React.StrictMode>
 );
