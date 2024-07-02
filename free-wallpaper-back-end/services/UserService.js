@@ -132,8 +132,6 @@ const blockUserService = async (userId, isActived) => {
       .findByIdAndUpdate(userId, { $set: { isActived: isActived } }, { new: true })
       .populate("roles", "-_id");
 
-    console.log(userId, isActived);
-
     if (!updatedUser) {
       return {
         status: 404,
