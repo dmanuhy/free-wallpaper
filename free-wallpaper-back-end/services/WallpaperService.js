@@ -222,6 +222,19 @@ const addWallpaperCommentService = (data) => {
 const reportWallpaperService = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
+      const existingReport = await Report.findOne({
+        reporter: data.userId,
+        wallpaper: data.wallpaperId,
+      });
+
+      if (existingReport) {
+        resolve({
+          status: 409,
+          message: "Report already exists for this user and wallpaper",
+        });
+        return;
+      }
+
       const newReport = new Report({
         reason: data.reason,
         wallpaper: data.wallpaperId,

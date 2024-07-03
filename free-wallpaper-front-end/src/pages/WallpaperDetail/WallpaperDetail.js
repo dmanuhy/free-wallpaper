@@ -81,7 +81,7 @@ const WallpaperDetail = () => {
                         class="wallpaper-detail-top-icon text-danger fa-solid fa-triangle-exclamation"
                         onClick={() => setOpenReportModal(true)}
                       ></i>
-                      <ReportModal isOpen={openReportModal} onClose={() => setOpenReportModal(false)} />
+                      <ReportModal isOpen={openReportModal} onClose={() => setOpenReportModal(false)} id={id} />
                     </div>
                   </div>
                   {wallpaperDetail.createdBy && (

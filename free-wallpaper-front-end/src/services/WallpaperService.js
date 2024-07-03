@@ -28,6 +28,10 @@ const addWallpaperCommentService = (data) => {
   return axios.post("wallpaper/comment/add", data);
 };
 
+const reportWallpaperService = (id, reason) => {
+  return axios.post(`/wallpaper/${id}/report`, { reason });
+};
+
 export const WallpaperService = {
   getAllWallpaperService,
   getAllWallpaperByAuthorService,
@@ -36,4 +40,5 @@ export const WallpaperService = {
   getWallpaperDetail,
   deleteImageAlbum,
   addWallpaperCommentService,
+  reportWallpaperService,
 };

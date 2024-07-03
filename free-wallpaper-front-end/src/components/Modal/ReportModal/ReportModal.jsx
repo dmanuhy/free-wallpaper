@@ -1,10 +1,32 @@
 import React, { useState } from "react";
 import "./ReportModal.scss";
+import { WallpaperService } from "../../../services/WallpaperService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const ReportModal = ({ isOpen, onClose }) => {
+const ReportModal = ({ isOpen, onClose, id }) => {
   const [description, setDescription] = useState("");
 
   if (!isOpen) return null;
+
+  const handleModalReport = async () => {
+    if (!description.trim()) {
+      toast.error("Please enter a description.");
+      return;
+    }
+
+    try {
+      const response = await WallpaperService.reportWallpaperService(id, description);
+      if (response.status === 201) {
+        toast.success("Report created successfully.");
+        onClose();
+      } else {
+        toast.error("This image has already been reported.");
+      }
+    } catch (error) {
+      toast.error("An error occurred while reporting the image. Please try again later.");
+    }
+  };
 
   return (
     <div className="modal-overlay">
@@ -27,9 +49,12 @@ const ReportModal = ({ isOpen, onClose }) => {
           <button className="cancel-button" onClick={onClose}>
             Cancel
           </button>
-          <button className="report-button">Report</button>
+          <button className="report-button" onClick={handleModalReport}>
+            Report
+          </button>
         </div>
       </div>
+      <ToastContainer autoClose={2000} newestOnTop={true} closeOnClick pauseOnFocusLoss={false} pauseOnHover={false} />
     </div>
   );
 };
