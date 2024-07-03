@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ReportModal.scss";
 import { WallpaperService } from "../../../services/WallpaperService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const ReportModal = ({ isOpen, onClose, id }) => {
   const [description, setDescription] = useState("");
+  const navigate = useNavigate();
 
   if (!isOpen) return null;
 
   const handleModalReport = async () => {
+    const jwt = Cookies.get("jwt");
+    if (!jwt) {
+      toast.error("Please log in to report an image.");
+    }
+
     if (!description.trim()) {
       toast.error("Please enter a description.");
       return;
