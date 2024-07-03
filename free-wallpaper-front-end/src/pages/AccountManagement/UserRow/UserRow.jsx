@@ -9,7 +9,7 @@ const UserRow = ({ user }) => {
   const getRoleClassName = (roles) => {
     if (roles.some((role) => role.name === "admin")) return "badge admin";
     if (roles.some((role) => role.name === "vip")) return "badge vip";
-    return `badge contributor`;
+    return `badge member`;
   };
 
   const className = getRoleClassName(user.roles);
@@ -46,7 +46,7 @@ const UserRow = ({ user }) => {
             ? "admin"
             : user.roles.some((role) => role.name === "vip")
             ? "vip"
-            : "contributor"}
+            : "member"}
         </span>
       </td>
       <td>

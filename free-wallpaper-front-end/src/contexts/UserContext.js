@@ -16,19 +16,19 @@ const UserProvider = ({ children }) => {
   };
 
   // useEffect(() => {
-  //     const jwtToken = Cookies.get("jwt")
-  //     if (jwtToken) {
-  //         const decoded = jwtDecode(jwtToken)
-  //         setUser({
-  //             _id: decoded._id,
-  //             name: decoded.name,
-  //             email: decoded.email,
-  //             avatar: decoded.avatar,
-  //             roles: decoded.roles,
-  //             isActived: decoded.isActived
-  //         })
-  //     }
-  // }, [])
+  //   const jwtToken = Cookies.get("jwt");
+  //   if (jwtToken) {
+  //     const decoded = jwtDecode(jwtToken);
+  //     setUser({
+  //       _id: decoded._id,
+  //       name: decoded.name,
+  //       email: decoded.email,
+  //       avatar: decoded.avatar,
+  //       roles: decoded.roles,
+  //       isActived: decoded.isActived,
+  //     });
+  //   }
+  // }, []);
 
   return <UserContext.Provider value={{ user, setUser, loginContext, logoutContext }}>{children}</UserContext.Provider>;
 };
