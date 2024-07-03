@@ -25,7 +25,7 @@ const App = () => {
           <Route path="user/:userId/edit-profile" element={<Page.Editprofile />} />
           <Route path="management/account" element={<AccountManagement />} />
           <Route path="am" element={<AccountManagement />} />
-          <Route path="regiseter" element={<Page.Register />} />
+          <Route path="register" element={<Page.Register />} />
         </Route>
       </Routes>
       <Component.Footer />
