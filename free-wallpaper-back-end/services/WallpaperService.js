@@ -1,6 +1,6 @@
 const db = require("../models");
 const Wallpaper = require("../models/wallpaper");
-const Report = require("../models/report");
+const Report = db.report;
 
 const getAllWallpaperService = (page, order, priority) => {
   return new Promise(async (resolve, reject) => {

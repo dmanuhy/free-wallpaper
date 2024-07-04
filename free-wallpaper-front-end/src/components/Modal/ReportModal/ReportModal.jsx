@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 const ReportModal = ({ isOpen, onClose, id }) => {
   const [description, setDescription] = useState("");
-  const navigate = useNavigate();
 
   if (!isOpen) return null;
 
