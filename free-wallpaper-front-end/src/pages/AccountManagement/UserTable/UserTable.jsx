@@ -27,22 +27,17 @@ const UserTable = () => {
           <th onClick={() => requestSort("email")} className={getClassNamesFor("email")}>
             Email
           </th>
-          <th onClick={() => requestSort("location")} className={`hidden-xs ${getClassNamesFor("location")}`}>
-            Location
-          </th>
+
           <th onClick={() => requestSort("joined")} className={`hidden-xs ${getClassNamesFor("joined")}`}>
-            Joined
+            Date Of Birth
           </th>
-          <th onClick={() => requestSort("role")} className={getClassNamesFor("role")}>
-            Role
-          </th>
+          <th>Role</th>
           <th>Block</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         {currentUsers.map((user) => (
-          <UserRow key={user.id} user={user} />
+          <UserRow key={user._id} user={user} />
         ))}
       </tbody>
     </table>

@@ -45,19 +45,19 @@ const Header = () => {
                 }
             </div>
             <div className='col-3 d-flex justify-content-end align-items-center gap-3'>
-                <div class="dropdown dropdown-right">
-                    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Explore <i class="fa-solid fa-chevron-down"></i>
+                <div className="dropdown dropdown-right">
+                    <button className="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Explore <i className="fa-solid fa-chevron-down"></i>
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Hostest Images</a></li>
-                        <li><a class="dropdown-item" href="#">Top Contributors</a></li>
-                        <li><a class="dropdown-item" href="#">Full Collections</a></li>
+                    <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="#">Hostest Images</a></li>
+                        <li><a className="dropdown-item" href="#">Top Contributors</a></li>
+                        <li><a className="dropdown-item" href="#">Full Collections</a></li>
                     </ul>
                 </div>
                 {user && user.isActived === true ?
                     <>
-                        <div onClick={() => handleClickAvatar()} className="header-user-avatar" style={{ backgroundImage: `url(${user.avatar || user_avatar_raw})` }}></div>
+                        <div onClick={() => handleClickAvatar()} className="header-user-avatar" style={{ backgroundImage: `url(${(user && user.avatar) || user_avatar_raw})` }}></div>
                         <button onClick={(event) => handleLogout(event)} className="header-logout btn btn-warning">Logout</button>
                     </>
                     :

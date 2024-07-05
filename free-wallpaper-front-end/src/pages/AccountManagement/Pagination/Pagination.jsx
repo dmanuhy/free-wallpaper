@@ -13,6 +13,8 @@ const Pagination = () => {
     pageNumbers.push(i);
   }
 
+  if (totalPages === 1) return null;
+
   return (
     <div className="pagination">
       <button onClick={() => handlePageChange(Math.max(1, currentPage - 1))}>&laquo;</button>

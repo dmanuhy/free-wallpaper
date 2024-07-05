@@ -1,8 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const uploadCloud = require('../middlewares/UploadCloud');
+const express = require("express");
+const bodyParser = require("body-parser");
+const uploadCloud = require("../middlewares/UploadCloud");
+const { checkUserJWT } = require("../middlewares/JsonWebToken");
 
-const { wallpaperController } = require("../controllers")
+const { wallpaperController } = require("../controllers");
 const wallpaperRouter = express.Router();
 
 wallpaperRouter.use(bodyParser.json());
@@ -12,7 +13,11 @@ wallpaperRouter.get("/by-author/:userId", wallpaperController.getWallpapersByAut
 wallpaperRouter.get("/all/:albumId", wallpaperController.getWallpapersByAlbum);
 wallpaperRouter.get("/:id", wallpaperController.getWallpaperByID);
 wallpaperRouter.delete("/:id", wallpaperController.deleteManyImageAlbum);
-wallpaperRouter.post("/create", uploadCloud.array('imageUrl'), wallpaperController.CreateNewWallpaper)
+wallpaperRouter.post("/comment/add", wallpaperController.addWallpaperComment);
+wallpaperRouter.post("/create", uploadCloud.array("imageUrl"), wallpaperController.CreateNewWallpaper);
+//Like ảnh
+wallpaperRouter.post("/:id/like", wallpaperController.likeWallpaper);
+wallpaperRouter.post("/:id/report", [checkUserJWT], wallpaperController.reportWallpaper);
 module.exports = {
-    wallpaperRouter
-}
+  wallpaperRouter,
+};

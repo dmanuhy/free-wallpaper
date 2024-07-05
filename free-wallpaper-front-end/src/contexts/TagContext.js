@@ -8,7 +8,6 @@ const TagProvider = ({ children }) => {
 
     const fetchAllTag = async () => {
         const response = await TagService.getAllTag()
-        console.log(response.status)
         if (response && response.status === 200 && response.data.length > 0) {
             setCategory(response.data)
         }
