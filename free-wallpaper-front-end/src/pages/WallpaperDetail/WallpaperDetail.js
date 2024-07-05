@@ -6,7 +6,6 @@ import "./WallpaperDetail.scss"
 import moment from "moment"
 import CommentInput from "../../components/CommentInput/CommentInput"
 
-
 const WallpaperDetail = () => {
 
     const { user } = useContext(UserContext)
@@ -17,13 +16,17 @@ const WallpaperDetail = () => {
     const [contentMaxHeight, setContentMaxHeight] = useState(null)
     const imageRef = useRef()
 
-    const changeReplyDisplay = (id) => {
+    const changeReplyDisplay = (id, isAuto) => {
         let array = [...commentReplyDisplay]
         const index = array.indexOf(id)
         if (index < 0) {
             array.push(id)
         } else {
-            array.splice(array.indexOf(id), 1)
+            if (isAuto) {
+                return
+            } else {
+                array.splice(array.indexOf(id), 1)
+            }
         }
         setCommentReplyDisplay(array)
     }
@@ -68,7 +71,7 @@ const WallpaperDetail = () => {
                                         <i className="wallpaper-detail-top-icon fa-regular fa-heart"></i> {wallpaperDetail.likes}
                                     </span>
                                     <i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square"></i>
-                                    <i class="wallpaper-detail-top-icon text-danger fa-solid fa-triangle-exclamation"></i>
+                                    <i className="wallpaper-detail-top-icon text-danger fa-solid fa-triangle-exclamation"></i>
                                 </div>
                                 {wallpaperDetail.createdBy &&
                                     <div className="wallpaper-detail-top-content d-flex align-items-center gap-2">
@@ -85,7 +88,7 @@ const WallpaperDetail = () => {
                                         <div style={{ maxHeight: contentMaxHeight - 256 }} className="wallpaper-detail-comment-list d-flex flex-column gap-1">
                                             {wallpaperDetail.comments.sort((a, b) => a.date - b.date).map((item, index) => {
                                                 return (
-                                                    <div key={"comment-" + index} className="d-flex align-items-center justify-content-between py-1 gap-3">
+                                                    <div key={"comment-" + item._id} className="d-flex align-items-center justify-content-between py-1 gap-3">
                                                         <div className="d-flex gap-2">
                                                             <div>
                                                                 <img src={item.user.avatar} className="wallpaper-detail-commenter-avatar" alt="commenter" />
@@ -97,7 +100,7 @@ const WallpaperDetail = () => {
 
                                                                     <div className="text-secondary d-flex align-items-center gap-2">
                                                                         {item.replies.length > 0 &&
-                                                                            <i onClick={() => changeReplyDisplay(item._id)} className={commentReplyDisplay.indexOf(item._id) < 0 ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}></i>
+                                                                            <i onClick={() => changeReplyDisplay(item._id, false)} className={commentReplyDisplay.indexOf(item._id) < 0 ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}></i>
                                                                         }
                                                                         <span onClick={() => openReplyInput(item._id)}>Reply</span>
                                                                     </div>
@@ -105,7 +108,7 @@ const WallpaperDetail = () => {
                                                                 {
                                                                     commentReplyDisplay.indexOf(item._id) > -1 && item.replies.length > 0 && item.replies.sort((a, b) => a.date - b.date).map((item, index) => {
                                                                         return (
-                                                                            <div className="d-flex gap-2 py-1">
+                                                                            <div key={"reply" + item._id} className="d-flex gap-2 py-1">
                                                                                 <div>
                                                                                     <img src={item.user.avatar} className="wallpaper-detail-reply-avatar" alt="commenter" />
                                                                                 </div>
@@ -119,7 +122,7 @@ const WallpaperDetail = () => {
 
                                                                 }
                                                                 {user && user._id !== null && commentReplyInput.indexOf(item._id) > -1 &&
-                                                                    <CommentInput className={"comment-input"} placeholder={"send a reply ..."} userID={user._id} wallpaperID={wallpaperDetail._id} commentID={item._id} wallpaperDetail={wallpaperDetail} setWallpaperDetail={setWallpaperDetail} />
+                                                                    <CommentInput className={"comment-input"} placeholder={"send a reply ..."} userID={user._id} wallpaperID={wallpaperDetail._id} commentID={item._id} wallpaperDetail={wallpaperDetail} setWallpaperDetail={setWallpaperDetail} changeReplyDisplay={changeReplyDisplay} />
                                                                 }
                                                             </div>
                                                         </div>
@@ -130,7 +133,7 @@ const WallpaperDetail = () => {
                                     </>
                                     :
                                     <div className="py-3">
-                                        <span className="">No comment. Be the first commenter <i class="fa-solid fa-arrow-down"></i></span>
+                                        <span className="">No comment. Be the first commenter <i className="fa-solid fa-arrow-down"></i></span>
                                     </div>
                                 }
                             </div>
