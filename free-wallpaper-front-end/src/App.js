@@ -7,6 +7,11 @@ import { Page } from "./pages";
 import AccountManagement from "./pages/AccountManagement/AccountManagement";
 import Register from "./pages/Register/Register";
 
+import { io } from "socket.io-client";
+
+export const socket = io.connect(process.env.REACT_APP_API_HOST);
+
+
 const App = () => {
   return (
     <BrowserRouter>
