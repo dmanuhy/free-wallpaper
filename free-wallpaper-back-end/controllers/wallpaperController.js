@@ -43,16 +43,20 @@ async function CreateNewWallpaper(req, res, next) {
     }
 }
 
-// const deleteOneImage = async (publicIds) => {
-//     try {
-//         const deletePromises = publicIds.map(publicId => cloudinary.uploader.destroy(publicId));
-//         await Promise.all(deletePromises);
-//         Xoa' await Album.findByIdAndUpdate(fromAlbum, { $pull: { wallpapers: { $in: wallpaperIds } } });
-//         console.log(`Deleted images with public_ids: ${publicIds}`);
-//     } catch (error) {
-//         console.error(`Failed to delete images with public_ids: ${publicIds}`, error);
-//     }
-// };
+const deleteOneImage = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const wallpapers = await Wallpaper.findById(id);
+        await Wallpaper.deleteOne({ _id: id })
+        const deletePromises = cloudinary.uploader.destroy(wallpapers.publicId);
+        await Promise.all(deletePromises);
+        await Album.findByIdAndUpdate(fromAlbum, { $pull: { wallpapers: { $in: wallpapers._id } } });
+        console.log(`Deleted images with public_ids: ${publicIds}`);
+    } catch (error) {
+        console.error(`Failed to delete images with public_ids: ${publicIds}`, error);
+    }
+};
+
 const deleteManyImageAlbum = async (req, res, next) => {
     try {
         const { id } = req.params;

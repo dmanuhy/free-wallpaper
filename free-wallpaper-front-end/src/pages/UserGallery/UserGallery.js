@@ -33,7 +33,7 @@ export default function UserGallery() {
             setNoMoreData(true)
         }
     }
-    
+
     const fetchUser = async () => {
         try {
             const response = await UserService.findUser(userId);

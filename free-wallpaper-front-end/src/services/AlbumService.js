@@ -12,10 +12,14 @@ const createAlbum = (albumData) => {
 const deleteAlbumbyId = (albumId) => {
     return axios.delete(`/album/${albumId}`)
 }
+const ChangeNameAlbumbyId = (albumId, name) => {
+    return axios.put(`/album/${albumId}`, {name})
+}
 
 export const AlbumService = {
     getAllAlbumByAuthorService,
     getAlbumByIdService,
     createAlbum,
-    deleteAlbumbyId
+    deleteAlbumbyId,
+    ChangeNameAlbumbyId
 }
