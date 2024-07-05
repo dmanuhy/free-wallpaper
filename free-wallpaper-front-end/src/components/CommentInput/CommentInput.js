@@ -4,7 +4,7 @@ import { WallpaperService } from "../../services/WallpaperService"
 import { socket } from "../../App"
 import { toast } from "react-toastify"
 
-const CommentInput = ({ className, placeholder, wallpaperID, commentID = "", userID, wallpaperDetail, setWallpaperDetail, changeReplyDisplay = () => { console.log("Loi roi") } }) => {
+const CommentInput = ({ className, placeholder, wallpaperID, commentID = "", userID, wallpaperDetail, setWallpaperDetail }) => {
 
     const [body, setBody] = useState("")
     useEffect(() => {
@@ -32,7 +32,6 @@ const CommentInput = ({ className, placeholder, wallpaperID, commentID = "", use
                     }
                     return { ...prevWallpaperDetail, comments: updatedComments };
                 });
-                changeReplyDisplay(data.cID, true);
             }
         });
 

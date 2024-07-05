@@ -13,20 +13,20 @@ const WallpaperDetail = () => {
     const { id } = useParams();
     const [openReportModal, setOpenReportModal] = useState(false);
     const [wallpaperDetail, setWallpaperDetail] = useState({});
-    const [commentReplyDisplay, setCommentReplyDisplay] = useState([]);
+    const [hideReplyList, setHideReplyList] = useState([]);
     const [commentReplyInput, setCommentReplyInput] = useState([]);
     const [contentMaxHeight, setContentMaxHeight] = useState(null);
     const imageRef = useRef();
 
-    const changeReplyDisplay = (id) => {
-        let array = [...commentReplyDisplay];
+    const hideCommentReplies = (id) => {
+        let array = [...hideReplyList];
         const index = array.indexOf(id);
         if (index < 0) {
             array.push(id);
         } else {
-            array.splice(array.indexOf(id), 1);
+            array.splice(index, 1);
         }
-        setCommentReplyDisplay(array);
+        setHideReplyList(array);
     };
 
     const openReplyInput = (id) => {
@@ -58,7 +58,6 @@ const WallpaperDetail = () => {
 
     return (
         <>
-            {" "}
             {wallpaperDetail && (
                 <div className="wallpaper-detail content-width-padding content-height-padding">
                     <div className="wallpaper-detail-main">
@@ -134,9 +133,9 @@ const WallpaperDetail = () => {
                                                                             <div className="text-secondary d-flex align-items-center gap-2">
                                                                                 {item.replies.length > 0 && (
                                                                                     <i
-                                                                                        onClick={() => changeReplyDisplay(item._id)}
+                                                                                        onClick={() => hideCommentReplies(item._id)}
                                                                                         className={
-                                                                                            commentReplyDisplay.indexOf(item._id) < 0
+                                                                                            hideReplyList.indexOf(item._id) > -1
                                                                                                 ? "fa-solid fa-eye-slash"
                                                                                                 : "fa-solid fa-eye"
                                                                                         }
@@ -145,7 +144,7 @@ const WallpaperDetail = () => {
                                                                                 <span onClick={() => openReplyInput(item._id)}>Reply</span>
                                                                             </div>
                                                                         </div>
-                                                                        {commentReplyDisplay.indexOf(item._id) > -1 &&
+                                                                        {hideReplyList.indexOf(item._id) === -1 &&
                                                                             item.replies.length > 0 &&
                                                                             item.replies
                                                                                 .sort((a, b) => a.date - b.date)
