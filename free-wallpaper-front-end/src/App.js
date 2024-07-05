@@ -6,6 +6,7 @@ import { Component } from "./components";
 import { Page } from "./pages";
 import AccountManagement from "./pages/AccountManagement/AccountManagement";
 import Register from "./pages/Register/Register";
+import ReportList from "./pages/ReportList/ReportList";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="user/:userId/album/:albumId" element={<Page.UserCollectionsDetails />} />
           <Route path="user/:userId/edit-profile" element={<Page.Editprofile />} />
           <Route path="management/account" element={<AccountManagement />} />
+          <Route path="management/report" element={<ReportList />} />
           <Route path="am" element={<AccountManagement />} />
           <Route path="register" element={<Page.Register />} />
         </Route>
