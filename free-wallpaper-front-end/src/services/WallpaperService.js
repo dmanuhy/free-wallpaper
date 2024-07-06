@@ -32,6 +32,10 @@ const reportWallpaperService = (id, reason) => {
   return axios.post(`/wallpaper/${id}/report`, { reason });
 };
 
+const deleteWallPaperService = (id) => {
+  return axios.delete(`/wallpaper/${id}/delete`);
+};
+
 export const WallpaperService = {
   getAllWallpaperService,
   getAllWallpaperByAuthorService,
@@ -41,4 +45,5 @@ export const WallpaperService = {
   deleteImageAlbum,
   addWallpaperCommentService,
   reportWallpaperService,
+  deleteWallPaperService,
 };

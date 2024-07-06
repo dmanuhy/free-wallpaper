@@ -8,28 +8,30 @@ const ReportTable = () => {
 
   const getReportList = async () => {
     const response = await ReportService.getAllReportsService();
-    setReports(response);
+
+    const uniqueReports = response.reduce((acc, report) => {
+      if (!acc.some((r) => r.wallpaper._id === report.wallpaper._id)) {
+        acc.push(report);
+      }
+      return acc;
+    }, []);
+
+    setReports(uniqueReports);
   };
 
   useEffect(() => {
     getReportList();
   }, []);
 
-  console.log(reports);
-
   return (
     <table className="report-table">
       <thead>
         <tr>
-          <th>Index</th>
+          <th>Image ID</th>
           <th>Image Link</th>
-          <th>Description</th>
-          <th>Uploader</th>
-          <th>Reporter</th>
-          <th>Delete</th>
+          <th>Action</th>
         </tr>
       </thead>
-
       <tbody>
         {reports.map((report, index) => (
           <ReportRow key={report._id} report={report} index={index + 1} />

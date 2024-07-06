@@ -4,6 +4,7 @@ const uploadCloud = require("../middlewares/UploadCloud");
 const { checkUserJWT } = require("../middlewares/JsonWebToken");
 
 const { wallpaperController } = require("../controllers");
+
 const wallpaperRouter = express.Router();
 
 wallpaperRouter.use(bodyParser.json());
@@ -18,6 +19,7 @@ wallpaperRouter.post("/create", uploadCloud.array("imageUrl"), wallpaperControll
 //Like ảnh
 wallpaperRouter.post("/:id/like", wallpaperController.likeWallpaper);
 wallpaperRouter.post("/:id/report", [checkUserJWT], wallpaperController.reportWallpaper);
+
 module.exports = {
   wallpaperRouter,
 };

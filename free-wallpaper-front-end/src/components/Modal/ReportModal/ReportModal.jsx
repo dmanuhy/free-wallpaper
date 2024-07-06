@@ -22,6 +22,11 @@ const ReportModal = ({ isOpen, onClose, id }) => {
       return;
     }
 
+    if (description.length > 80) {
+      toast.error("Description is too long. Please enter a description with less than 80 characters.");
+      return;
+    }
+
     try {
       const response = await WallpaperService.reportWallpaperService(id, description);
       if (response.status === 201) {

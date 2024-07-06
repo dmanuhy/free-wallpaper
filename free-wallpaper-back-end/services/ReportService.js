@@ -1,7 +1,7 @@
 const db = require("../models");
 const Report = db.report;
 const User = db.user;
-const WallPaper = db.wallpaper;
+const Wallpaper = db.wallpaper;
 
 const getAllReportsService = async (req, res) => {
   try {
@@ -39,7 +39,6 @@ const getAllReportsService = async (req, res) => {
           };
         })
       );
-
       return {
         status: 200,
         message: "Get all reports successfully!",
@@ -59,6 +58,32 @@ const getAllReportsService = async (req, res) => {
   }
 };
 
+const deleteWallpaperService = async (id) => {
+  try {
+    const wallpaper = await Wallpaper.findById(id);
+
+    if (!wallpaper) {
+      return {
+        status: 404,
+        message: "Wallpaper not found",
+      };
+    }
+
+    await Wallpaper.deleteOne({ _id: id });
+    return {
+      status: 200,
+      message: "Wallpaper deleted successfully",
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      message: "Error deleting wallpaper",
+      error: error.message,
+    };
+  }
+};
+
 module.exports = {
   getAllReportsService,
+  deleteWallpaperService,
 };

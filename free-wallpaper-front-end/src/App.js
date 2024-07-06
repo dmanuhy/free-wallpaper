@@ -7,6 +7,7 @@ import { Page } from "./pages";
 import AccountManagement from "./pages/AccountManagement/AccountManagement";
 import Register from "./pages/Register/Register";
 import ReportList from "./pages/ReportList/ReportList";
+import ReportDetail from "./pages/ReportDetail/ReportDetail";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="user/:userId/edit-profile" element={<Page.Editprofile />} />
           <Route path="management/account" element={<AccountManagement />} />
           <Route path="management/report" element={<ReportList />} />
+          <Route path="management/report/:id" element={<ReportDetail />} />
           <Route path="am" element={<AccountManagement />} />
           <Route path="register" element={<Page.Register />} />
         </Route>
