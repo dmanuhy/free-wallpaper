@@ -14,7 +14,12 @@ const ReportRow = ({ report, index, handleArrayChange }) => {
       try {
         const response = await ReportService.deleteWallPaperAndReportService(report.wallpaper._id);
         if (response.status === 200) {
-          toast.success("Report and wallpaper deleted successfully!");
+          toast.success("Report and wallpaper deleted successfully!", {
+            position: "top-right",
+            autoClose: 3000,
+            closeOnClick: true,
+            pauseOnHover: false,
+          });
           handleArrayChange(report.wallpaper._id);
         }
       } catch (error) {
@@ -30,7 +35,12 @@ const ReportRow = ({ report, index, handleArrayChange }) => {
       try {
         const response = await ReportService.deleteReportService(report.wallpaper._id);
         if (response.status === 200) {
-          toast.success("Report deleted successfully!");
+          toast.success("Report deleted successfully!", {
+            position: "top-right",
+            autoClose: 3000,
+            closeOnClick: true,
+            pauseOnHover: false,
+          });
           handleArrayChange(report.wallpaper._id);
         }
       } catch (error) {

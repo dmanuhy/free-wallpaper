@@ -31,6 +31,7 @@ const ReportModal = ({ isOpen, onClose, id }) => {
       const response = await WallpaperService.reportWallpaperService(id, description);
       if (response.status === 201) {
         toast.success("Report created successfully.");
+        setDescription("");
         onClose();
       } else {
         toast.error("This image has already been reported.");
@@ -58,7 +59,13 @@ const ReportModal = ({ isOpen, onClose, id }) => {
           />
         </div>
         <div className="modal-footer">
-          <button className="cancel-button" onClick={onClose}>
+          <button
+            className="cancel-button"
+            onClick={() => {
+              onClose();
+              setDescription("");
+            }}
+          >
             Cancel
           </button>
           <button className="report-button" onClick={handleModalReport}>
