@@ -11,9 +11,6 @@ const ReportDetailRow = ({ report, index }) => {
       <td>{report.reason}</td>
       <td>{report.wallpaper.createdBy.name}</td>
       <td>{report.reporter.name}</td>
-      <td>
-        <button>Delete</button>
-      </td>
     </tr>
   );
 };

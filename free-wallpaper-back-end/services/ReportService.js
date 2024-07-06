@@ -58,18 +58,19 @@ const getAllReportsService = async (req, res) => {
   }
 };
 
-const deleteWallpaperService = async (id) => {
+const deleteWallpaperAndReportService = async (wallpaperId) => {
   try {
-    const wallpaper = await Wallpaper.findById(id);
+    const wallpaper = await Wallpaper.findById(wallpaperId);
+    const reports = await Report.findOne({ wallpaper: wallpaperId });
 
-    if (!wallpaper) {
-      return {
-        status: 404,
+    if (!wallpaper || !reports) {
+      return res.status(404).json({
         message: "Wallpaper not found",
-      };
+      });
     }
 
-    await Wallpaper.deleteOne({ _id: id });
+    const reportRes = await Report.deleteMany({ wallpaper: wallpaperId });
+    const wallPaperRes = await Wallpaper.deleteOne({ _id: wallpaperId });
     return {
       status: 200,
       message: "Wallpaper deleted successfully",
@@ -82,8 +83,31 @@ const deleteWallpaperService = async (id) => {
     };
   }
 };
+const deleteReportService = async (wallpaperId) => {
+  try {
+    const result = await Report.deleteMany({ wallpaper: wallpaperId });
+
+    if (!result) {
+      return {
+        status: 404,
+        message: "No reports found for the specified wallpaper.",
+      };
+    }
+    return {
+      status: 200,
+      message: `reports deleted successfully.`,
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      message: "Error deleting reports",
+      error: error.message,
+    };
+  }
+};
 
 module.exports = {
   getAllReportsService,
-  deleteWallpaperService,
+  deleteWallpaperAndReportService,
+  deleteReportService,
 };

@@ -10,11 +10,11 @@ const ReportDetailTable = () => {
 
   const getReportList = async () => {
     const response = await ReportService.getAllReportsService();
-    console.log(response);
+    if (response.status == 200) {
+      const reportItems = response.data.filter((report) => report.wallpaper._id === id);
 
-    const reportItems = response.filter((report) => report.wallpaper._id === id);
-
-    setReports(reportItems);
+      setReports(reportItems);
+    }
   };
 
   useEffect(() => {
@@ -30,7 +30,6 @@ const ReportDetailTable = () => {
           <th>Description</th>
           <th>Uploader</th>
           <th>Reporter</th>
-          <th>Delete</th>
         </tr>
       </thead>
       <tbody>

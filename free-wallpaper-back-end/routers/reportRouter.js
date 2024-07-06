@@ -8,7 +8,8 @@ const reportRouter = express.Router();
 reportRouter.use(bodyParser.json());
 
 reportRouter.get("/", [checkUserJWT, isAdmin], reportController.getAllReports);
-reportRouter.delete("/:id/delete", reportController.deleteWallpaper);
+reportRouter.delete("/delete/:id", reportController.deleteWallpaperAndReport);
+reportRouter.delete("/:id", reportController.deleteReport);
 
 module.exports = {
   reportRouter,

@@ -1,6 +1,7 @@
 .report-table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 
   th,
   td {
@@ -14,10 +15,5 @@
 
   td button {
     font-size: 16px;
-  }
-
-  .reason {
-    max-width: 500px;
-    word-wrap: break-word;
   }
 }
