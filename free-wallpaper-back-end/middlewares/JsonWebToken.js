@@ -45,8 +45,20 @@ const checkUserJWT = (req, res, next) => {
   }
 };
 
+const isAdmin = (req, res, next) => {
+  if (req.user && req.user.roles.some((role) => role.name === "admin")) {
+    next();
+  } else {
+    return res.status(403).json({
+      errorCode: 403,
+      message: "Authorization Failed, Not Admin",
+    });
+  }
+};
+
 module.exports = {
   createJWT,
   verifyToken,
   checkUserJWT,
+  isAdmin,
 };
