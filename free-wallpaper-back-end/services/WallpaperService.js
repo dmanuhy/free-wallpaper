@@ -1,6 +1,7 @@
 const db = require("../models");
 const Wallpaper = require("../models/wallpaper");
-const Report = db.report;
+const Report = require("../models/report");
+const server = require("../server");
 
 const getAllWallpaperService = (page, order, priority) => {
   return new Promise(async (resolve, reject) => {
@@ -173,13 +174,23 @@ const addWallpaperCommentService = (data) => {
             populate: { path: "user", select: "_id name avatar" },
           });
         if (existWallpaper) {
+          const newComment = existWallpaper.comments[existWallpaper.comments.length - 1];
+          let commentData = {
+            user: newComment.user,
+            body: newComment.body,
+            date: newComment.date,
+            replies: [],
+            _id: newComment._id,
+            wID: data.wallpaperID,
+          };
+          server.io.emit("newComment", commentData);
           resolve({
             status: 201,
-            data: existWallpaper.comments[existWallpaper.comments.length - 1],
+            data: commentData,
           });
         }
       } else {
-        existWallpaper = await Wallpaper.findOneAndUpdate({ _id: data.wallpaperID })
+        existWallpaper = await Wallpaper.findOne({ _id: data.wallpaperID })
           .select("_id comments")
           .populate({
             path: "comments",
@@ -202,6 +213,14 @@ const addWallpaperCommentService = (data) => {
           const lastReplyIndex = existWallpaper.comments[updateIndex].replies.length;
           const reply = existWallpaper.comments[updateIndex].replies[lastReplyIndex - 1];
           const user = await db.user.findOne({ _id: reply.user.toString() }).select("name avatar");
+          server.io.emit("newComment", {
+            user: user,
+            _id: reply._id,
+            body: reply.body,
+            date: reply.date,
+            cID: data.commentID,
+            wID: data.wallpaperID,
+          });
           resolve({
             status: 201,
             data: {
@@ -209,6 +228,8 @@ const addWallpaperCommentService = (data) => {
               _id: reply._id,
               body: reply.body,
               date: reply.date,
+              cID: data.commentID,
+              wID: data.wallpaperID,
             },
           });
         }

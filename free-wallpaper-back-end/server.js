@@ -5,9 +5,18 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const Router = require("./routers");
 const db = require("./models");
-
+const { createServer } = require("node:http");
+const { Server } = require("socket.io");
+const http = require("http");
 //khoi tao web server
+
 const app = express();
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: process.env.FRONT_END_URL,
+  },
+});
 
 app.use(
   cors({
@@ -19,13 +28,25 @@ app.use(cookieParser());
 app.use(bodyParser.json({ limit: "64mb" }));
 app.use(bodyParser.urlencoded({ limit: "64mb", extended: true }));
 
+// Above our `app.get("/users")` handler
+
 app.use("/user", Router.userRouter);
 app.use("/wallpaper", Router.wallpaperRouter);
 app.use("/tag", Router.tagRouter);
 app.use("/album", Router.albumRouter);
 app.use("/report", Router.reportRouter);
 
-app.listen(process.env.PORT || 9999, process.env.HOST_NAME || "localhost", () => {
+io.on("connection", (socket) => {
+  console.log("An user connect: ", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("🔥: A user disconnected");
+  });
+});
+
+exports.io = io;
+
+server.listen(process.env.PORT || 9999, process.env.HOST_NAME || "localhost", () => {
   console.log(`Server in running at: http://${process.env.HOST_NAME}:${process.env.PORT}`);
   db.connect();
 });

@@ -9,6 +9,11 @@ import Register from "./pages/Register/Register";
 import ReportList from "./pages/ReportList/ReportList";
 import ReportDetail from "./pages/ReportDetail/ReportDetail";
 
+import { io } from "socket.io-client";
+
+export const socket = io.connect(process.env.REACT_APP_API_HOST);
+
+
 const App = () => {
   return (
     <BrowserRouter>
