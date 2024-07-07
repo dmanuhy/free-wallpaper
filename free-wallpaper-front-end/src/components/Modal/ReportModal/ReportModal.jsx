@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ReportModal.scss";
 import { WallpaperService } from "../../../services/WallpaperService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const ReportModal = ({ isOpen, onClose, id }) => {
   const [description, setDescription] = useState("");
@@ -10,8 +12,18 @@ const ReportModal = ({ isOpen, onClose, id }) => {
   if (!isOpen) return null;
 
   const handleModalReport = async () => {
+    const jwt = Cookies.get("jwt");
+    if (!jwt) {
+      toast.error("Please log in to report an image.");
+    }
+
     if (!description.trim()) {
       toast.error("Please enter a description.");
+      return;
+    }
+
+    if (description.length > 80) {
+      toast.error("Description is too long. Please enter a description with less than 80 characters.");
       return;
     }
 
@@ -19,6 +31,7 @@ const ReportModal = ({ isOpen, onClose, id }) => {
       const response = await WallpaperService.reportWallpaperService(id, description);
       if (response.status === 201) {
         toast.success("Report created successfully.");
+        setDescription("");
         onClose();
       } else {
         toast.error("This image has already been reported.");
@@ -46,7 +59,13 @@ const ReportModal = ({ isOpen, onClose, id }) => {
           />
         </div>
         <div className="modal-footer">
-          <button className="cancel-button" onClick={onClose}>
+          <button
+            className="cancel-button"
+            onClick={() => {
+              onClose();
+              setDescription("");
+            }}
+          >
             Cancel
           </button>
           <button className="report-button" onClick={handleModalReport}>
