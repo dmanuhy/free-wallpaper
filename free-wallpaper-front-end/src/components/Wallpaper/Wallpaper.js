@@ -14,17 +14,21 @@ const Wallpaper = ({ wallpaper }) => {
 
     return (
         <>
-            <motion.div variants={variants} initial="hidden" animate="visible" transition={{ ease: "easeInOut", duration: 0.5 }} className="wallpaper">
-                <img onClick={() => navigate(`/wallpaper/${wallpaper._id}`)} loading="lazy" className="wallpaper-image" src={wallpaper.imageUrl} alt="image1" />
-                <i class="wallpaper-icon fa-regular fa-heart"></i>
-                <a className="wallpaper-download-btn btn btn-success" href={wallpaper.imageUrl} download={true} >Download</a>
-                <div onClick={() => navigate(`/user/${wallpaper.createdBy._id}`)} className="wallpaper-creator">
-                    <span className="wallpaper-creator-name">
-                        {wallpaper.createdBy.name}
-                    </span>
-                    <div className="wallpaper-creator-avatar" style={{ backgroundImage: `url(${(wallpaper.createdBy && wallpaper.createdBy.avatar) || user_avatar_raw})` }}></div>
-                </div>
-            </motion.div >
+            {wallpaper &&
+                <motion.div variants={variants} initial="hidden" animate="visible" transition={{ ease: "easeInOut", duration: 0.5 }} className="wallpaper">
+                    <img onClick={() => navigate(`/wallpaper/${wallpaper._id}`)} loading="lazy" className="wallpaper-image" src={wallpaper.imageUrl} alt="image1" />
+                    <i class="wallpaper-icon fa-regular fa-heart"></i>
+                    <a className="wallpaper-download-btn btn btn-success" href={wallpaper.imageUrl} download={true} >Download</a>
+                    {wallpaper.createdBy &&
+                        <div onClick={() => navigate(`/user/${wallpaper.createdBy._id}`)} className="wallpaper-creator">
+                            <span className="wallpaper-creator-name">
+                                {wallpaper.createdBy.name}
+                            </span>
+                            <div className="wallpaper-creator-avatar" style={{ backgroundImage: `url(${(wallpaper.createdBy && wallpaper.createdBy.avatar) || user_avatar_raw})` }}></div>
+                        </div>
+                    }
+                </motion.div >
+            }
         </>
     )
 }

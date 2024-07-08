@@ -9,7 +9,7 @@ const WallpaperSchema = new mongoose.Schema({
         required: true,
     },
     tags: [
-        { type: mongoose.Schema.Types.ObjectId, ref: "tag" }
+        { type: String }
     ],
     fromAlbum: {
         type: mongoose.Schema.Types.ObjectId,

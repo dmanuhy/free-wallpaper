@@ -16,6 +16,7 @@ wallpaperRouter.get("/:id", wallpaperController.getWallpaperByID);
 wallpaperRouter.delete("/:id", wallpaperController.deleteManyImageAlbum);
 wallpaperRouter.post("/comment/add", wallpaperController.addWallpaperComment);
 wallpaperRouter.post("/create", uploadCloud.array("imageUrl"), wallpaperController.CreateNewWallpaper);
+wallpaperRouter.get("/search/:key", wallpaperController.getWallpaperByKey)
 //Like ảnh
 wallpaperRouter.post("/:id/like", wallpaperController.likeWallpaper);
 wallpaperRouter.post("/share", wallpaperController.shareWallpaper);
