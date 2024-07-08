@@ -15,14 +15,16 @@ const WallpaperProvider = ({ children }) => {
 
   const fetchAllWallpaper = async () => {
     const response = await WallpaperService.getAllWallpaperService(page, sort.order, sort.priority);
-    if (response && response.status === 200 && response.data.length > 0) {
+    if (response.status === 200 && response.data.length > 0) {
       if (page === 1) {
         setWallpaperList(response.data);
       } else {
         setWallpaperList((products) => [...products, ...response.data]);
       }
     } else {
-      setNoMoreData(true);
+      if (response.status === 404) {
+        setNoMoreData(true);
+      }
     }
   };
 

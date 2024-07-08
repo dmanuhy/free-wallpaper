@@ -5,7 +5,6 @@ import PublicRoutes from "./routes/PublicRoutes";
 import { Component } from "./components";
 import { Page } from "./pages";
 import AccountManagement from "./pages/AccountManagement/AccountManagement";
-import Register from "./pages/Register/Register";
 import ReportList from "./pages/ReportList/ReportList";
 import ReportDetail from "./pages/ReportDetail/ReportDetail";
 
