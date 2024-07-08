@@ -6,11 +6,13 @@ import "./WallpaperDetail.scss"
 import moment from "moment"
 import CommentInput from "../../components/CommentInput/CommentInput"
 import ReportModal from "../../components/Modal/ReportModal/ReportModal";
+import ShareModal from "../../components/Modal/ShareModal/ShareModal"
 
 
 const WallpaperDetail = () => {
     const { user } = useContext(UserContext);
     const { id } = useParams();
+    
     const [openReportModal, setOpenReportModal] = useState(false);
     const [wallpaperDetail, setWallpaperDetail] = useState({});
     const [hideReplyList, setHideReplyList] = useState([]);
@@ -75,7 +77,11 @@ const WallpaperDetail = () => {
                                         <span>
                                             <i className="wallpaper-detail-top-icon fa-regular fa-heart"></i> {wallpaperDetail.likes}
                                         </span>
-                                        <i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square"></i>
+                                        <div>
+                                            <button  type="button" class="btn " data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square" ></i></button>
+                                            {/* <i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square" ></i> */}
+                                            <ShareModal id={id}/>
+                                        </div>
                                         <div>
                                             <i
                                                 class="wallpaper-detail-top-icon text-danger fa-solid fa-triangle-exclamation"

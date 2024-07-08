@@ -218,7 +218,7 @@ const getWallpaperByKey = async (req, res) => {
 
 const shareWallpaper = async (req, res) => {
   try {
-    const { wallpaperID, userId, email } = req.body;
+    const { wallpaperID, email } = req.body;
 
     const wallpaper = await Wallpaper.findById(wallpaperID);
     if (!wallpaper) {
@@ -226,10 +226,7 @@ const shareWallpaper = async (req, res) => {
     }
 
     // Check if user exists
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -247,7 +244,7 @@ const shareWallpaper = async (req, res) => {
 
       subject: "Check Out This New Wallpapper on FreeWallPapper!", // Subject line
       text: `Hello,
-Your friend ${user.name} has shared a photo with you on FreeWallPapper!
+Your friend  has shared a photo with you on FreeWallPapper!
 Click the link below to view the detail photo:
 http://localhost:3000/wallpaper/${wallpaperID}
 
@@ -258,7 +255,7 @@ P.S. If you did not expect to receive this email, please ignore it.
 
 © 2024 FreeWallPapper. All rights reserved.`, // plain text body
       html: `<p>Hello,</p>
-                   <p>Your friend <strong>${user.name}</strong> has shared a photo album with you on FreeWallPapper!</p>
+                   <p>Your friend <strong></strong> has shared a photo album with you on FreeWallPapper!</p>
                    <p>Click the link below to view the Photo:</p>
                    <p><a href="http://localhost:3000/wallpaper/${wallpaperID}">View Phooto</a></p>
                    <p><img src="${wallpaper.imageUrl}" alt="Wallpaper Image" style="width:100%;max-width:600px;"></p>
@@ -266,7 +263,7 @@ P.S. If you did not expect to receive this email, please ignore it.
                    <p>P.S. If you did not expect to receive this email, please ignore it.</p>
                    <p>© 2024 FreeWallPapper. All rights reserved.</p>`, // html body
     });
-    res.status(200).json(info);
+    res.status(200).json(wallpaper);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error", error });

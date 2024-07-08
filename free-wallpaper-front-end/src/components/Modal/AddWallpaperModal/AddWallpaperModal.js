@@ -3,6 +3,7 @@ import Dropzone from "../../Dropzone/Dropzone";
 import { WallpaperService } from "../../../services/WallpaperService";
 import "./AddWallpaperModal.scss";
 import Backdrop from '@mui/material/Backdrop';
+import { toast } from "react-toastify";
 import CircularProgress from '@mui/material/CircularProgress';
 const AddWallpaperModal = ({ albumId, userId, onUpdate }) => {
     const [newImages, setNewImages] = useState([]);
@@ -21,11 +22,12 @@ const AddWallpaperModal = ({ albumId, userId, onUpdate }) => {
             formData.append("fromAlbum", albumId);
             formData.append("createdBy", userId);
             const response = await WallpaperService.CreateWallpaper(formData);
-            alert("Created new wallpaper successfully");
+            
             clearState();
             onUpdate();
+            toast.success("New Wallpapper create successfully");
             setOpen(false)
-            
+
         } catch (error) {
             console.error("Error creating new wallpaper:", error);
             alert("Error creating new wallpaper. Please try again.");

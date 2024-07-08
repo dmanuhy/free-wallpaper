@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import user_avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
 import { UserService } from "../../services/UserService";
 import { WallpaperService } from "../../services/WallpaperService";
+import { toast } from "react-toastify";
 export default function UserCollections() {
     const [open, setOpen] = useState(false);
     const { userId } = useParams();
@@ -61,10 +62,10 @@ export default function UserCollections() {
 
         updateAlbum(albumId, updatedAlbumName);
     }
-    const updateAlbum = async (albumId,name) => {
+    const updateAlbum = async (albumId, name) => {
         try {
             const response = await AlbumService.ChangeNameAlbumbyId(albumId, name);
-            
+
             fetchAlbums();
         } catch (error) {
             console.error('Error updating album:', error);
@@ -105,7 +106,7 @@ export default function UserCollections() {
             const res = await AlbumService.deleteAlbumbyId(albumId);
             fetchAlbums();
             setOpen(false);
-            alert("Delete Album successfully");
+            toast.success("New Wallpapper create successfully");
         } catch (err) {
         }
     };
@@ -215,7 +216,7 @@ export default function UserCollections() {
                                     <label htmlFor="album-name" className="col-form-label">Album Name:</label>
                                     <input type="text" className="form-control" id="album-name" />
                                 </div>
-                               
+
                             </form>
                         </div>
                         <div className="modal-footer">
