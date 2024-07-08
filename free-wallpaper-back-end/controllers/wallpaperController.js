@@ -3,10 +3,10 @@ const User = require("../models/user");
 const Album = require("../models/album");
 const { WallpaperService } = require("../services");
 const cloudinary = require("cloudinary").v2;
-
+const nodemailer = require("nodemailer");
 const getWallpapers = async (req, res) => {
   const page = req.query.page ? req.query.page : "1";
-  const order = req.query.order ? req.query.order : "createdAt";
+  const order = req.query.order ? req.query.order : " ";
   const priority = req.query.priority ? req.query.priority : "DESC";
 
   try {
@@ -45,17 +45,17 @@ async function CreateNewWallpaper(req, res, next) {
 }
 
 const deleteOneImage = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const wallpapers = await Wallpaper.findById(id);
-        await Wallpaper.deleteOne({ _id: id })
-        const deletePromises = cloudinary.uploader.destroy(wallpapers.publicId);
-        await Promise.all(deletePromises);
-        await Album.findByIdAndUpdate(fromAlbum, { $pull: { wallpapers: { $in: wallpapers._id } } });
-        console.log(`Deleted images with public_ids: ${publicIds}`);
-    } catch (error) {
-        console.error(`Failed to delete images with public_ids: ${publicIds}`, error);
-    }
+  try {
+    const { id } = req.params;
+    const wallpapers = await Wallpaper.findById(id);
+    await Wallpaper.deleteOne({ _id: id })
+    const deletePromises = cloudinary.uploader.destroy(wallpapers.publicId);
+    await Promise.all(deletePromises);
+    await Album.findByIdAndUpdate(fromAlbum, { $pull: { wallpapers: { $in: wallpapers._id } } });
+
+  } catch (error) {
+
+  }
 };
 
 const deleteManyImageAlbum = async (req, res, next) => {
@@ -66,23 +66,23 @@ const deleteManyImageAlbum = async (req, res, next) => {
       return res.status(400).json({ error: "Missing albumId in query parameters" });
     }
 
-    // Tìm các ảnh trong album có id là `id`
+
     const wallpapers = await Wallpaper.find({ fromAlbum: id });
 
-    // Lấy ra publicId của các ảnh
+
     const publicIds = wallpapers.map((wallpaper) => wallpaper.publicId);
 
     // Xóa từng ảnh khỏi Cloudinary
     const deletePromises = publicIds.map((publicId) => cloudinary.uploader.destroy(publicId));
     await Promise.all(deletePromises);
 
-    // Xóa tất cả ảnh khỏi MongoDB
+
     await Wallpaper.deleteMany({ fromAlbum: id });
 
-    // Trả về phản hồi thành công
+
     return res.status(200).json({ message: "Deleted images from album successfully" });
   } catch (error) {
-    console.error(`Failed to delete images with public_ids`, error);
+
     return res.status(500).json({ error: "Failed to delete images from album", details: error.message });
   }
 };
@@ -199,6 +199,63 @@ const reportWallpaper = async (req, res) => {
   }
 };
 
+const shareWallpaper = async (req, res) => {
+  try {
+    const { wallpaperID, userId, email } = req.body;
+
+    const wallpaper = await Wallpaper.findById(wallpaperID);
+    if (!wallpaper) {
+      return res.status(404).json({ message: 'Album not found' });
+    }
+
+    // Check if user exists
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // Use `true` for port 465, `false` for all other ports
+      auth: {
+        user: "minhvhhe170320@fpt.edu.vn",
+        // pass: "bbzjwgtpfpwpuovb",
+        // user: testAccount.user,
+        pass: "rbwj eril yswz hxzw",
+      },
+    });
+    const info = await transporter.sendMail({
+      from: `"FreeWallPapper 👻" <minhvhhe170320@fpt.edu.vn>`, // sender address
+      to: email, // list of receivers
+
+      subject: "Check Out This New Wallpapper on FreeWallPapper!", // Subject line
+      text: `Hello,
+Your friend ${user.name} has shared a photo with you on FreeWallPapper!
+Click the link below to view the detail photo:
+http://localhost:3000/wallpaper/${wallpaperID}
+
+Best regards,
+The FreeWallPapper Team
+
+P.S. If you did not expect to receive this email, please ignore it.
+
+© 2024 FreeWallPapper. All rights reserved.`, // plain text body
+      html: `<p>Hello,</p>
+                   <p>Your friend <strong>${user.name}</strong> has shared a photo album with you on FreeWallPapper!</p>
+                   <p>Click the link below to view the Photo:</p>
+                   <p><a href="http://localhost:3000/wallpaper/${wallpaperID}">View Phooto</a></p>
+                   <p><img src="${wallpaper.imageUrl}" alt="Wallpaper Image" style="width:100%;max-width:600px;"></p>
+                   <p>Best regards,<br>The FreeWallPapper Team</p>
+                   <p>P.S. If you did not expect to receive this email, please ignore it.</p>
+                   <p>© 2024 FreeWallPapper. All rights reserved.</p>`, // html body
+    });
+    res.status(200).json(info);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error", error });
+  }
+};
+
 module.exports = {
   getWallpapers,
   CreateNewWallpaper,
@@ -209,4 +266,5 @@ module.exports = {
   addWallpaperComment,
   likeWallpaper,
   reportWallpaper,
+  shareWallpaper
 };

@@ -18,6 +18,7 @@ wallpaperRouter.post("/comment/add", wallpaperController.addWallpaperComment);
 wallpaperRouter.post("/create", uploadCloud.array("imageUrl"), wallpaperController.CreateNewWallpaper);
 //Like ảnh
 wallpaperRouter.post("/:id/like", wallpaperController.likeWallpaper);
+wallpaperRouter.post("/share", wallpaperController.shareWallpaper);
 wallpaperRouter.post("/:id/report", [checkUserJWT], wallpaperController.reportWallpaper);
 
 module.exports = {

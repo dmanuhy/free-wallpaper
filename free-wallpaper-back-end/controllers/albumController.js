@@ -1,7 +1,7 @@
 const db = require("../models");
 const Album = require("../models/album");
-const User = require("../models/user"); 
-
+const User = require("../models/user");
+const nodemailer = require("nodemailer");
 // Create a new album
 const createAlbum = async (req, res) => {
     const { name, wallpapers, author } = req.body;
@@ -106,8 +106,7 @@ const getAlbumsByUser = async (req, res) => {
 //Share album
 const shareAlbum = async (req, res) => {
     try {
-        const { albumId, userId } = req.body;
-
+        const { albumId, userId, email } = req.body;
         // Check if album exists
         const album = await Album.findById(albumId);
         if (!album) {
@@ -125,8 +124,43 @@ const shareAlbum = async (req, res) => {
             album.sharedWith.push(userId);
             await album.save();
         }
+        let testAccount = await nodemailer.createTestAccount();
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false, // Use `true` for port 465, `false` for all other ports
+            auth: {
+                user: "minhvhhe170320@fpt.edu.vn",
+                // pass: "bbzjwgtpfpwpuovb",
+                // user: testAccount.user,
+                pass: "rbwj eril yswz hxzw",
+            },
+        });
+        const info = await transporter.sendMail({
+            from: `"FreeWallPapper 👻" <minhvhhe170320@fpt.edu.vn>`, // sender address
+            to: email, // list of receivers
 
-        res.status(200).json({ message: 'Album shared successfully' });
+            subject: "Check Out This New Album on FreeWallPapper!", // Subject line
+            text: `Hello,
+Your friend ${user.name} has shared a photo album with you on FreeWallPapper!
+Click the link below to view the ${album.name} album:
+http://localhost:3000/user/${user._id}/album/${album._id}
+
+Best regards,
+The FreeWallPapper Team
+
+P.S. If you did not expect to receive this email, please ignore it.
+
+© 2024 FreeWallPapper. All rights reserved.`, // plain text body
+            html: `<p>Hello,</p>
+                   <p>Your friend <strong>${user.name}</strong> has shared a photo album with you on FreeWallPapper!</p>
+                   <p>Click the link below to view the album:</p>
+                   <p><a href="http://localhost:3000/user/${user._id}/album/${album._id}">View Album</a></p>
+                   <p>Best regards,<br>The FreeWallPapper Team</p>
+                   <p>P.S. If you did not expect to receive this email, please ignore it.</p>
+                   <p>© 2024 FreeWallPapper. All rights reserved.</p>`, // html body
+        });
+        res.status(200).json(info);
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error', error });
     }
