@@ -6,7 +6,7 @@ import "./WallpaperDetail.scss"
 import moment from "moment"
 import CommentInput from "../../components/CommentInput/CommentInput"
 import ReportModal from "../../components/Modal/ReportModal/ReportModal";
-
+import avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
 
 const WallpaperDetail = () => {
     const { user } = useContext(UserContext);
@@ -89,7 +89,7 @@ const WallpaperDetail = () => {
                                             <span className="fs-6 text-end">{wallpaperDetail.createdBy.name}</span>
                                             <img
                                                 className="wallpaper-detail-owner-avatar"
-                                                src={wallpaperDetail.createdBy.avatar}
+                                                src={wallpaperDetail.createdBy.avatar || avatar_raw}
                                                 alt="userAvatar"
                                             />
                                         </div>
