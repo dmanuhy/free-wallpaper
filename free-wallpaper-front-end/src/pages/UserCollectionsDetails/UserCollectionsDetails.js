@@ -109,8 +109,8 @@ export default function UserCollectionsDetails() {
                         <div className="d-flex justify-content-center mt-2 gap-2">
                             {user && user.isActived &&
                                 <>
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAddWallpaper">
-                                        <i class="fa-solid fa-plus"></i> Wallpaper
+                                    <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAddWallpaper">
+                                        <i className="fa-solid fa-plus"></i> Wallpaper
                                     </button>
                                     <AddWallpaperModal albumId={albumId} userId={userId} onUpdate={fetchAllWallpaper} />
                                 </>

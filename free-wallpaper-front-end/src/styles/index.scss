@@ -15,7 +15,7 @@
 }
 
 body {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: monospace;
 }
 
 .content-width-padding {
@@ -31,4 +31,12 @@ body {
         padding-top   : 2rem;
         padding-bottom: 2rem;
     }
+}
+
+.bg-white-2 {
+    background-color: var(--color-white-2);
+}
+
+.font-size-12 {
+    font-size: 0.75rem;
 }
