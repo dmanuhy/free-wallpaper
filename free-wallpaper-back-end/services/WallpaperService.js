@@ -306,6 +306,23 @@ const getWallpaperByKeyService = (key) => {
     });
 };
 
+const updateWallpaperLikesService = async (wallpaperID, action) => {
+    try {
+
+        let value = 0;
+        if (action === "INC") {
+            value++
+        } else {
+            if (action === "DES") {
+                value--
+            }
+        }
+        await db.wallpaper.findByIdAndUpdate({ _id: wallpaperID }, { $inc: { likes: value } })
+    } catch (e) {
+        console.log(e)
+    }
+};
+
 module.exports = {
     getAllWallpaperService,
     getAllWallpaperByAuthorService,
@@ -313,5 +330,6 @@ module.exports = {
     getWallpaperByIDService,
     addWallpaperCommentService,
     reportWallpaperService,
-    getWallpaperByKeyService
+    getWallpaperByKeyService,
+    updateWallpaperLikesService
 };

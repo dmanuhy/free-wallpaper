@@ -2,6 +2,8 @@ const db = require("../models");
 const { v4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const { createJWT } = require("../middlewares/JsonWebToken");
+const server = require("../server");
+const { updateWallpaperLikesService } = require("./WallpaperService");
 
 const getRoles = async (roleName) => {
     let role = await db.role.findOne({ name: roleName }).select("_id");
@@ -184,17 +186,24 @@ const getUserLikedWallpaperService = async (id) => {
     }
 };
 
-const updateUserLikedWallpaperService = async (userId, wallpaperId) => {
+const updateUserLikedWallpaperService = async (userId, wallpaperId, userName, ownerId) => {
     try {
+        let action = ""
         const userLikedWallpaper = await db.user.findOne({ _id: userId })
             .select("_id liked")
         if (userLikedWallpaper && userLikedWallpaper.liked.includes(wallpaperId)) {
             const wallpaperIndex = userLikedWallpaper.liked.indexOf(wallpaperId)
             userLikedWallpaper.liked.splice(wallpaperIndex, 1)
+            action = "DES"
         } else {
+            action = "INC"
             userLikedWallpaper.liked.push(wallpaperId);
+            if (userId !== ownerId) {
+                await sendNotificationService(ownerId, userName + " liked your photos.", "/wallpaper/" + wallpaperId)
+            }
         }
         const response = await userLikedWallpaper.save();
+        await updateWallpaperLikesService(wallpaperId, action)
         return {
             status: 200,
             data: response
@@ -207,6 +216,31 @@ const updateUserLikedWallpaperService = async (userId, wallpaperId) => {
     }
 };
 
+const sendNotificationService = async (ownerId, body, link) => {
+
+    const userNotification = await db.user.findOneAndUpdate(
+        { _id: ownerId },
+        { $push: { notifications: { body: body, link: link, date: Date.now() } } },
+        { new: true }
+    ).select("_id notifications")
+    const newNotifications = userNotification.notifications[userNotification.notifications.length - 1]
+    server.io.emit("newNotification", { userId: ownerId, notification: newNotifications })
+}
+
+const markReadedNotificationService = async (userId, notificationId) => {
+
+    const userNotification = await db.user.findOne({ _id: userId })
+        .select("_id notifications");
+    if (userNotification) {
+        const matchedNotificationIndex = userNotification.notifications.findIndex((n) => n._id.toString() === notificationId);
+        userNotification.notifications[matchedNotificationIndex].isReaded = true;
+        await userNotification.save()
+        return {
+            status: 201,
+        }
+    }
+}
+
 module.exports = {
     signUpService,
     signInService,
@@ -214,5 +248,6 @@ module.exports = {
     blockUserService,
     getUserNotificationService,
     getUserLikedWallpaperService,
-    updateUserLikedWallpaperService
+    updateUserLikedWallpaperService,
+    markReadedNotificationService
 };
