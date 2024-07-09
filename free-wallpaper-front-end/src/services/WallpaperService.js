@@ -35,6 +35,12 @@ const reportWallpaperService = (id, reason) => {
 const getWallpaperByKeyService = (key) => {
   return axios.get(`/wallpaper/search/${key}`);
 };
+const shareWallpaper = (id, mail) => {
+  return axios.post('/wallpaper/share', {
+    wallpaperID: id,
+    email: mail
+  });
+};
 
 export const WallpaperService = {
   getAllWallpaperService,
@@ -45,5 +51,6 @@ export const WallpaperService = {
   deleteImageAlbum,
   addWallpaperCommentService,
   reportWallpaperService,
-  getWallpaperByKeyService
+  getWallpaperByKeyService,
+  shareWallpaper
 };

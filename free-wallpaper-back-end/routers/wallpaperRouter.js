@@ -19,6 +19,7 @@ wallpaperRouter.post("/create", uploadCloud.array("imageUrl"), wallpaperControll
 wallpaperRouter.get("/search/:key", wallpaperController.getWallpaperByKey)
 //Like ảnh
 wallpaperRouter.post("/:id/like", wallpaperController.likeWallpaper);
+wallpaperRouter.post("/share", wallpaperController.shareWallpaper);
 wallpaperRouter.post("/:id/report", [checkUserJWT], wallpaperController.reportWallpaper);
 
 module.exports = {
