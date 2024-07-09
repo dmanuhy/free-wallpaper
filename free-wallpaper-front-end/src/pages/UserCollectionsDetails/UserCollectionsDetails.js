@@ -62,33 +62,39 @@ export default function UserCollectionsDetails() {
         if (page !== 0) {
             fetchAllWallpaper();
         }
+        console.log(wallpaperList);
+
     }, [page, sort])
     useEffect(() => {
         fetchUser();
         fetchAlbum();
+
     }, [])
     const handleUpdateWallpapers = () => {
         setPage(1);
         fetchAllWallpaper();
     };
     const handleDownloadAll = () => {
-        //     const zip = new JSZip();
-        //     const imgFolder = zip.folder("wallpapers");
-        //     wallpaperList.forEach((url, index) => {
-        //         const fileName = `wallpaper${index + 1}.jpg`;
-        //         fetch(url)
-        //             .then(response => response.blob())
-        //             .then(blob => {
-        //                 imgFolder.file(fileName, blob);
-        //                 if (index === wallpaperList.length - 1) {
-        //                     zip.generateAsync({ type: 'blob' }).then(content => {
-        //                         saveAs(content, `${index + 1}.zip`);
-        //                     });
-        //                 }
-        //             })
-        //             .catch(error => console.error('Error fetching image:', error));
-        //     });
+        const zip = new JSZip();
+        const imgFolder = zip.folder("wallpapers");
+
+        wallpaperList.forEach((wallpaper, index) => {
+            const fileName = `wallpaper${index + 1}.jpg`;
+            const url = wallpaper.imageUrl;
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                    imgFolder.file(fileName, blob);
+                    if (index === wallpaperList.length - 1) {
+                        zip.generateAsync({ type: 'blob' }).then(content => {
+                            saveAs(content, `wallpapers.zip`);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error fetching image:', error));
+        });
     };
+
     return (
         <div>
             <div className="container mt-5">

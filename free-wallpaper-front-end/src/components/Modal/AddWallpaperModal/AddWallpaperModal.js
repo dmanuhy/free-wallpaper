@@ -22,12 +22,10 @@ const AddWallpaperModal = ({ albumId, userId, onUpdate }) => {
             formData.append("fromAlbum", albumId);
             formData.append("createdBy", userId);
             const response = await WallpaperService.CreateWallpaper(formData);
-            
             clearState();
             onUpdate();
             toast.success("New Wallpapper create successfully");
             setOpen(false)
-
         } catch (error) {
             console.error("Error creating new wallpaper:", error);
             alert("Error creating new wallpaper. Please try again.");
