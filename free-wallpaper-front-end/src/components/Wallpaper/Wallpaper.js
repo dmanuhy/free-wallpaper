@@ -21,7 +21,7 @@ const Wallpaper = ({ wallpaper }) => {
             {wallpaper &&
                 <motion.div variants={variants} initial="hidden" animate="visible" transition={{ ease: "easeInOut", duration: 0.5 }} className="wallpaper">
                     <img onClick={() => navigate(`/wallpaper/${wallpaper._id}`)} loading="lazy" className="wallpaper-image" src={wallpaper.imageUrl} alt="image1" />
-                    <i onClick={() => handleChangeLikedWallpaper(wallpaper._id)} className={userLikedWallpaper && userLikedWallpaper.includes(wallpaper._id) ? "wallpaper-icon text-danger fas fa-heart" : "wallpaper-icon fa-regular fa-heart"}></i>
+                    <i onClick={() => handleChangeLikedWallpaper(wallpaper._id, wallpaper.createdBy && wallpaper.createdBy._id)} className={userLikedWallpaper && userLikedWallpaper.includes(wallpaper._id) ? "wallpaper-icon text-danger fas fa-heart" : "wallpaper-icon fa-regular fa-heart"}></i>
                     <a className="wallpaper-download-btn btn btn-success" href={wallpaper.imageUrl} download={true} >Download</a>
                     {wallpaper.createdBy &&
                         <div onClick={() => navigate(`/user/${wallpaper.createdBy._id}`)} className="wallpaper-creator">

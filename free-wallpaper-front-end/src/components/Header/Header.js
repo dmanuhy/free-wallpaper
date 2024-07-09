@@ -7,6 +7,7 @@ import user_avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
 import { UserService } from '../../services/UserService'
 import { toast } from 'react-toastify'
 import moment from 'moment'
+import { socket } from "../../App"
 
 const Header = () => {
 
@@ -30,6 +31,19 @@ const Header = () => {
     useEffect(() => {
         getUserNotification()
     }, [user])
+
+    useEffect(() => {
+        socket.on("newNotification", (data) => {
+            if (user && data.userId === user._id) {
+                const notifications = [...userNotification]
+                notifications.push(data.notification)
+                setUserNotification(notifications)
+            }
+        })
+        return () => {
+            socket.off("newNotification");
+        };
+    }, [socket, user, userNotification])
 
     const getUserNotification = async () => {
         if (user && user._id) {
@@ -63,6 +77,17 @@ const Header = () => {
         }
     }
 
+    const markReadNotification = async (notificationID, link, isReaded) => {
+        if (!isReaded) {
+            await UserService.markReadNotificationService({ userId: user._id, notificationId: notificationID })
+            const notifications = [...userNotification]
+            const matchedNotificationIndex = notifications.findIndex((n) => n._id === notificationID);
+            notifications[matchedNotificationIndex].isReaded = true
+            setUserNotification(notifications)
+        }
+        navigate(link)
+    }
+
     return (
         <div className="header content-width-padding row align-items-center mx-0">
             <span className="header-logo col-2 fs-2" onClick={() => navigate("/")}>Free Wallpaper</span>
@@ -80,9 +105,9 @@ const Header = () => {
                         Explore <i className="fa-solid fa-chevron-down"></i>
                     </button>
                     <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Hostest Images</a></li>
-                        <li><a className="dropdown-item" href="#">Top Contributors</a></li>
-                        <li><a className="dropdown-item" href="#">Full Collections</a></li>
+                        <li><Link className="dropdown-item" to="/">Hostest Images</Link></li>
+                        <li><Link className="dropdown-item" to="/">Top Contributors</Link></li>
+                        <li><Link className="dropdown-item" to="/">Full Collections</Link></li>
                     </ul>
                 </div>
                 {user && user.isActived === true ?
@@ -99,10 +124,10 @@ const Header = () => {
                                         {userNotification.sort((a, b) => { return - (a.date - b.date) }).map((item, index) => {
                                             return (
                                                 <li key={"notification-" + item._id} className={item.isReaded ? "bg-white-2" : ""}>
-                                                    <Link className="dropdown-item" to={item.link}>
+                                                    <div className="dropdown-item" onClick={() => markReadNotification(item._id, item.link, item.isReaded)}>
                                                         <div>{item.body}</div>
                                                         <div className='text-secondary font-size-12 text-end'>{moment(item.date).fromNow()}</div>
-                                                    </Link>
+                                                    </div>
                                                 </li>
                                             )
                                         })}

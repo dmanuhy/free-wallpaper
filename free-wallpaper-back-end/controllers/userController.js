@@ -142,14 +142,27 @@ const getUserLikedWallpaper = async (req, res) => {
 
 const updateUserLikedWallpaper = async (req, res) => {
     try {
-        const { userId, wallpaperId } = req.body
+        const { userId, wallpaperId, userName, ownerId } = req.body
         if (!userId || !wallpaperId) {
             return res.status(400).json({
                 status: res.statusCode,
                 message: "Connect failed"
             });
         }
-        const serviceResponse = await UserService.updateUserLikedWallpaperService(userId, wallpaperId);
+        const serviceResponse = await UserService.updateUserLikedWallpaperService(userId, wallpaperId, userName, ownerId);
+        return res.status(serviceResponse.status).json(serviceResponse);
+    } catch (error) {
+        return res.status(500).json({
+            status: 500,
+            message: error.message || "Internal Server Error",
+        });
+    }
+};
+
+const markReadedNotification = async (req, res) => {
+    try {
+        const { userId, notificationId } = req.body
+        const serviceResponse = await UserService.markReadedNotificationService(userId, notificationId);
         return res.status(serviceResponse.status).json(serviceResponse);
     } catch (error) {
         return res.status(500).json({
@@ -168,5 +181,6 @@ module.exports = {
     blockUser,
     getUserNotification,
     getUserLikedWallpaper,
-    updateUserLikedWallpaper
+    updateUserLikedWallpaper,
+    markReadedNotification
 };
