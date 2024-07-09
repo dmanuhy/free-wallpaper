@@ -29,8 +29,8 @@ const UserProvider = ({ children }) => {
         }
     }
 
-    const handleChangeLikedWallpaper = async (wallpaperId) => {
-        const response = await UserService.updateUserLikedWallpaperService({ userId: user._id, wallpaperId: wallpaperId });
+    const handleChangeLikedWallpaper = async (wallpaperId, createdBy) => {
+        const response = await UserService.updateUserLikedWallpaperService({ userId: user._id, wallpaperId: wallpaperId, userName: user.name, ownerId: createdBy });
         if (response.status === 200) {
             setUserLikedWallpaper(response.data.liked)
         } else {
