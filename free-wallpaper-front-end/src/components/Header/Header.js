@@ -105,9 +105,9 @@ const Header = () => {
                         Explore <i className="fa-solid fa-chevron-down"></i>
                     </button>
                     <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Hostest Images</a></li>
-                        <li><a className="dropdown-item" href="#">Top Contributors</a></li>
-                        <li><a className="dropdown-item" href="#">Full Collections</a></li>
+                        <li><Link className="dropdown-item" to="/">Hostest Images</Link></li>
+                        <li><Link className="dropdown-item" to="/">Top Contributors</Link></li>
+                        <li><Link className="dropdown-item" to="/">Full Collections</Link></li>
                     </ul>
                 </div>
                 {user && user.isActived === true ?
