@@ -6,6 +6,7 @@ import "./WallpaperDetail.scss"
 import moment from "moment"
 import CommentInput from "../../components/CommentInput/CommentInput"
 import ReportModal from "../../components/Modal/ReportModal/ReportModal";
+import avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
 import ShareModal from "../../components/Modal/ShareModal/ShareModal"
 
 
@@ -84,7 +85,7 @@ const WallpaperDetail = () => {
                                         </div>
                                         <div>
                                             <i
-                                                class="wallpaper-detail-top-icon text-danger fa-solid fa-triangle-exclamation"
+                                                className="wallpaper-detail-top-icon text-danger fa-solid fa-triangle-exclamation"
                                                 onClick={() => setOpenReportModal(true)}
                                             ></i>
                                             <ReportModal isOpen={openReportModal} onClose={() => setOpenReportModal(false)} id={id} />
@@ -95,7 +96,7 @@ const WallpaperDetail = () => {
                                             <span className="fs-6 text-end">{wallpaperDetail.createdBy.name}</span>
                                             <img
                                                 className="wallpaper-detail-owner-avatar"
-                                                src={wallpaperDetail.createdBy.avatar}
+                                                src={wallpaperDetail.createdBy.avatar || avatar_raw}
                                                 alt="userAvatar"
                                             />
                                         </div>
@@ -196,7 +197,7 @@ const WallpaperDetail = () => {
                                     ) : (
                                         <div className="py-3">
                                             <span className="">
-                                                No comment. Be the first commenter <i class="fa-solid fa-arrow-down"></i>
+                                                No comment. Be the first commenter <i className="fa-solid fa-arrow-down"></i>
                                             </span>
                                         </div>
                                     )}

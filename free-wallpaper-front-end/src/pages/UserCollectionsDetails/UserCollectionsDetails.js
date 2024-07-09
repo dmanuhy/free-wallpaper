@@ -115,8 +115,8 @@ export default function UserCollectionsDetails() {
                         <div className="d-flex justify-content-center mt-2 gap-2">
                             {user && user.isActived &&
                                 <>
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAddWallpaper">
-                                        <i class="fa-solid fa-plus"></i> Wallpaper
+                                    <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAddWallpaper">
+                                        <i className="fa-solid fa-plus"></i> Photos
                                     </button>
                                     <AddWallpaperModal albumId={albumId} userId={userId} onUpdate={fetchAllWallpaper} />
                                 </>
@@ -128,8 +128,7 @@ export default function UserCollectionsDetails() {
                     </div>
                 </row>
             </div>
-            <Component.WallpaperList wallpaperList={wallpaperList
-            } page={page} setPage={setPage} />
+            <Component.WallpaperList wallpaperList={wallpaperList} page={page} setPage={setPage} noMoreData={noMoreData} />
         </div>
     )
 }

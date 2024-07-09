@@ -24,6 +24,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     require: false,
   },
+  notifications: [
+    { body: { type: String }, link: { type: String }, isReaded: { type: Boolean, default: false }, date: { type: Number, default: Date.now() } }
+  ],
   albums: [{ type: mongoose.Schema.Types.ObjectId, ref: "album" }],
   shared: [{ type: mongoose.Schema.Types.ObjectId, ref: "album" }],
   liked: [{ type: mongoose.Schema.Types.ObjectId, ref: "wallpaper" }],
