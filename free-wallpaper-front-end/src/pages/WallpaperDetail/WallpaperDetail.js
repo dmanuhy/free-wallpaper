@@ -78,7 +78,7 @@ const WallpaperDetail = () => {
                                         <i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square"></i>
                                         <div>
                                             <i
-                                                class="wallpaper-detail-top-icon text-danger fa-solid fa-triangle-exclamation"
+                                                className="wallpaper-detail-top-icon text-danger fa-solid fa-triangle-exclamation"
                                                 onClick={() => setOpenReportModal(true)}
                                             ></i>
                                             <ReportModal isOpen={openReportModal} onClose={() => setOpenReportModal(false)} id={id} />
@@ -190,7 +190,7 @@ const WallpaperDetail = () => {
                                     ) : (
                                         <div className="py-3">
                                             <span className="">
-                                                No comment. Be the first commenter <i class="fa-solid fa-arrow-down"></i>
+                                                No comment. Be the first commenter <i className="fa-solid fa-arrow-down"></i>
                                             </span>
                                         </div>
                                     )}

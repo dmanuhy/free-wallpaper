@@ -23,6 +23,18 @@ const blockUserService = (id, isActived) => {
   return axios.patch(`/user/${id}`, { isActived });
 };
 
+const getUserNotificationService = (id) => {
+  return axios.post("/user/get-notification", { id: id });
+};
+
+const getUserLikedWallpaperService = (id) => {
+  return axios.post("/user/get-liked-wallpaper", { id: id });
+};
+
+const updateUserLikedWallpaperService = (data) => {
+  return axios.post("/user/update-liked-wallpaper", data);
+};
+
 export const UserService = {
   signUpService,
   signInService,
@@ -30,4 +42,7 @@ export const UserService = {
   findUser,
   getAllUsersService,
   blockUserService,
+  getUserNotificationService,
+  getUserLikedWallpaperService,
+  updateUserLikedWallpaperService
 };
