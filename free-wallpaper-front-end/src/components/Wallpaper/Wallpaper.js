@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { Link, useParams } from "react-router-dom";
 import { WallpaperService } from "../../services/WallpaperService";
 import { useState, useEffect } from "react";
+import EditWallpaperModal from "../Modal/EditWallpaperModal/EditWallpaperModal";
 const variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 }
@@ -55,7 +56,7 @@ const Wallpaper = ({ wallpaper }) => {
                 >
                     {isValid &&
                         < div className="wallpaper-buttons">
-                            <button className="btn btn-primary" onClick={() => handleEdit(wallpaper._id)}><i class="bi bi-pencil"></i></button>
+                            <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editWallpaperModal"><i class="bi bi-pencil"></i></button>
                             <button className="btn btn-danger" onClick={() => handleDelete(wallpaper._id)}><i class="bi bi-trash"></i></button>
                         </div>
                     }
@@ -84,7 +85,7 @@ const Wallpaper = ({ wallpaper }) => {
                     >
                         <CircularProgress color="inherit" />
                     </Backdrop>
-
+                    <EditWallpaperModal imageId={wallpaper._id} imageUrl={wallpaper.imageUrl} />
                 </motion.div >
 
             }
