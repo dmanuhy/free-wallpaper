@@ -22,6 +22,7 @@ wallpaperRouter.get("/search/:key", wallpaperController.getWallpaperByKey)
 wallpaperRouter.post("/:id/like", wallpaperController.likeWallpaper);
 wallpaperRouter.post("/share", wallpaperController.shareWallpaper);
 wallpaperRouter.post("/:id/report", [checkUserJWT], wallpaperController.reportWallpaper);
+wallpaperRouter.put("/edit/:id", wallpaperController.EditTagWallpaper);
 
 module.exports = {
   wallpaperRouter,

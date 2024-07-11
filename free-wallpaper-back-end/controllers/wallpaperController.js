@@ -48,7 +48,7 @@ const deleteOneImage = async (req, res, next) => {
   try {
     const { wid } = req.params;
 
-    
+
     const wallpaper = await Wallpaper.findById(wid);
     if (!wallpaper) {
       return res.status(404).json({ message: "Wallpaper not found" });
@@ -276,6 +276,26 @@ P.S. If you did not expect to receive this email, please ignore it.
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
+const EditTagWallpaper = async (req, res) => {
+  const { id } = req.params;
+  const { tags } = req.body;
+
+  try {
+    const updatedWallpaper = await Wallpaper.findByIdAndUpdate(
+      id,
+      { $set: { tags: tags } },
+    );
+
+    if (!updatedWallpaper) {
+      return res.status(404).send('Wallpaper not found');
+    }
+
+    res.json(updatedWallpaper);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+
+};
 
 module.exports = {
   getWallpapers,
@@ -289,5 +309,6 @@ module.exports = {
   reportWallpaper,
   getWallpaperByKey,
   shareWallpaper,
-  deleteOneImage
+  deleteOneImage,
+  EditTagWallpaper
 };
