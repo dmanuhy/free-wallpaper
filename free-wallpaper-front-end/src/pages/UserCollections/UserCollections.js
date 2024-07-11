@@ -36,7 +36,7 @@ export default function UserCollections() {
             const response = await AlbumService.createAlbum(newAlbum);
             setNewAlbumName('');
             setOpen(false);
-            alert("Create new album succesfull")
+            toast.success("New Wallpapper create successfully");
         } catch (error) {
             console.error("Error creating album:", error);
         }
@@ -67,6 +67,7 @@ export default function UserCollections() {
             const response = await AlbumService.ChangeNameAlbumbyId(albumId, name);
 
             fetchAlbums();
+            toast.success("Album rename successful");
         } catch (error) {
             console.error('Error updating album:', error);
         }
@@ -106,7 +107,7 @@ export default function UserCollections() {
             const res = await AlbumService.deleteAlbumbyId(albumId);
             fetchAlbums();
             setOpen(false);
-            toast.success("New Wallpapper create successfully");
+            toast.success("Album delete successful");
         } catch (err) {
         }
     };
@@ -167,7 +168,7 @@ export default function UserCollections() {
                         )}
                         {user && user.isActived && user._id == userId &&
                             <>
-                                <button className="delete-button" onClick={(e) => handleDelete(album._id, e)}>X</button>
+                                <button className="delete-button" onClick={(e) => handleDelete(album._id, e)}><i class="bi bi-trash"></i></button>
                                 <button className="edit-button" data-bs-toggle="modal" data-bs-target="#editalbum" album-name={album.name} album-id={album._id} onClick={(e) => handleEditButtonClick(e)} ><i class="bi bi-pencil"></i></button>
                             </>
                         }

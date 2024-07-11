@@ -41,6 +41,9 @@ const shareWallpaper = (id, mail) => {
     email: mail
   });
 };
+const deleteOneImage = (WallpaperId) => {
+  return axios.delete(`/wallpaper/delete/${WallpaperId}`);
+};
 
 export const WallpaperService = {
   getAllWallpaperService,
@@ -52,5 +55,6 @@ export const WallpaperService = {
   addWallpaperCommentService,
   reportWallpaperService,
   getWallpaperByKeyService,
-  shareWallpaper
+  shareWallpaper,
+  deleteOneImage
 };

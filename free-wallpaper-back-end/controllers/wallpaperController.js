@@ -46,9 +46,9 @@ async function CreateNewWallpaper(req, res, next) {
 
 const deleteOneImage = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const wallpapers = await Wallpaper.findById(id);
-    await Wallpaper.deleteOne({ _id: id })
+    const { wid } = req.params;
+    const wallpapers = await Wallpaper.findById(wid);
+    await Wallpaper.deleteOne({ _id: wid })
     const deletePromises = cloudinary.uploader.destroy(wallpapers.publicId);
     await Promise.all(deletePromises);
     await Album.findByIdAndUpdate(fromAlbum, { $pull: { wallpapers: { $in: wallpapers._id } } });
@@ -281,5 +281,6 @@ module.exports = {
   likeWallpaper,
   reportWallpaper,
   getWallpaperByKey,
-  shareWallpaper
+  shareWallpaper,
+  deleteOneImage
 };
