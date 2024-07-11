@@ -15,6 +15,7 @@ const ReportModal = ({ isOpen, onClose, id }) => {
     const jwt = Cookies.get("jwt");
     if (!jwt) {
       toast.error("Please log in to report an image.");
+      return;
     }
 
     if (!description.trim()) {
