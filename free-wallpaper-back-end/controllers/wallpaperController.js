@@ -18,6 +18,7 @@ const getWallpapers = async (req, res) => {
 };
 
 const Wallpaper = require("../models/wallpaper");
+const Tag = require("../models/tag");
 async function CreateNewWallpaper(req, res, next) {
   try {
     const files = req.files;
@@ -278,12 +279,27 @@ P.S. If you did not expect to receive this email, please ignore it.
 };
 const EditTagWallpaper = async (req, res) => {
   const { id } = req.params;
-  const { tags } = req.body;
+  const { tags, des } = req.body;
 
   try {
+    const existingTags = await Tag.find({ name: { $in: tags } }).exec();
+
+    // Get the names of the existing tags
+    const existingTagNames = existingTags.map(tag => tag.name);
+
+    // Filter out tags that already exist
+    const newTags = tags.filter(tag => !existingTagNames.includes(tag));
+
+    // Create new tag documents
+    const newTagDocs = newTags.map(tag => ({ name: tag }));
+
+    // Insert new tags into the database
+    if (newTagDocs.length > 0) {
+      await Tag.insertMany(newTagDocs);
+    }
     const updatedWallpaper = await Wallpaper.findByIdAndUpdate(
       id,
-      { $set: { tags: tags } },
+      { $set: { tags: tags, description: des } },
     );
 
     if (!updatedWallpaper) {

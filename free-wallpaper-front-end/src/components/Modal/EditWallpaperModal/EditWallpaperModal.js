@@ -1,7 +1,8 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import { CONSTRANT } from "../../../constrant";
-
+import { toast } from "react-toastify";
+import { WallpaperService } from "../../../services/WallpaperService";
 const EditWallpaperModal = ({ imageId, imageUrl }) => {
 
     const [wallpaperTags, setWallpaperTags] = useState([""])
@@ -24,9 +25,16 @@ const EditWallpaperModal = ({ imageId, imageUrl }) => {
         setWallpaperTags(tagList)
     }
 
-    const updateWallpaperTags = () => {
-
-    }
+    const updateWallpaperTags = async () => {
+        await WallpaperService.EditImage(imageId, wallpaperTags, description)
+            .then(response => {
+                toast.success("Edit successful")
+            })
+            .catch(error => {
+                // Handle error, maybe show an error message
+                console.error('Error updating wallpaper:', error);
+            });
+    };
 
     return (
         <div className="edit-wallpaper-modal">
