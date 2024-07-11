@@ -67,7 +67,7 @@ const Wallpaper = ({ wallpaper }) => {
                         alt="image1"
                     />
                     <i
-                        onClick={() => handleChangeLikedWallpaper(wallpaper._id)}
+                        onClick={() => handleChangeLikedWallpaper(wallpaper._id, wallpaper.createdBy._id)}
                         className={userLikedWallpaper && userLikedWallpaper.includes(wallpaper._id) ? "wallpaper-icon text-danger fas fa-heart" : "wallpaper-icon fa-regular fa-heart"}
                     ></i>
                     <a className="wallpaper-download-btn btn btn-success" href={wallpaper.imageUrl} download={true}>Download</a>

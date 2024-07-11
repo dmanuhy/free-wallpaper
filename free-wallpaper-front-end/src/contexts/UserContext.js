@@ -34,7 +34,7 @@ const UserProvider = ({ children }) => {
         if (response.status === 200) {
             setUserLikedWallpaper(response.data.liked)
         } else {
-            console.log(response.message)
+            console.log(response)
         }
     }
 

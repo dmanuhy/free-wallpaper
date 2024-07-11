@@ -36,7 +36,7 @@ const updateUserLikedWallpaperService = (data) => {
 };
 
 const markReadNotificationService = (data) => {
-  return axios.post("/user//mark-readed-notification", data);
+  return axios.post("/user/mark-readed-notification", data);
 };
 
 export const UserService = {

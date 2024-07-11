@@ -114,7 +114,7 @@ export default function UserCollectionsDetails() {
                             {user && user.isActived &&
                                 <>
                                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAddWallpaper">
-                                        <i class="fa-solid fa-plus"></i> Wallpaper
+                                        <i class="fa-solid fa-plus"></i> Photos
                                     </button>
                                     <AddWallpaperModal albumId={albumId} userId={userId} onUpdate={fetchAllWallpaper} />
                                 </>
