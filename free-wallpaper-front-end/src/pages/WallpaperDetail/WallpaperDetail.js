@@ -13,7 +13,7 @@ import ShareModal from "../../components/Modal/ShareModal/ShareModal"
 const WallpaperDetail = () => {
     const { user } = useContext(UserContext);
     const { id } = useParams();
-    
+
     const [openReportModal, setOpenReportModal] = useState(false);
     const [wallpaperDetail, setWallpaperDetail] = useState({});
     const [hideReplyList, setHideReplyList] = useState([]);
@@ -74,14 +74,14 @@ const WallpaperDetail = () => {
                         <div className="wallpaper-detail-content d-flex flex-column justify-content-between p-2">
                             <div className="wallpaper-detail-top d-flex flex-column">
                                 <div className="d-flex align-items-center justify-content-between gap-2 border-bottom border-b-1 pb-3">
-                                    <div className="wallpaper-detail-top-content text-nowrap d-flex gap-1">
+                                    <div className="wallpaper-detail-top-content d-flex align-item-centers text-nowrap d-flex gap-1">
                                         <span>
                                             <i className="wallpaper-detail-top-icon fa-regular fa-heart"></i> {wallpaperDetail.likes}
                                         </span>
                                         <div>
-                                            <button  type="button" class="btn " data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square" ></i></button>
+                                            <button type="button" className="btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square" ></i></button>
                                             {/* <i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square" ></i> */}
-                                            <ShareModal id={id}/>
+                                            <ShareModal id={id} />
                                         </div>
                                         <div>
                                             <i

@@ -143,6 +143,7 @@ const getUserLikedWallpaper = async (req, res) => {
 const updateUserLikedWallpaper = async (req, res) => {
     try {
         const { userId, wallpaperId, userName, ownerId } = req.body
+        console.log("controller: ", ownerId)
         if (!userId || !wallpaperId) {
             return res.status(400).json({
                 status: res.statusCode,

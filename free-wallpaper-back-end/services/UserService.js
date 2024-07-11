@@ -223,8 +223,12 @@ const sendNotificationService = async (ownerId, body, link) => {
         { $push: { notifications: { body: body, link: link, date: Date.now() } } },
         { new: true }
     ).select("_id notifications")
-    const newNotifications = userNotification.notifications[userNotification.notifications.length - 1]
-    server.io.emit("newNotification", { userId: ownerId, notification: newNotifications })
+    console.log(userNotification)
+    if (userNotification) {
+        const newNotifications = userNotification.notifications[userNotification.notifications.length - 1]
+        server.io.emit("newNotification", { userId: ownerId, notification: newNotifications })
+    }
+
 }
 
 const markReadedNotificationService = async (userId, notificationId) => {

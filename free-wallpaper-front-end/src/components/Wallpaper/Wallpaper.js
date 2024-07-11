@@ -1,56 +1,52 @@
 import { useNavigate } from "react-router-dom";
-import "./Wallpaper.scss";
+import "./Wallpaper.scss"
 import { motion } from "framer-motion";
-import user_avatar_raw from "../../assets/icon/icon-avatar-placeholder.png";
-import { useContext, useState } from "react";
+import user_avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
+import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { toast } from "react-toastify";
-
+import { Link, useParams } from "react-router-dom";
 import { WallpaperService } from "../../services/WallpaperService";
-
+import { useState, useEffect } from "react";
+import EditWallpaperModal from "../Modal/EditWallpaperModal/EditWallpaperModal";
 const variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 }
-};
+}
 
 const Wallpaper = ({ wallpaper }) => {
     const [open, setOpen] = useState(false);
-
     const { userLikedWallpaper, handleChangeLikedWallpaper } = useContext(UserContext);
-    const { user } = useContext(UserContext);
-    const navigate = useNavigate();
+    const { user } = useContext(UserContext)
+    const navigate = useNavigate()
 
     const validateUrlFormat = (pathname) => {
         const regex = new RegExp(`^/user/${user._id}/album/[a-fA-F0-9]{24}$`);
         return regex.test(pathname);
     };
-
     const currentUrl = window.location.pathname;
     const isValid = validateUrlFormat(currentUrl);
-
     const handleEdit = () => {
 
     };
 
     const handleDelete = async (id) => {
+
         try {
             setOpen(true);
             await WallpaperService.deleteOneImage(id);
             setOpen(false);
+            navigate(0);
             toast.success("Wallpaper deleted successfully");
             navigate(0);
         } catch (err) {
-            setOpen(false);
-            toast.error("Failed to delete wallpaper");
         }
     };
-
-
     return (
         <>
-            {wallpaper && (
+            {wallpaper &&
                 <motion.div
                     variants={variants}
                     initial="hidden"
@@ -58,16 +54,12 @@ const Wallpaper = ({ wallpaper }) => {
                     transition={{ ease: "easeInOut", duration: 0.5 }}
                     className="wallpaper"
                 >
-                    {isValid && (
-                        <div className="wallpaper-buttons">
-                            <button className="btn btn-primary" onClick={handleEdit}>
-                                <i className="bi bi-pencil"></i>
-                            </button>
-                            <button className="btn btn-danger" onClick={() => handleDelete(wallpaper._id)}>
-                                <i className="bi bi-trash"></i>
-                            </button>
+                    {isValid &&
+                        < div className="wallpaper-buttons">
+                            <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editWallpaperModal"><i class="bi bi-pencil"></i></button>
+                            <button className="btn btn-danger" onClick={() => handleDelete(wallpaper._id)}><i class="bi bi-trash"></i></button>
                         </div>
-                    )}
+                    }
                     <img
                         onClick={() => navigate(`/wallpaper/${wallpaper._id}`)}
                         loading="lazy"
@@ -76,7 +68,7 @@ const Wallpaper = ({ wallpaper }) => {
                         alt="image1"
                     />
                     <i
-                        onClick={() => handleChangeLikedWallpaper(wallpaper._id)}
+                        onClick={() => handleChangeLikedWallpaper(wallpaper._id, wallpaper.createdBy._id)}
                         className={userLikedWallpaper && userLikedWallpaper.includes(wallpaper._id) ? "wallpaper-icon text-danger fas fa-heart" : "wallpaper-icon fa-regular fa-heart"}
                     ></i>
                     <a className="wallpaper-download-btn btn btn-success" href={wallpaper.imageUrl} download={true}>Download</a>
@@ -86,17 +78,19 @@ const Wallpaper = ({ wallpaper }) => {
                             <div className="wallpaper-creator-avatar" style={{ backgroundImage: `url(${(wallpaper.createdBy && wallpaper.createdBy.avatar) || user_avatar_raw})` }}></div>
                         </div>
                     )}
+
                     <Backdrop
                         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                         open={open}
                     >
                         <CircularProgress color="inherit" />
                     </Backdrop>
+                    <EditWallpaperModal imageId={wallpaper._id} imageUrl={wallpaper.imageUrl} />
+                </motion.div >
 
-                </motion.div>
-            )}
+            }
         </>
-    );
-};
+    )
+}
 
-export default Wallpaper;
+export default Wallpaper

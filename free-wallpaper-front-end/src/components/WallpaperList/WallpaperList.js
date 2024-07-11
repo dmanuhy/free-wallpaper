@@ -23,7 +23,7 @@ const WallpaperList = ({ wallpaperList = [], page = 0, setPage = null, noMoreDat
                         <div className='wallpaper-list-container'>
                             {wallpaperList.map((item, index) => {
                                 return (
-                                    <Component.Wallpaper key={"wallpaper" + item._id} wallpaper={item} />
+                                    <Component.Wallpaper key={"wallpaper-" + item._id} wallpaper={item} />
                                 )
                             })}
                         </div>
