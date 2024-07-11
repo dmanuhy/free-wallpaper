@@ -47,14 +47,21 @@ async function CreateNewWallpaper(req, res, next) {
 const deleteOneImage = async (req, res, next) => {
   try {
     const { wid } = req.params;
-    const wallpapers = await Wallpaper.findById(wid);
-    await Wallpaper.deleteOne({ _id: wid })
-    const deletePromises = cloudinary.uploader.destroy(wallpapers.publicId);
-    await Promise.all(deletePromises);
-    await Album.findByIdAndUpdate(fromAlbum, { $pull: { wallpapers: { $in: wallpapers._id } } });
+
+    
+    const wallpaper = await Wallpaper.findById(wid);
+    if (!wallpaper) {
+      return res.status(404).json({ message: "Wallpaper not found" });
+    }
+    await Wallpaper.deleteOne({ _id: wid });
+    await cloudinary.uploader.destroy(wallpaper.publicId);
+    await Album.findByIdAndUpdate(wallpaper.fromAlbum, { $pull: { wallpapers: wid } });
+
+    res.status(200).json({ message: "Wallpaper deleted successfully" });
 
   } catch (error) {
 
+    next(error);
   }
 };
 

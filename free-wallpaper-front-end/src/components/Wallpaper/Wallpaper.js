@@ -20,16 +20,15 @@ const Wallpaper = ({ wallpaper }) => {
     const { userLikedWallpaper, handleChangeLikedWallpaper } = useContext(UserContext);
     const { user } = useContext(UserContext)
     const navigate = useNavigate()
+
     const validateUrlFormat = (pathname) => {
         const regex = new RegExp(`^/user/${user._id}/album/[a-fA-F0-9]{24}$`);
         return regex.test(pathname);
     };
     const currentUrl = window.location.pathname;
     const isValid = validateUrlFormat(currentUrl);
+    const handleEdit = () => {
 
-    const handleEdit = (id) => {
-
-        console.log(`Edit wallpaper with id: ${id}`);
     };
 
     const handleDelete = async (id) => {
@@ -38,7 +37,9 @@ const Wallpaper = ({ wallpaper }) => {
             setOpen(true);
             await WallpaperService.deleteOneImage(id);
             setOpen(false);
-            toast.success("Album delete successful");
+            navigate(0);
+            toast.success("Wallpaper deleted successfully");
+            navigate(0);
         } catch (err) {
         }
     };
@@ -76,12 +77,14 @@ const Wallpaper = ({ wallpaper }) => {
                             <div className="wallpaper-creator-avatar" style={{ backgroundImage: `url(${(wallpaper.createdBy && wallpaper.createdBy.avatar) || user_avatar_raw})` }}></div>
                         </div>
                     )}
+
                     <Backdrop
                         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                         open={open}
                     >
                         <CircularProgress color="inherit" />
                     </Backdrop>
+
                 </motion.div >
 
             }
