@@ -318,6 +318,7 @@ const updateWallpaperLikesService = async (wallpaperID, action) => {
             }
         }
         await db.wallpaper.findByIdAndUpdate({ _id: wallpaperID }, { $inc: { likes: value } })
+        server.io.emit("updateWallpaperLikes", value)
     } catch (e) {
         console.log(e)
     }
