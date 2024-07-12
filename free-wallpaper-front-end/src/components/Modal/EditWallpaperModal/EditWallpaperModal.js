@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import { CONSTRANT } from "../../../constrant";
 import { toast } from "react-toastify";
 import { WallpaperService } from "../../../services/WallpaperService";
-const EditWallpaperModal = ({ imageId, imageUrl }) => {
+const EditWallpaperModal = ({ wallpaperId, imageUrl }) => {
 
     const [wallpaperTags, setWallpaperTags] = useState([""])
     const [description, setDescription] = useState("")
@@ -26,7 +26,7 @@ const EditWallpaperModal = ({ imageId, imageUrl }) => {
     }
 
     const updateWallpaperTags = async () => {
-        await WallpaperService.EditImage(imageId, wallpaperTags, description)
+        await WallpaperService.EditImage(wallpaperId, wallpaperTags, description)
             .then(response => {
                 toast.success("Edit successful")
             })
@@ -38,7 +38,7 @@ const EditWallpaperModal = ({ imageId, imageUrl }) => {
 
     return (
         <div className="edit-wallpaper-modal">
-            <div className="modal fade" id="editWallpaperModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal fade" id={"editWallpaperModal-" + wallpaperId} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" style={{ width: "fit-content", maxWidth: "80vw" }}>
                     <div className="modal-content">
                         <div className="modal-header bg-info">
