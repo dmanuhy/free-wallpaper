@@ -23,9 +23,9 @@ const SearchBar = () => {
     let filteredUsers = defaultUsers;
 
     if (role !== "All") {
-      if (role.toLowerCase() === "contributor") {
+      if (role.toLowerCase() === "member") {
         filteredUsers = filteredUsers.filter(
-          (user) => user.roles.length === 1 && user.roles[0].name.toLowerCase() === "contributor"
+          (user) => user.roles.length === 1 && user.roles[0].name.toLowerCase() === "member"
         );
       } else {
         filteredUsers = filteredUsers.filter((user) =>
@@ -50,7 +50,7 @@ const SearchBar = () => {
           <option disabled>Roles</option>
           <option>All</option>
           <option>Vip</option>
-          <option>Contributor</option>
+          <option>Member</option>
         </select>
       </div>
     </div>

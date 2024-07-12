@@ -3,7 +3,7 @@ import "./ReportTable.scss";
 import { ReportService } from "../../../services/ReportService";
 import ReportRow from "../ReportRow/ReportRow";
 
-const ReportTable = () => {
+const ReportTable = ({ getTotalReports, currentPage, pageSize }) => {
   const [reports, setReports] = useState([]);
 
   const getReportList = async () => {
@@ -13,10 +13,16 @@ const ReportTable = () => {
         if (!acc.some((r) => r.wallpaper._id === report.wallpaper._id)) {
           acc.push(report);
         }
+
         return acc;
       }, []);
 
-      setReports(uniqueReports);
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const paginatedReports = uniqueReports.slice(startIndex, endIndex);
+
+      getTotalReports(uniqueReports);
+      setReports(paginatedReports);
     }
   };
 
@@ -26,7 +32,7 @@ const ReportTable = () => {
 
   useEffect(() => {
     getReportList();
-  }, []);
+  }, [currentPage]);
 
   return (
     <table className="report-table">
