@@ -98,7 +98,7 @@ const WallpaperDetail = () => {
                                                 className={userLikedWallpaper && userLikedWallpaper.includes(wallpaperDetail._id) ? "wallpaper-detail-top-icon text-danger fas fa-heart" : "wallpaper-detail-top-icon fa-regular fa-heart"}
                                             ></i> {wallpaperDetail.likes}
                                         </span>
-                                        {user &&
+                                        {user && user._id &&
                                             <div>
                                                 <button type="button" className="btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square" ></i></button>
                                                 {/* <i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square" ></i> */}
