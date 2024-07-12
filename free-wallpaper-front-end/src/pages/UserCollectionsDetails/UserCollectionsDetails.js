@@ -126,7 +126,7 @@ export default function UserCollectionsDetails() {
                 </row>
             </div>
             <Component.WallpaperList wallpaperList={wallpaperList
-            } page={page} setPage={setPage} />
+            } page={page} setPage={setPage} noMoreData={noMoreData} />
         </div>
     )
 }
