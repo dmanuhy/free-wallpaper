@@ -4,7 +4,7 @@ import { ReportService } from "../../../services/ReportService";
 import { useParams } from "react-router-dom";
 import "./ReportDetailTable.scss";
 
-const ReportDetailTable = () => {
+const ReportDetailTable = ({ getTotalReports, currentPage, pageSize }) => {
   const [reports, setReports] = useState([]);
   const { id } = useParams();
 
@@ -13,13 +13,18 @@ const ReportDetailTable = () => {
     if (response.status == 200) {
       const reportItems = response.data.filter((report) => report.wallpaper._id === id);
 
-      setReports(reportItems);
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const paginatedReports = reportItems.slice(startIndex, endIndex);
+
+      getTotalReports(reportItems);
+      setReports(paginatedReports);
     }
   };
 
   useEffect(() => {
     getReportList();
-  }, []);
+  }, [currentPage]);
 
   return (
     <table className="report-detail-table">

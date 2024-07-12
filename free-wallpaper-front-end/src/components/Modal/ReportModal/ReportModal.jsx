@@ -15,6 +15,7 @@ const ReportModal = ({ isOpen, onClose, id }) => {
     const jwt = Cookies.get("jwt");
     if (!jwt) {
       toast.error("Please log in to report an image.");
+      return;
     }
 
     if (!description.trim()) {
@@ -30,7 +31,12 @@ const ReportModal = ({ isOpen, onClose, id }) => {
     try {
       const response = await WallpaperService.reportWallpaperService(id, description);
       if (response.status === 201) {
-        toast.success("Report created successfully.");
+        toast.success("Report created successfully.", {
+          position: "top-right",
+          autoClose: 3000,
+          closeOnClick: true,
+          pauseOnHover: false,
+        });
         setDescription("");
         onClose();
       } else {

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { WallpaperService } from "../../services/WallpaperService"
 import { UserContext } from "../../contexts/UserContext"
 import "./WallpaperDetail.scss"
@@ -8,11 +8,12 @@ import CommentInput from "../../components/CommentInput/CommentInput"
 import ReportModal from "../../components/Modal/ReportModal/ReportModal";
 import avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
 import ShareModal from "../../components/Modal/ShareModal/ShareModal"
-
+import { socket } from "../../App"
 
 const WallpaperDetail = () => {
-    const { user } = useContext(UserContext);
+    const { user, userLikedWallpaper, handleChangeLikedWallpaper } = useContext(UserContext);
     const { id } = useParams();
+    const navigate = useNavigate()
 
     const [openReportModal, setOpenReportModal] = useState(false);
     const [wallpaperDetail, setWallpaperDetail] = useState({});
@@ -42,6 +43,15 @@ const WallpaperDetail = () => {
         }
         setCommentReplyInput(array);
     };
+
+    useEffect(() => {
+        socket.on("updateWallpaperLikes", (data) => {
+            setWallpaperDetail((wallpaper) => ({ ...wallpaper, likes: wallpaper.likes + data }))
+        });
+        return () => {
+            socket.off("updateWallpaperLikes");
+        };
+    }, [socket, wallpaperDetail])
 
     const fetchWallaperDetail = async () => {
         try {
@@ -73,10 +83,20 @@ const WallpaperDetail = () => {
                         />
                         <div className="wallpaper-detail-content d-flex flex-column justify-content-between p-2">
                             <div className="wallpaper-detail-top d-flex flex-column">
-                                <div className="d-flex align-items-center justify-content-between gap-2 border-bottom border-b-1 pb-3">
+                                <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-2 border-bottom border-b-1 pb-3">
                                     <div className="wallpaper-detail-top-content d-flex align-item-centers text-nowrap d-flex gap-1">
                                         <span>
-                                            <i className="wallpaper-detail-top-icon fa-regular fa-heart"></i> {wallpaperDetail.likes}
+                                            <i
+                                                onClick={() => {
+                                                    if (user && user._id) {
+                                                        handleChangeLikedWallpaper(wallpaperDetail._id, wallpaperDetail.createdBy._id)
+                                                    } else {
+                                                        navigate("/login")
+                                                    }
+
+                                                }}
+                                                className={userLikedWallpaper && userLikedWallpaper.includes(wallpaperDetail._id) ? "wallpaper-detail-top-icon text-danger fas fa-heart" : "wallpaper-detail-top-icon fa-regular fa-heart"}
+                                            ></i> {wallpaperDetail.likes}
                                         </span>
                                         <div>
                                             <button type="button" className="btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square" ></i></button>
