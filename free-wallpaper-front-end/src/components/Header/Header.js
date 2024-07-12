@@ -51,7 +51,6 @@ const Header = () => {
             if (response.status === 200) {
                 if (response.data) {
                     setUserNotification(response.data.notifications);
-                    console.log(userNotification)
                 }
             }
         }
@@ -89,9 +88,9 @@ const Header = () => {
     }
 
     return (
-        <div className="header content-width-padding row align-items-center mx-0">
+        <div className="header content-width-padding row align-items-center justify-content-between mx-0">
             <span className="header-logo col-2 fs-2" onClick={() => navigate("/")}>Free Wallpaper</span>
-            <div className='col-7 header-search'>
+            <div className='col-7 d-none d-lg-block header-search'>
                 {window.location.pathname !== "/" && window.location.pathname !== "/"
                     ?
                     <Component.Search />
@@ -138,7 +137,7 @@ const Header = () => {
                             </ul>
                         </div>
 
-                        <div onClick={() => handleClickAvatar()} className="header-user-avatar" style={{ backgroundImage: `url(${(user && user.avatar) || user_avatar_raw})` }}></div>
+                        <img onClick={() => handleClickAvatar()} className="header-user-avatar" alt='avatar' src={(user && user.avatar) || user_avatar_raw} />
                         <button onClick={(event) => handleLogout(event)} className="header-logout btn btn-warning">Logout</button>
                     </>
                     :

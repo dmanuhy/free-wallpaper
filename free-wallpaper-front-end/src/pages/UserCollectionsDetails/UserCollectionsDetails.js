@@ -52,7 +52,6 @@ export default function UserCollectionsDetails() {
         try {
             const response = await AlbumService.getAlbumByIdService(albumId);
             setAlbum(response);
-            console.log(response)
 
         } catch (error) {
             console.error("Error fetching album:", error);
