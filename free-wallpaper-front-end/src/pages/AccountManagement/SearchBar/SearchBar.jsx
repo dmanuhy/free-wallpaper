@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./SearchBar.scss";
 import { Context } from "../AccountManagement";
 
@@ -6,6 +7,12 @@ const SearchBar = () => {
   const { setUsers, defaultUsers, setCurrentPage } = useContext(Context);
   const [selectedRole, setSelectedRole] = useState("All");
   const [searchValue, setSearchValue] = useState("");
+
+  const navigate = useNavigate();
+
+  const handlePageChange = () => {
+    navigate("/management/report");
+  };
 
   const handleRoleChange = (event) => {
     const role = event.target.value;
@@ -43,7 +50,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="search-bar__header">
+    <div className="search-bar__header d-flex">
       <div className="search-bar__inner">
         <input type="text" placeholder="Search users..." onChange={handleSearch} value={searchValue} />
         <select onChange={handleRoleChange} value={selectedRole}>
@@ -53,6 +60,10 @@ const SearchBar = () => {
           <option>Member</option>
         </select>
       </div>
+
+      <button className="btn btn-primary" onClick={handlePageChange}>
+        View Report List
+      </button>
     </div>
   );
 };
