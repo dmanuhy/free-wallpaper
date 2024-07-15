@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReportTable from "./ReportTable/ReportTable";
 import Pagination from "../../components/Pagination/Pagination";
 
@@ -6,6 +7,12 @@ const ReportList = () => {
   const [reports, setReports] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 1;
+
+  const navigate = useNavigate();
+
+  const handlePageChange = () => {
+    navigate("/management/account");
+  };
 
   const onPageChange = (page) => {
     setCurrentPage(page);
@@ -18,6 +25,9 @@ const ReportList = () => {
   return (
     <div className="container">
       <h1 className="text-center fw-bold">List of reported images</h1>
+      <button className="btn  btn-primary" onClick={handlePageChange}>
+        View Account List
+      </button>
       <ReportTable getTotalReports={getTotalReports} currentPage={currentPage} pageSize={pageSize} />
       <Pagination
         pageSize={pageSize}
