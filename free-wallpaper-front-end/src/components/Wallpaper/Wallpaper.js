@@ -85,7 +85,7 @@ const Wallpaper = ({ wallpaper }) => {
                     >
                         <CircularProgress color="inherit" />
                     </Backdrop>
-                    <EditWallpaperModal wallpaperId={wallpaper._id} imageUrl={wallpaper.imageUrl} />
+                    <EditWallpaperModal wallpaperId={wallpaper._id} imageUrl={wallpaper.imageUrl} tags={wallpaper.tags} />
                 </motion.div >
 
             }

@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import { CONSTRANT } from "../../../constrant";
 import { toast } from "react-toastify";
 import { WallpaperService } from "../../../services/WallpaperService";
-const EditWallpaperModal = ({ wallpaperId, imageUrl }) => {
+const EditWallpaperModal = ({ wallpaperId, imageUrl, tags = [] }) => {
 
     const [wallpaperTags, setWallpaperTags] = useState([""])
     const [description, setDescription] = useState("")
+
+    useEffect(() => {
+        setWallpaperTags(tags)
+    }, [])
 
     const handleChangeTags = (index, action, value) => {
         let tagList = [...wallpaperTags]
@@ -52,7 +56,7 @@ const EditWallpaperModal = ({ wallpaperId, imageUrl }) => {
                                 <img src={imageUrl} alt="photos-to-edit" />
                                 <div className="edit-wallpaper-modal-content">
                                     <div className="text-start mb-5">
-                                        <label className="form-label " htmlFor="edit-wallpaper-desc">Description</label>
+                                        <label className="form-label mb-3" htmlFor="edit-wallpaper-desc">Description</label>
                                         <input id="edit-wallpaper-desc" style={{ width: "24rem" }} className="form-control" value={description} onChange={(event) => setDescription(event.target.value)} />
                                     </div>
                                     <div className="text-start">
