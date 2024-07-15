@@ -48,33 +48,7 @@ function ShareModal(id) {
                 </div>
             </div>
         </div >
-        // <div className="add-wallpaper-modal">
-        //     <div className="modal fade" id="modalAddWallpaper" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        //         <div className="modal-dialog modal-dialog-centered">
-        //             <div className="modal-content">
-        //                 <div className="modal-header bg-success">
-        //                     <h1 className="modal-title fs-5 text-white" id="staticBackdropLabel">
-        //                         Share your wallpapers, photos, and let the world love them
-        //                     </h1>
-        //                     <button type="button" className="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        //                 </div>
-        //                 <div className="modal-body">
-        //                     <Dropzone newImages={newImages} setNewImages={setNewImages} />
-        //                 </div>
-        //                 <div className="modal-footer">
-        //                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        //                     <button onClick={handleCreateNewWallpaper} type="button" data-bs-dismiss="modal" className="btn btn-primary">Create</button>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        //     <Backdrop
-        //         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        //         open={open}
-        //     >
-        //         <CircularProgress color="inherit" />
-        //     </Backdrop>
-        // </div>
+        
     );
 }
 

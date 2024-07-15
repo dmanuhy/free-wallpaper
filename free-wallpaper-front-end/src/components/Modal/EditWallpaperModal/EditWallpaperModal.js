@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import { CONSTRANT } from "../../../constrant";
 import { toast } from "react-toastify";
 import { WallpaperService } from "../../../services/WallpaperService";
-const EditWallpaperModal = ({ wallpaperId, imageUrl }) => {
+const EditWallpaperModal = ({ imageId, imageUrl }) => {
 
     const [wallpaperTags, setWallpaperTags] = useState([""])
     const [description, setDescription] = useState("")
@@ -26,7 +26,7 @@ const EditWallpaperModal = ({ wallpaperId, imageUrl }) => {
     }
 
     const updateWallpaperTags = async () => {
-        await WallpaperService.EditImage(wallpaperId, wallpaperTags, description)
+        await WallpaperService.EditImage(imageId, wallpaperTags, description)
             .then(response => {
                 toast.success("Edit successful")
             })
@@ -38,7 +38,7 @@ const EditWallpaperModal = ({ wallpaperId, imageUrl }) => {
 
     return (
         <div className="edit-wallpaper-modal">
-            <div className="modal fade" id={"editWallpaperModal-" + wallpaperId} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal fade" id="editWallpaperModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" style={{ width: "fit-content", maxWidth: "80vw" }}>
                     <div className="modal-content">
                         <div className="modal-header bg-info">
@@ -60,7 +60,6 @@ const EditWallpaperModal = ({ wallpaperId, imageUrl }) => {
                                             <label className="form-label mb-3" >Tags</label>
                                             <i onClick={() => handleChangeTags(null, "ADD")} style={{ padding: "0.65rem", cursor: "pointer" }} className="bg-success text-white fa-solid fa-plus"></i>
                                         </div>
-
                                         <div className="edit-wallpaper-tag-list row">
                                             {wallpaperTags.map((item, index) => {
                                                 return (
