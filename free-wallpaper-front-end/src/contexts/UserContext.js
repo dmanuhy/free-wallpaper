@@ -40,7 +40,7 @@ const UserProvider = ({ children }) => {
 
     useEffect(() => {
         const jwtToken = Cookies.get("jwt");
-        if (jwtToken) {
+        if (jwtToken && jwtToken !== "undefined") {
             const decoded = jwtDecode(jwtToken);
             setUser({
                 _id: decoded._id,
@@ -50,6 +50,8 @@ const UserProvider = ({ children }) => {
                 roles: decoded.roles,
                 isActived: decoded.isActived,
             });
+        } else {
+            setUser({})
         }
     }, []);
 

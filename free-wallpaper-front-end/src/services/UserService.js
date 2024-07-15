@@ -39,6 +39,10 @@ const markReadNotificationService = (data) => {
   return axios.post("/user/mark-readed-notification", data);
 };
 
+const activeAccountService = (data) => {
+  return axios.post(`/user/active-account`, data)
+}
+
 export const UserService = {
   signUpService,
   signInService,
@@ -49,5 +53,6 @@ export const UserService = {
   getUserNotificationService,
   getUserLikedWallpaperService,
   updateUserLikedWallpaperService,
-  markReadNotificationService
+  markReadNotificationService,
+  activeAccountService
 };

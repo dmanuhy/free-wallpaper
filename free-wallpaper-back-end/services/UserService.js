@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const { createJWT } = require("../middlewares/JsonWebToken");
 const server = require("../server");
 const { updateWallpaperLikesService } = require("./WallpaperService");
+const EmailService = require("./EmailService")
 
 const getRoles = async (roleName) => {
     let role = await db.role.findOne({ name: roleName }).select("_id");
@@ -33,15 +34,15 @@ const signUpService = (data) => {
                     password: hashPassword,
                     roles: [roles._id],
                     token: token,
-                    isActived: true,
+                    isActived: false,
                 });
                 //Send email to notice host admin
 
-                // data.activeLink = `${process.env.FRONT_END_URL}/active-account/${token}`;
-                // await EmailService.sendRegisterRequest(data);
+                data.activeLink = `${process.env.FRONT_END_URL}/active-account/${token}`;
+                await EmailService.sendRegisterRequest(data);
                 resolve({
                     status: 201,
-                    message: "Registed successfully",
+                    message: "Registed successfully, please check active request in Email",
                 });
             }
         } catch (e) {
@@ -68,7 +69,7 @@ const signInService = (data) => {
                 if (!existUser.isActived) {
                     resolve({
                         status: 401,
-                        message: "This account is locked!. Please contact admin",
+                        message: "This account is unactive or locked!. Please contact admin",
                     });
                 } else {
                     const isCorrectPassword = bcrypt.compareSync(data.password, existUser.password);
@@ -244,6 +245,38 @@ const markReadedNotificationService = async (userId, notificationId) => {
     }
 }
 
+const activeAccountService = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.token) {
+                console.log(data.token)
+                resolve({
+                    status: 400,
+                    message: 'An Error is occured !'
+                })
+            } else {
+                let user = await db.user.findOne({ token: data.token, isActived: false })
+                if (user) {
+                    user.token = v4()
+                    user.isActived = true
+                    await user.save()
+                    resolve({
+                        status: 201,
+                        message: 'Verify success !'
+                    })
+                } else {
+                    resolve({
+                        status: 400,
+                        message: `Account is not exist or was actived`
+                    })
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     signUpService,
     signInService,
@@ -252,5 +285,6 @@ module.exports = {
     getUserNotificationService,
     getUserLikedWallpaperService,
     updateUserLikedWallpaperService,
-    markReadedNotificationService
+    markReadedNotificationService,
+    activeAccountService
 };
