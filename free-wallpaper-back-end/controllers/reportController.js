@@ -1,5 +1,6 @@
-const { ReportService } = require("../services");
+const { ReportService, UserService } = require("../services");
 const db = require("../models");
+const { on } = require("../models/user");
 const Report = db.report;
 
 const getAllReports = async (req, res) => {
@@ -14,8 +15,12 @@ const getAllReports = async (req, res) => {
 const deleteWallpaperAndReport = async (req, res) => {
   try {
     const wallpaperId = req.params.id;
-
+    const ownerId = req.body.ownerId;
+    console.log(ownerId);
     const response = await ReportService.deleteWallpaperAndReportService(wallpaperId);
+    if (ownerId) {
+      await UserService.sendNotificationService(ownerId, "Your wallpaper has been deleted");
+    }
     return res.json({ message: response.message, status: response.status });
   } catch (error) {
     return res.status(500).json({ message: "Error deleting wallpaper", error: error.message });

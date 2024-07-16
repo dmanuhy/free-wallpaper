@@ -4,8 +4,8 @@ const getAllReportsService = () => {
   return axios.get("/report");
 };
 
-const deleteWallPaperAndReportService = (wallpaperId) => {
-  return axios.delete(`/report/delete/${wallpaperId}`);
+const deleteWallPaperAndReportService = (wallpaperId, ownerId) => {
+  return axios.post(`/report/delete/${wallpaperId}`, { ownerId });
 };
 
 const deleteReportService = (id) => {
