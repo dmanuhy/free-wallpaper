@@ -19,7 +19,7 @@ const deleteWallpaperAndReport = async (req, res) => {
     console.log(ownerId);
     const response = await ReportService.deleteWallpaperAndReportService(wallpaperId);
     if (ownerId) {
-      await UserService.sendNotificationService(ownerId, "Your wallpaper has been deleted");
+      await UserService.sendNotificationService(ownerId, "One of your wallpapers has been deleted");
     }
     return res.json({ message: response.message, status: response.status });
   } catch (error) {
