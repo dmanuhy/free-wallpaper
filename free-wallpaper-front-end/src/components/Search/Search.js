@@ -34,7 +34,7 @@ const Search = () => {
 
     return (
         <div className="search">
-            {console.log(searchHint)}
+            {/* {console.log(searchHint)} */}
             <input onKeyDown={(event) => handleSeachOnEnter(event.key)} onChange={(event) => setSearchValue(event.target.value)} value={searchValue} className="search-input" type="text" placeholder='Seach ...' />
             <i onClick={() => naviage(`search/${searchValue}`)} className="search-icon fa-solid fa-magnifying-glass"></i>
 
