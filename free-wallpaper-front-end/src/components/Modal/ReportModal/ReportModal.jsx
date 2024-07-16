@@ -31,7 +31,6 @@ const ReportModal = ({ isOpen, onClose, id }) => {
 
     try {
       const response = await WallpaperService.reportWallpaperService(id, description);
-      console.log(response.status);
       if (response.status === 201) {
         toast.success("Report created successfully.", {
           position: "top-right",
