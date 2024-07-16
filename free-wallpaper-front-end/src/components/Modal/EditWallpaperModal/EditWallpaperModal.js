@@ -30,7 +30,7 @@ const EditWallpaperModal = ({ wallpaperId, imageUrl, tags = [] }) => {
     }
 
     const updateWallpaperTags = async () => {
-        await WallpaperService.EditImage(imageId, wallpaperTags, description)
+        await WallpaperService.EditImage(wallpaperId, wallpaperTags, description)
             .then(response => {
                 toast.success("Edit successful")
             })
