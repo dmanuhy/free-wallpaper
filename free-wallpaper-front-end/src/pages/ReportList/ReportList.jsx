@@ -6,7 +6,7 @@ import Pagination from "../../components/Pagination/Pagination";
 const ReportList = () => {
   const [reports, setReports] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 1;
+  const pageSize = 10;
 
   const navigate = useNavigate();
 

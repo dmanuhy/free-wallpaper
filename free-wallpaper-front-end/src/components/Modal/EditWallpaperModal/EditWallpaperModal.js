@@ -35,14 +35,14 @@ const EditWallpaperModal = ({ wallpaperId, imageUrl, tags = [] }) => {
                 toast.success("Edit successful")
             })
             .catch(error => {
-               
+
                 console.error('Error updating wallpaper:', error);
             });
     };
 
     return (
         <div className="edit-wallpaper-modal">
-            <div className="modal fade" id="editWallpaperModal" data-bs="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal fade" id={"edit-wallpaper-" + wallpaperId} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" style={{ width: "fit-content", maxWidth: "80vw" }}>
                     <div className="modal-content">
                         <div className="modal-header bg-info">

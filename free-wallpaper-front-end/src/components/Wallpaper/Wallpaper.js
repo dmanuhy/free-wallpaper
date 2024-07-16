@@ -56,7 +56,7 @@ const Wallpaper = ({ wallpaper }) => {
                 >
                     {isValid &&
                         < div className="wallpaper-buttons">
-                            <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target={"#editWallpaperModal-" + wallpaper._id}><i class="bi bi-pencil"></i></button>
+                            <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target={"#edit-wallpaper-" + wallpaper._id}><i class="bi bi-pencil"></i></button>
                             <button className="btn btn-danger" onClick={() => handleDelete(wallpaper._id)}><i class="bi bi-trash"></i></button>
                         </div>
                     }
@@ -68,7 +68,14 @@ const Wallpaper = ({ wallpaper }) => {
                         alt="image1"
                     />
                     <i
-                        onClick={() => handleChangeLikedWallpaper(wallpaper._id, wallpaper.createdBy._id)}
+                        onClick={() => {
+                            if (user && user._id) {
+                                handleChangeLikedWallpaper(wallpaper._id, wallpaper.createdBy._id)
+                            } else {
+                                toast.info("Please login first")
+                                navigate("/login")
+                            }
+                        }}
                         className={userLikedWallpaper && userLikedWallpaper.includes(wallpaper._id) ? "wallpaper-icon text-danger fas fa-heart" : "wallpaper-icon fa-regular fa-heart"}
                     ></i>
                     <a className="wallpaper-download-btn btn btn-success" href={wallpaper.imageUrl} download={true}>Download</a>

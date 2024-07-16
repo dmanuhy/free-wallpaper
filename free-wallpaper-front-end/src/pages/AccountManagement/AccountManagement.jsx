@@ -15,11 +15,11 @@ const AccountManagement = () => {
 
   const getAllUser = async () => {
     try {
-      const response = await UserService.getAllUsersService();
-
-      setDefaultUsers(response);
-      setUsers(response);
-      // console.log(response);
+      const responseData = await UserService.getAllUsersService();
+      if (responseData) {
+        setDefaultUsers(responseData);
+        setUsers(responseData);
+      }
     } catch (error) {
       console.log(error);
     }
