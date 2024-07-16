@@ -198,7 +198,11 @@ export default function UserCollections() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleSubmit}>Add</button>
+                            <button type="button" className="btn btn-success" data-bs-dismiss="modal" onKeyDown={(event)=>{
+                                if (event.target.key === "Enter") {
+                                    handleSubmit()
+                                }
+                            }} onClick={handleSubmit}>Add</button>
                         </div>
                     </div>
                 </div>
