@@ -143,7 +143,6 @@ const getUserLikedWallpaper = async (req, res) => {
 const updateUserLikedWallpaper = async (req, res) => {
     try {
         const { userId, wallpaperId, userName, ownerId } = req.body
-        console.log("controller: ", ownerId)
         if (!userId || !wallpaperId) {
             return res.status(400).json({
                 status: res.statusCode,
@@ -173,6 +172,19 @@ const markReadedNotification = async (req, res) => {
     }
 };
 
+const activeAccount = async (req, res) => {
+    try {
+        let response = await UserService.activeAccountService(req.body)
+        return res.status(response.status).json(response);
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errorCode: -1,
+            message: 'Error from NODEJS server'
+        })
+    }
+}
+
 module.exports = {
     signUp,
     signIn,
@@ -183,5 +195,6 @@ module.exports = {
     getUserNotification,
     getUserLikedWallpaper,
     updateUserLikedWallpaper,
-    markReadedNotification
+    markReadedNotification,
+    activeAccount
 };

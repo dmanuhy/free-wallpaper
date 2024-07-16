@@ -17,6 +17,7 @@ userRouter.post("/get-notification", userController.getUserNotification)
 userRouter.post("/get-liked-wallpaper", checkUserJWT, userController.getUserLikedWallpaper)
 userRouter.post("/update-liked-wallpaper", checkUserJWT, userController.updateUserLikedWallpaper)
 userRouter.post("/mark-readed-notification", checkUserJWT, userController.markReadedNotification)
+userRouter.post("/active-account", userController.activeAccount)
 
 module.exports = {
   userRouter,

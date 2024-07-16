@@ -34,6 +34,7 @@ const App = () => {
           <Route path="management/report/:id" element={<ReportDetail />} />
           <Route path="am" element={<AccountManagement />} />
           <Route path="register" element={<Page.Register />} />
+          <Route path="active-account/:token" element={<Page.ActiveAccount />} />
         </Route>
       </Routes>
       <Component.Footer />
