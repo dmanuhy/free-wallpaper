@@ -124,7 +124,7 @@ const shareAlbum = async (req, res) => {
             album.sharedWith.push(userId);
             await album.save();
         }
-        let testAccount = await nodemailer.createTestAccount();
+       
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 587,
