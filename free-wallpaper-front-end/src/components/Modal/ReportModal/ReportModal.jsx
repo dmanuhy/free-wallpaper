@@ -4,6 +4,7 @@ import { WallpaperService } from "../../../services/WallpaperService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 const ReportModal = ({ isOpen, onClose, id }) => {
@@ -30,6 +31,7 @@ const ReportModal = ({ isOpen, onClose, id }) => {
 
     try {
       const response = await WallpaperService.reportWallpaperService(id, description);
+      console.log(response.status);
       if (response.status === 201) {
         toast.success("Report created successfully.", {
           position: "top-right",
@@ -39,8 +41,10 @@ const ReportModal = ({ isOpen, onClose, id }) => {
         });
         setDescription("");
         onClose();
-      } else {
+      } else if (response.status === 409) {
         toast.error("This image has already been reported.");
+      } else {
+        toast.error("An error occurred while reporting the image. Please try again later.");
       }
     } catch (error) {
       toast.error("An error occurred while reporting the image. Please try again later.");
