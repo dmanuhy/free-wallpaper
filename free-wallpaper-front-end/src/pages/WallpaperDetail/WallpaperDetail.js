@@ -9,6 +9,7 @@ import ReportModal from "../../components/Modal/ReportModal/ReportModal";
 import avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
 import ShareModal from "../../components/Modal/ShareModal/ShareModal"
 import { socket } from "../../App"
+import { toast } from "react-toastify"
 
 const WallpaperDetail = () => {
     const { user, userLikedWallpaper, handleChangeLikedWallpaper } = useContext(UserContext);
@@ -91,9 +92,9 @@ const WallpaperDetail = () => {
                                                     if (user && user._id) {
                                                         handleChangeLikedWallpaper(wallpaperDetail._id, wallpaperDetail.createdBy._id)
                                                     } else {
+                                                        toast.info("Please login first")
                                                         navigate("/login")
                                                     }
-
                                                 }}
                                                 className={userLikedWallpaper && userLikedWallpaper.includes(wallpaperDetail._id) ? "wallpaper-detail-top-icon text-danger fas fa-heart" : "wallpaper-detail-top-icon fa-regular fa-heart"}
                                             ></i> {wallpaperDetail.likes}
