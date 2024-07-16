@@ -12,7 +12,10 @@ const ReportRow = ({ report, index, handleArrayChange }) => {
     const isConfirmed = window.confirm("Are you sure you want to delete this wallpaper and report?");
     if (isConfirmed) {
       try {
-        const response = await ReportService.deleteWallPaperAndReportService(report.wallpaper._id);
+        const response = await ReportService.deleteWallPaperAndReportService(
+          report.wallpaper._id,
+          report.wallpaper.createdBy._id
+        );
         if (response.status === 200) {
           toast.success("Report and wallpaper deleted successfully!", {
             position: "top-right",
