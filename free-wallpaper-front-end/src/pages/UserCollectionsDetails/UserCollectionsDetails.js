@@ -3,6 +3,8 @@ import { Component } from "../../components"
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { useContext } from 'react';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import AddWallpaperModal from '../../components/Modal/AddWallpaperModal/AddWallpaperModal';
@@ -11,8 +13,9 @@ import { WallpaperService } from '../../services/WallpaperService';
 import { AlbumService } from '../../services/AlbumService';
 import { UserService } from '../../services/UserService';
 import user_avatar_raw from "../../assets/icon/icon-avatar-placeholder.png"
+import { toast } from "react-toastify";
 export default function UserCollectionsDetails() {
-
+    const [email, setEmail] = useState();
     const { userId, albumId } = useParams();
     const [album, setAlbum] = useState();
     const [User, setUser] = useState();
@@ -20,6 +23,7 @@ export default function UserCollectionsDetails() {
     const { user } = useContext(UserContext)
     const [wallpaperList, setWallpaperList] = useState([]);
     const [page, setPage] = useState(1);
+    const [open, setOpen] = useState(false);
     const [sort, setSort] = useState({
         order: "createdAt",
         priority: "descending"
@@ -71,6 +75,19 @@ export default function UserCollectionsDetails() {
         setPage(1);
         fetchAllWallpaper();
     };
+    const handleShare = async () => {
+        try {
+            setOpen(true);
+            await AlbumService.ShareAlbumbyId(albumId, userId, email);
+            setEmail('')
+            setOpen(false);
+            toast.success("Share successful");
+        } catch (error) {
+            console.error("Error creating new wallpaper:", error);
+            alert("Error creating new wallpaper. Please try again.");
+        }
+    };
+
     const handleDownloadAll = () => {
         const zip = new JSZip();
         const imgFolder = zip.folder("wallpapers");
@@ -110,6 +127,7 @@ export default function UserCollectionsDetails() {
                             </div>
                         </div>
                         <div className="d-flex justify-content-center mt-2 gap-2">
+                            <button type="button" className="btn p-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i className="wallpaper-detail-top-icon text-primary fa-solid fa-share-from-square" ></i></button>
                             {user && user.isActived &&
                                 <>
                                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAddWallpaper">
@@ -127,6 +145,33 @@ export default function UserCollectionsDetails() {
             </div>
             <Component.WallpaperList wallpaperList={wallpaperList
             } page={page} setPage={setPage} noMoreData={noMoreData} />
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="staticBackdropLabel">Share to Someone <i class="bi bi-envelope-at-fill"></i></h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form>
+                                <label for="recipient-name" className="col-form-label">Enter email here</label>
+                                <input type="email" className="form-control" id="recipient-name" placeholder='example@gmail.com' value={email} onChange={(e) => setEmail(e.target.value)} />
+                            </form>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleShare} >Share <i class="bi bi-send-check"></i></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div >
         </div>
     )
 }

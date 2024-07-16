@@ -6,7 +6,6 @@ import { ToastContainer, toast } from "react-toastify";
 function ShareModal(id) {
     const [email, setEmail] = useState('');
     const [open, setOpen] = useState(false);
-
     const handleShare = async () => {
         try {
             setOpen(true);
@@ -18,7 +17,6 @@ function ShareModal(id) {
             console.error("Error creating new wallpaper:", error);
             alert("Error creating new wallpaper. Please try again.");
         }
-
     };
 
     return (

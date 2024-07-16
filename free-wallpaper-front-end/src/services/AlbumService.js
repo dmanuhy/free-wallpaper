@@ -13,7 +13,10 @@ const deleteAlbumbyId = (albumId) => {
     return axios.delete(`/album/${albumId}`)
 }
 const ChangeNameAlbumbyId = (albumId, name) => {
-    return axios.put(`/album/${albumId}`, {name})
+    return axios.put(`/album/${albumId}`, { name })
+}
+const ShareAlbumbyId = (albumId, userId, email) => {
+    return axios.post(`/album/share`, {albumId, userId, email })
 }
 
 export const AlbumService = {
@@ -21,5 +24,6 @@ export const AlbumService = {
     getAlbumByIdService,
     createAlbum,
     deleteAlbumbyId,
-    ChangeNameAlbumbyId
+    ChangeNameAlbumbyId,
+    ShareAlbumbyId
 }
