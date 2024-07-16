@@ -5,7 +5,6 @@ import PublicRoutes from "./routes/PublicRoutes";
 import { Component } from "./components";
 import { Page } from "./pages";
 import AccountManagement from "./pages/AccountManagement/AccountManagement";
-import Register from "./pages/Register/Register";
 import ReportList from "./pages/ReportList/ReportList";
 import ReportDetail from "./pages/ReportDetail/ReportDetail";
 
@@ -35,6 +34,7 @@ const App = () => {
           <Route path="management/report/:id" element={<ReportDetail />} />
           <Route path="am" element={<AccountManagement />} />
           <Route path="register" element={<Page.Register />} />
+          <Route path="active-account/:token" element={<Page.ActiveAccount />} />
         </Route>
       </Routes>
       <Component.Footer />

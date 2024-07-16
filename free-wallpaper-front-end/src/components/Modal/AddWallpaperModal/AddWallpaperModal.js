@@ -2,16 +2,19 @@ import { useState } from "react";
 import Dropzone from "../../Dropzone/Dropzone";
 import { WallpaperService } from "../../../services/WallpaperService";
 import "./AddWallpaperModal.scss";
-
+import Backdrop from '@mui/material/Backdrop';
+import { toast } from "react-toastify";
+import CircularProgress from '@mui/material/CircularProgress';
 const AddWallpaperModal = ({ albumId, userId, onUpdate }) => {
     const [newImages, setNewImages] = useState([]);
-
+    const [open, setOpen] = useState(false);
     const handleCreateNewWallpaper = async () => {
         if (!newImages || newImages.length === 0) {
             alert("Please upload at least one image.");
             return;
         }
         try {
+            setOpen(true);
             const formData = new FormData();
             newImages.forEach((image) => {
                 formData.append("imageUrl", image);
@@ -19,9 +22,10 @@ const AddWallpaperModal = ({ albumId, userId, onUpdate }) => {
             formData.append("fromAlbum", albumId);
             formData.append("createdBy", userId);
             const response = await WallpaperService.CreateWallpaper(formData);
-            alert("Created new wallpaper successfully");
             clearState();
             onUpdate();
+            toast.success("New Wallpapper create successfully");
+            setOpen(false)
         } catch (error) {
             console.error("Error creating new wallpaper:", error);
             alert("Error creating new wallpaper. Please try again.");
@@ -54,6 +58,12 @@ const AddWallpaperModal = ({ albumId, userId, onUpdate }) => {
                     </div>
                 </div>
             </div>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </div>
     );
 };

@@ -33,7 +33,7 @@ export default function UserGallery() {
             setNoMoreData(true)
         }
     }
-    
+
     const fetchUser = async () => {
         try {
             const response = await UserService.findUser(userId);
@@ -72,7 +72,7 @@ export default function UserGallery() {
                     <Link to="collections" className="nav-button2">Collections</Link>
                 </div>
             </div>
-            <Component.WallpaperList wallpaperList={wallpaperList} page={page} setPage={setPage} />
+            <Component.WallpaperList wallpaperList={wallpaperList} page={page} setPage={setPage} noMoreData={noMoreData} />
         </div>
     )
 }

@@ -143,7 +143,23 @@
     cursor: pointer;
 }
 
+.edit-button {
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.my-gallery-item:hover .edit-button {
+    display: block;
+}
+
 .my-gallery-item:hover .delete-button {
     display: block;
-
 }

@@ -1,7 +1,8 @@
 export const CONSTRANT = {
     MAX_PRODUCT_IMAGE_FILE: 5,
     TOOL_BAR_OPTIONS: [
-        ['bold', 'italic', 'underline', 'strike'],
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['link', 'image', 'video'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
         [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
         [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent

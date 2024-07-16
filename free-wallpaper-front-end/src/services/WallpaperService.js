@@ -32,6 +32,22 @@ const reportWallpaperService = (id, reason) => {
   return axios.post(`/wallpaper/${id}/report`, { reason });
 };
 
+const getWallpaperByKeyService = (key) => {
+  return axios.get(`/wallpaper/search/${key}`);
+};
+const shareWallpaper = (id, mail) => {
+  return axios.post('/wallpaper/share', {
+    wallpaperID: id,
+    email: mail
+  });
+};
+const deleteOneImage = (WallpaperId) => {
+  return axios.delete(`/wallpaper/delete/${WallpaperId}`);
+};
+const EditImage = (WallpaperId, tags, des) => {
+  return axios.put(`/wallpaper/edit/${WallpaperId}`, { tags, des });
+};
+
 export const WallpaperService = {
   getAllWallpaperService,
   getAllWallpaperByAuthorService,
@@ -41,4 +57,8 @@ export const WallpaperService = {
   deleteImageAlbum,
   addWallpaperCommentService,
   reportWallpaperService,
+  getWallpaperByKeyService,
+  shareWallpaper,
+  deleteOneImage,
+  EditImage
 };

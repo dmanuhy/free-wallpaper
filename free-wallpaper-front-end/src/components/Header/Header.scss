@@ -1,39 +1,80 @@
 .header {
-  position        : sticky;
-  top             : 0;
-  z-index         : 2;
-  background-color: var(--color-white);
-  padding-top     : 1rem;
-  padding-bottom  : 1rem;
-
-  &-logo {
-    font-family: "Keania One", sans-serif;
-    text-wrap  : nowrap;
-    cursor     : pointer;
-  }
-
-  &-explore {
-    font-weight     : 600;
-    border          : none;
+    position        : sticky;
+    top             : 0;
+    z-index         : 2;
     background-color: var(--color-white);
-    border-radius   : 0.5rem;
-    padding         : 0.3rem 0.2rem;
-  }
+    padding-top     : 1rem;
+    padding-bottom  : 1rem;
 
-  &-login {
-    border-radius   : 0.5rem;
-    font-weight     : 600;
-    color           : var(--color-white);
-    padding         : 0.4rem 1.2rem;
-    border          : none;
-    background-color: var(--color-green);
-  }
+    &-logo {
+        font-family: "Keania One", sans-serif;
+        text-wrap  : nowrap;
+        cursor     : pointer;
+    }
 
-  &-user-avatar {
-    cursor         : pointer;
-    background-size: cover;
-    aspect-ratio   : 1;
-    width          : 2.5rem;
-    border-radius  : 9999999rem;
-  }
+    &-explore {
+        font-weight     : 600;
+        border          : none;
+        background-color: var(--color-white);
+        border-radius   : 0.5rem;
+        padding         : 0.3rem 0.2rem;
+    }
+
+    &-login {
+        border-radius   : 0.5rem;
+        font-weight     : 600;
+        color           : var(--color-white);
+        padding         : 0.4rem 1.2rem;
+        border          : none;
+        background-color: var(--color-green);
+    }
+
+    &-user {
+        &-avatar {
+            cursor         : pointer;
+            background-size: cover;
+            aspect-ratio   : 1;
+            width          : 2.5rem;
+            border-radius  : 9999999rem;
+        }
+
+        &-notification {
+
+            position: relative;
+
+            &-icon {
+                padding      : 0.4rem;
+                border-radius: 9999rem;
+                position     : relative;
+
+                &:hover {
+                    background-color: var(--color-white-2);
+                }
+            }
+
+            &-number {
+                background-color: var(--color-red);
+                color           : var(--color-white);
+                border-radius   : 9999rem;
+                padding         : 0.2rem 0.4rem;
+                left            : 1.2rem;
+                aspect-ratio    : 1;
+                top             : 1.2rem;
+                font-size       : 0.6rem;
+                position        : absolute;
+
+
+            }
+
+            .dropdown-toggle {
+                &::after {
+                    display: none;
+                }
+            }
+
+            .dropdown-menu {
+                box-shadow: 0 0 0.25rem 0.1rem rgb(96, 96, 96);
+            }
+        }
+    }
 }

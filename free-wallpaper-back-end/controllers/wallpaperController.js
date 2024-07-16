@@ -3,7 +3,7 @@ const User = require("../models/user");
 const Album = require("../models/album");
 const { WallpaperService } = require("../services");
 const cloudinary = require("cloudinary").v2;
-
+const nodemailer = require("nodemailer");
 const getWallpapers = async (req, res) => {
   const page = req.query.page ? req.query.page : "1";
   const order = req.query.order ? req.query.order : "createdAt";
@@ -18,6 +18,7 @@ const getWallpapers = async (req, res) => {
 };
 
 const Wallpaper = require("../models/wallpaper");
+const Tag = require("../models/tag");
 async function CreateNewWallpaper(req, res, next) {
   try {
     const files = req.files;
@@ -44,16 +45,27 @@ async function CreateNewWallpaper(req, res, next) {
   }
 }
 
-// const deleteOneImage = async (publicIds) => {
-//     try {
-//         const deletePromises = publicIds.map(publicId => cloudinary.uploader.destroy(publicId));
-//         await Promise.all(deletePromises);
-//         Xoa' await Album.findByIdAndUpdate(fromAlbum, { $pull: { wallpapers: { $in: wallpaperIds } } });
-//         console.log(`Deleted images with public_ids: ${publicIds}`);
-//     } catch (error) {
-//         console.error(`Failed to delete images with public_ids: ${publicIds}`, error);
-//     }
-// };
+const deleteOneImage = async (req, res, next) => {
+  try {
+    const { wid } = req.params;
+
+
+    const wallpaper = await Wallpaper.findById(wid);
+    if (!wallpaper) {
+      return res.status(404).json({ message: "Wallpaper not found" });
+    }
+    await Wallpaper.deleteOne({ _id: wid });
+    await cloudinary.uploader.destroy(wallpaper.publicId);
+    await Album.findByIdAndUpdate(wallpaper.fromAlbum, { $pull: { wallpapers: wid } });
+
+    res.status(200).json({ message: "Wallpaper deleted successfully" });
+
+  } catch (error) {
+
+    next(error);
+  }
+};
+
 const deleteManyImageAlbum = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -195,6 +207,112 @@ const reportWallpaper = async (req, res) => {
   }
 };
 
+const getWallpaperByKey = async (req, res) => {
+
+  const { key } = req.params;
+  if (!key) {
+    return res.status(404).json({
+      message: "Not found data"
+    });
+  }
+
+  try {
+    const serviceResponse = await WallpaperService.getWallpaperByKeyService(key)
+    return res.status(200).json(serviceResponse);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const shareWallpaper = async (req, res) => {
+  try {
+    const { wallpaperID, email } = req.body;
+
+    const wallpaper = await Wallpaper.findById(wallpaperID);
+    if (!wallpaper) {
+      return res.status(404).json({ message: 'Album not found' });
+    }
+
+    // Check if user exists
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // Use `true` for port 465, `false` for all other ports
+      auth: {
+        user: "minhvhhe170320@fpt.edu.vn",
+        // pass: "bbzjwgtpfpwpuovb",
+        // user: testAccount.user,
+        pass: "rbwj eril yswz hxzw",
+      },
+    });
+    const info = await transporter.sendMail({
+      from: `"FreeWallPapper 👻" <minhvhhe170320@fpt.edu.vn>`, // sender address
+      to: email, // list of receivers
+
+      subject: "Check Out This New Wallpapper on FreeWallPapper!", // Subject line
+      text: `Hello,
+Your friend  has shared a photo with you on FreeWallPapper!
+Click the link below to view the detail photo:
+http://localhost:3000/wallpaper/${wallpaperID}
+
+Best regards,
+The FreeWallPapper Team
+
+P.S. If you did not expect to receive this email, please ignore it.
+
+© 2024 FreeWallPapper. All rights reserved.`, // plain text body
+      html: `<p>Hello,</p>
+                   <p>Your friend <strong></strong> has shared a photo album with you on FreeWallPapper!</p>
+                   <p>Click the link below to view the Photo:</p>
+                   <p><a href="http://localhost:3000/wallpaper/${wallpaperID}">View Phooto</a></p>
+                   <p><img src="${wallpaper.imageUrl}" alt="Wallpaper Image" style="width:100%;max-width:600px;"></p>
+                   <p>Best regards,<br>The FreeWallPapper Team</p>
+                   <p>P.S. If you did not expect to receive this email, please ignore it.</p>
+                   <p>© 2024 FreeWallPapper. All rights reserved.</p>`, // html body
+    });
+    res.status(200).json(wallpaper);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error", error });
+  }
+};
+const EditTagWallpaper = async (req, res) => {
+  const { id } = req.params;
+  const { tags, des } = req.body;
+
+  try {
+    const existingTags = await Tag.find({ name: { $in: tags } }).exec();
+
+    // Get the names of the existing tags
+    const existingTagNames = existingTags.map(tag => tag.name);
+
+    // Filter out tags that already exist
+    const newTags = tags.filter(tag => !existingTagNames.includes(tag));
+
+    // Create new tag documents
+    const newTagDocs = newTags.map(tag => ({ name: tag }));
+
+    // Insert new tags into the database
+    if (newTagDocs.length > 0) {
+      await Tag.insertMany(newTagDocs);
+    }
+    const updatedWallpaper = await Wallpaper.findByIdAndUpdate(
+      id,
+      { $set: { tags: tags, description: des } },
+    );
+
+    if (!updatedWallpaper) {
+      return res.status(404).send('Wallpaper not found');
+    }
+
+    res.json(updatedWallpaper);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+
+};
+
 module.exports = {
   getWallpapers,
   CreateNewWallpaper,
@@ -205,4 +323,8 @@ module.exports = {
   addWallpaperComment,
   likeWallpaper,
   reportWallpaper,
+  getWallpaperByKey,
+  shareWallpaper,
+  deleteOneImage,
+  EditTagWallpaper
 };
