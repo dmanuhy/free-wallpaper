@@ -39,7 +39,7 @@ const signUpService = (data) => {
         //Send email to notice host admin
 
         data.activeLink = `${process.env.FRONT_END_URL}/active-account/${token}`;
-        await EmailService.sendRegisterRequest(data);
+        EmailService.sendRegisterRequest(data);
         resolve({
           status: 201,
           message: "Registed successfully, please check active request in Email",

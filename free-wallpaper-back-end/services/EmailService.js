@@ -13,19 +13,26 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendRegisterRequest = async (data) => {
-    await transporter.sendMail({
-        from: `"Free Wallpaper" <${process.env.EMAIL_APP}>`, // sender address
-        to: data.email,
-        subject: "Yêu cầu tạo tài khoản", // Subject line
-        text: "Xác thực tài khoản người dùng", // plain text body
-        html: `<h3>Xin chào</h3>
-        <p>Bạn nhận được email này vì có yêu cầu tạo tài khoản với nội dung như sau</p>
-        <div><b>Tên người dùng: </b>${data.name}</div>
-        <div><b>Email (Tài khoản): </b>${data.email}</div>
-        <br/>
-        <div>Nếu bạn xác nhận sử dụng tài khoản vui lòng click <a href=${data.activeLink}>Xác thực</a></div>
-        <div>Xin cảm ơn</div>`
-    });
+    try {
+        await transporter.sendMail({
+            from: `"Free Wallpaper" <${process.env.EMAIL_APP}>`, // sender address
+            to: data.email,
+            subject: "Verify Account Request", // Subject line
+            text: "You have an notification for Verify Account", // plain text body
+            html: `
+            <p>You received this email because there is a request to create an account with the following content</p>
+            <div><b>Username: </b>${data.name}</div>
+            <div><b>Email (Account): </b>${data.email}</div>
+            <br/>
+            <div>If you created this Account, please click Verify</div>
+            <div style="padding: 1rem 0rem;">
+                <a style="text-decoration: none; background-color: #08ff10;  font-size: 1.2rem" href=${data.activeLink}>Verify</a>
+            </div> 
+            <div>Thank you/div>`
+        });
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 module.exports = {
