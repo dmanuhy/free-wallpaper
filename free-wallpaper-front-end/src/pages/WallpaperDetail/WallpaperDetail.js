@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { WallpaperService } from "../../services/WallpaperService"
 import { UserContext } from "../../contexts/UserContext"
+import avatar_placeholder from "../../assets/icon/icon-avatar-placeholder.png"
 import "./WallpaperDetail.scss"
 import moment from "moment"
 import CommentInput from "../../components/CommentInput/CommentInput"
@@ -183,7 +184,7 @@ const WallpaperDetail = () => {
                                                                                         <div className="d-flex gap-2 py-1">
                                                                                             <div>
                                                                                                 <img
-                                                                                                    src={item.user.avatar}
+                                                                                                    src={item.user.avatar || avatar_placeholder}
                                                                                                     className="wallpaper-detail-reply-avatar"
                                                                                                     alt="commenter"
                                                                                                 />

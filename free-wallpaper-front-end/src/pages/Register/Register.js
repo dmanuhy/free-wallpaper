@@ -15,18 +15,31 @@ const Register = () => {
         confirmPassword: ""
     });
 
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
+
     const handleRegister = async (event) => {
         event.preventDefault();
         try {
             if (newUser.password !== newUser.confirmPassword) {
                 toast.error("Confirm password didn't matched")
             } else {
-                const response = await UserService.signUpService(newUser);
-                if (response.status === 201) {
-                    toast.success(response.message);
-                    navigate('/login');
+                if (!validateEmail(newUser.email)) {
+                    toast.error("Please enter email correctly: example@gmail.com")
                 } else {
-                    toast.error(response.message);
+                    const response = await UserService.signUpService(newUser);
+                    if (response.status === 201) {
+                        toast.success(response.message);
+                        navigate('/login');
+                    } else {
+                        toast.error(response.message);
+                    }
                 }
             }
         } catch (error) {
